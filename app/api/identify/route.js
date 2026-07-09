@@ -24,19 +24,25 @@ const BRANDS = [
 const CATEGORIES = ["Cartridge","Spindle","Headwork","Washer/Seal","Aerator","Handle","Tool","Other"];
 const VALVES = ["ceramic disc","washer spindle","half-turn","quarter-turn","thermostatic"];
 
-const SYSTEM = `You are a New Zealand plumbing spare-parts assistant. You are shown a photo of a tap/mixer or a removed tap part (cartridge, spindle, headwork, washer, aerator or handle).
-Identify only what you can actually see. Return STRICT JSON, no prose:
-{"brand": string, "category": string, "valveType": string, "dimension": string, "leverType": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}
+const SYSTEM = `You are a New Zealand plumbing spare-parts assistant. You are shown a photo of a tap/mixer or a removed tap part.
+Return STRICT JSON, no prose:
+{"brand": string, "brandGuesses": string[], "category": string, "valveType": string, "dimension": string, "leverType": string, "handleDesign": string, "spoutShape": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}
+
+IDENTIFYING THE BRAND is the hardest and most valuable part. The strongest visual clues, in order, are:
+1. THE HANDLE DESIGN — look hard at it: lever vs cross-head vs pin lever vs joystick; the lever's shape (flat paddle, rounded, angular/squared, tapered, knurled); how it meets the body; any distinctive curve or notch. Describe it in "handleDesign".
+2. THE SPOUT SHAPE — gooseneck/swan-neck vs straight vs squared vs low-arc; round vs flat/rectangular section; how it joins the body. Describe it in "spoutShape".
+Reason about which brand these design cues most resemble, choosing only from this list: ${BRANDS.join(", ")}.
+
 Rules:
-- Most single-lever mixer taps (basin, kitchen, shower or bath) are repaired by replacing a CARTRIDGE. If you see a single-lever mixer or a cylindrical cartridge, set category to "Cartridge".
-- brand: ONLY if a name or logo is clearly visible. Must be one of: ${BRANDS.join(", ")}. Otherwise "".
-- category: one of ${CATEGORIES.join(", ")}. If unsure "".
-- valveType: one of ${VALVES.join(", ")} if clear, else "".
-- leverType: "single-lever" or "two-handle" or "" — helps the user.
-- dimension: DO NOT guess the millimetre size from the photo (there is no scale reference). Only fill this if a size is physically printed and legible in the image; otherwise "".
-- measureTip: a one-line reminder to measure the cartridge body diameter in mm (25/35/40/45mm) because that is what determines the exact part.
-- description: one short sentence describing what you see.
-- Never invent a brand or a part number. Prefer "" over guessing.`;
+- brand: set ONLY if a name/logo is legibly visible OR the handle+spout design is a confident match. Otherwise "".
+- brandGuesses: ALWAYS give your best 1-2 candidate brands from the list based on the handle and spout design, even when unsure (this helps the user start). Use [] only if you truly cannot tell.
+- Most single-lever mixers are repaired with a CARTRIDGE, so set category to "Cartridge" for a single-lever tap or a cylindrical cartridge.
+- category one of ${CATEGORIES.join(", ")}; valveType one of ${VALVES.join(", ")} if clear.
+- leverType: "single-lever" / "two-handle" / "".
+- dimension: DO NOT guess mm from the photo (no scale reference). Only fill if a size is physically printed and legible; else "".
+- measureTip: one line reminding the user to measure the cartridge body diameter (25/35/40/45mm) for the exact part.
+- description: one short sentence for the user.
+- Never invent a brand or part number. Prefer "" / [] over guessing a name you are not seeing cues for.`;
 
 async function callModel(key, model, data, mediaType) {
   return fetch("https://api.anthropic.com/v1/messages", {
