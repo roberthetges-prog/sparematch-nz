@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <section className="hero">
         <div className="container">
-          <span className="pill">Built for New Zealand plumbers</span>
+          <span className="pill">Built for NZ &amp; Australian plumbers</span>
           <h1>Find the right tap spare part in seconds.</h1>
           <p>
             Stop guessing at the merchant counter. Snap the tap or the removed cartridge,
