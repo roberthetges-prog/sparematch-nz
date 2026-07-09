@@ -14,7 +14,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 2,
@@ -31,7 +32,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/forpt105-G35.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 3,
@@ -48,7 +50,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 4,
@@ -65,7 +68,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/forpt22-g40.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 5,
@@ -82,7 +86,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 6,
@@ -99,7 +104,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 7,
@@ -116,7 +122,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "47mm"
+  "dimensionDetail": "47mm",
+  "tapPhoto": "https://foreno.co.nz/wp-content/uploads/LT060.jpg"
  },
  {
   "id": 8,
@@ -133,7 +140,8 @@
   "verified": "Y",
   "notes": "Kerox K-45",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT80.jpg",
-  "dimensionDetail": "45mm"
+  "dimensionDetail": "45mm",
+  "tapPhoto": ""
  },
  {
   "id": 9,
@@ -150,7 +158,8 @@
   "verified": "Y",
   "notes": "Kerox K-35OP (Foreno Cartridge ID PDF)",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": "https://foreno.co.nz/wp-content/uploads/SLT11LFCH.jpg"
  },
  {
   "id": 10,
@@ -167,7 +176,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT04.jpg",
-  "dimensionDetail": "12mm"
+  "dimensionDetail": "12mm",
+  "tapPhoto": ""
  },
  {
   "id": 11,
@@ -184,7 +194,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 12,
@@ -201,7 +212,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 13,
@@ -218,7 +230,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 14,
@@ -235,7 +248,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT43.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 15,
@@ -252,7 +266,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT65.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 16,
@@ -269,7 +284,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 17,
@@ -286,7 +302,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "12mm"
+  "dimensionDetail": "12mm",
+  "tapPhoto": ""
  },
  {
   "id": 18,
@@ -303,7 +320,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT10.jpg",
-  "dimensionDetail": "1/2\""
+  "dimensionDetail": "1/2\"",
+  "tapPhoto": ""
  },
  {
   "id": 19,
@@ -320,7 +338,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 20,
@@ -337,7 +356,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "1/2\""
+  "dimensionDetail": "1/2\"",
+  "tapPhoto": ""
  },
  {
   "id": 21,
@@ -354,7 +374,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT18.jpg",
-  "dimensionDetail": "22mm"
+  "dimensionDetail": "22mm",
+  "tapPhoto": ""
  },
  {
   "id": 22,
@@ -371,7 +392,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT19.jpg",
-  "dimensionDetail": "24mm"
+  "dimensionDetail": "24mm",
+  "tapPhoto": ""
  },
  {
   "id": 23,
@@ -388,7 +410,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "28mm"
+  "dimensionDetail": "28mm",
+  "tapPhoto": ""
  },
  {
   "id": 24,
@@ -405,7 +428,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 25,
@@ -422,7 +446,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 26,
@@ -439,7 +464,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 27,
@@ -456,7 +482,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 28,
@@ -473,7 +500,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://foreno.co.nz/wp-content/uploads/LT24LFCH_featured.jpg"
  },
  {
   "id": 29,
@@ -490,7 +518,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 30,
@@ -507,7 +536,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 31,
@@ -524,7 +554,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 32,
@@ -541,7 +572,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://foreno.co.nz/wp-content/uploads/FORPT109.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://foreno.co.nz/wp-content/uploads/ICON02_featured.jpg"
  },
  {
   "id": 33,
@@ -558,7 +590,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/cc25_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 34,
@@ -575,7 +608,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC25OP_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": "https://www.felton.co.nz/assets/Uploads/A_Product-Images_700x700px/Axiss/AX2BMC_1__FillWzYwMCw2MDBd.jpg"
  },
  {
   "id": 35,
@@ -592,7 +626,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 36,
@@ -609,7 +644,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": "https://www.felton.co.nz/assets/Uploads/A_Product-Images_700x700px/Axiss/AX2BMC_1__FillWzYwMCw2MDBd.jpg"
  },
  {
   "id": 37,
@@ -626,7 +662,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35OP_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 38,
@@ -643,7 +680,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 39,
@@ -660,7 +698,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35E_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 40,
@@ -677,7 +716,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": "https://www.felton.co.nz/assets/Uploads/A_Product-Images_700x700px/Axiss/AX2BMC_1__FillWzYwMCw2MDBd.jpg"
  },
  {
   "id": 41,
@@ -694,7 +734,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35E_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 42,
@@ -711,7 +752,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 43,
@@ -728,7 +770,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 44,
@@ -745,7 +788,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/Kerox-Cartridges/CC35_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 45,
@@ -762,7 +806,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 46,
@@ -779,7 +824,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.felton.co.nz/assets/Uploads/A-Spare-Parts/Product-Images_700x700px/EN0039_1__FillWzYwMCw2MDBd.jpg",
-  "dimensionDetail": "47mm"
+  "dimensionDetail": "47mm",
+  "tapPhoto": "https://www.felton.co.nz/assets/Uploads/QFSPCSMC_Que-Fusion-Plus-Shower-Mixer-Chrome-v3__FillWzYwMCw2MDBd.jpg"
  },
  {
   "id": 47,
@@ -796,7 +842,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "mixed"
+  "dimensionDetail": "mixed",
+  "tapPhoto": ""
  },
  {
   "id": 48,
@@ -813,7 +860,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 49,
@@ -830,7 +878,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 50,
@@ -847,7 +896,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 51,
@@ -864,7 +914,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 52,
@@ -881,7 +932,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 53,
@@ -898,7 +950,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 54,
@@ -915,7 +968,8 @@
   "verified": "Y",
   "notes": "Robertson Trade distributes; Kerox universal",
   "photo": "https://www.robertsontrade.co.nz/storage/spare-parts/K35A%20new.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 55,
@@ -932,7 +986,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/K35B-1639339419-COPY.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 56,
@@ -949,7 +1004,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/universal/KO40A.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 57,
@@ -966,7 +1022,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/KO40B.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 58,
@@ -983,7 +1040,8 @@
   "verified": "Y",
   "notes": "Diameter not published; ION basin cartridges are 25mm",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 59,
@@ -1000,7 +1058,8 @@
   "verified": "Y",
   "notes": "Hansa '3.5' is a model name, not the mm size",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Hansa-35mm-Replacement-Mixer-Cartridge-59913075.png",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 60,
@@ -1017,7 +1076,8 @@
   "verified": "Y",
   "notes": "Diameter not confirmed; '2.5' is not the mm size",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/hansa/59913914.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 61,
@@ -1034,7 +1094,8 @@
   "verified": "Y",
   "notes": "'4.8' is a model name, not the mm size",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/lrg_27058_HansaCartridge599046011.jpg",
-  "dimensionDetail": "46mm (46x46x60)"
+  "dimensionDetail": "46mm (46x46x60)",
+  "tapPhoto": ""
  },
  {
   "id": 62,
@@ -1051,7 +1112,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/hansa/59913051.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 63,
@@ -1068,7 +1130,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 64,
@@ -1085,7 +1148,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 65,
@@ -1102,7 +1166,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "1/2\""
+  "dimensionDetail": "1/2\"",
+  "tapPhoto": ""
  },
  {
   "id": 66,
@@ -1119,7 +1184,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://italianluxuryinteriors.com/cdn/shop/files/zucchetti_r98123_ceramic_disc_mixer_tap_cartridge_25mm.jpg?v=1688385187",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 67,
@@ -1136,7 +1202,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://italianluxuryinteriors.com/cdn/shop/files/zucchetti_r98112_ceramic_disc_mixer_tap_cartridge_35mm_2.jpg?v=1688385495",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 68,
@@ -1153,7 +1220,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 69,
@@ -1170,7 +1238,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 70,
@@ -1187,7 +1256,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 71,
@@ -1204,7 +1274,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/zucchetti/PanS/R99316%20disc.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 72,
@@ -1221,7 +1292,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/zucchetti/PanS/45859.02.jpg",
-  "dimensionDetail": "M16.5 / 7.5 LPM"
+  "dimensionDetail": "M16.5 / 7.5 LPM",
+  "tapPhoto": ""
  },
  {
   "id": 73,
@@ -1238,7 +1310,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/neopearl/09-9164.0.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 74,
@@ -1255,7 +1328,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/Elementi/42902.00.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 75,
@@ -1272,7 +1346,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/elementi/ATBX0087-XD%20new.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 76,
@@ -1289,7 +1364,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/universal/98999.00.jpg",
-  "dimensionDetail": "15mm"
+  "dimensionDetail": "15mm",
+  "tapPhoto": ""
  },
  {
   "id": 77,
@@ -1306,7 +1382,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/universal/98992.00.jpg",
-  "dimensionDetail": "20mm"
+  "dimensionDetail": "20mm",
+  "tapPhoto": ""
  },
  {
   "id": 78,
@@ -1323,7 +1400,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product%20images/59910749%20A.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 79,
@@ -1340,7 +1418,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/cENTRALbRASS/CS-42022.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 80,
@@ -1357,7 +1436,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/elementi/uno/43951.02%20disc%20new%20handle.png",
-  "dimensionDetail": "35mm cartridge"
+  "dimensionDetail": "35mm cartridge",
+  "tapPhoto": ""
  },
  {
   "id": 81,
@@ -1374,7 +1454,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/elementi/uno/42970.02%20disc%20new%20HANDLE.png",
-  "dimensionDetail": "40mm cartridge"
+  "dimensionDetail": "40mm cartridge",
+  "tapPhoto": ""
  },
  {
   "id": 82,
@@ -1391,7 +1472,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/hansa/59914417.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 83,
@@ -1408,7 +1490,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/zucchetti/PanS/R96481%20disc.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 84,
@@ -1425,7 +1508,8 @@
   "verified": "Y",
   "notes": "Sydney Bathroomware SKU 04-7772",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/methven-40mm-shower-mixer-cartridge-04-7772.webp",
-  "dimensionDetail": "40x40x62mm"
+  "dimensionDetail": "40x40x62mm",
+  "tapPhoto": ""
  },
  {
   "id": 85,
@@ -1442,7 +1526,8 @@
   "verified": "Y",
   "notes": "Kerox K35B",
   "photo": "https://plumbingsales.com.au/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/m/e/methven_35mm_kerox_mixer_tap_cartridge_with_leg_k35b_04-9172.jpg",
-  "dimensionDetail": "35mm dia x 73mm H"
+  "dimensionDetail": "35mm dia x 73mm H",
+  "tapPhoto": ""
  },
  {
   "id": 86,
@@ -1459,7 +1544,8 @@
   "verified": "Diagram",
   "notes": "Exploded PDF also lists SP470, SP033510, SP143, 782002, SP190, SP083550, SP233550, 785946 - component per code not labelled on diagram",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/E8214_BK_Image_HeroImage_ECHO_STRATA_SINK_MIXER_CP.jpg"
  },
  {
   "id": 87,
@@ -1476,7 +1562,8 @@
   "verified": "Diagram",
   "notes": "Exploded PDF lists SP470, SP233550, SP472, SP033510, SP478 - shares internals with E8114; component per code not labelled",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/E8214_BK_Image_HeroImage_ECHO_STRATA_SINK_MIXER_CP.jpg"
  },
  {
   "id": 88,
@@ -1493,7 +1580,8 @@
   "verified": "Y",
   "notes": "Methven Group (Deva/UK) code - confirm NZ availability",
   "photo": "",
-  "dimensionDetail": "35mm x 58mm"
+  "dimensionDetail": "35mm x 58mm",
+  "tapPhoto": ""
  },
  {
   "id": 89,
@@ -1510,7 +1598,8 @@
   "verified": "Y",
   "notes": "Methven Group (Deva/UK) code - confirm NZ availability",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 90,
@@ -1527,7 +1616,8 @@
   "verified": "Y",
   "notes": "Methven Group (Deva/UK) code - confirm NZ availability",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 91,
@@ -1544,7 +1634,8 @@
   "verified": "Y",
   "notes": "Methven Group code - Aurajet sold in NZ; confirm SKU",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/AOSSCP_BK_Image_HeroImage_AIO_SHOWER_SYSTEM_CP.jpg"
  },
  {
   "id": 92,
@@ -1561,7 +1652,8 @@
   "verified": "Y",
   "notes": "Mitre 10 SKU 189232",
   "photo": "https://b2c-api-prod-internal.cc.mitre10.co.nz/medias/sys_master/productimages/h0f/hdf/8799765299230/189232xlg/189232xlg.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 93,
@@ -1578,7 +1670,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://plumbingsales.com.au/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/g/r/greens_starmix_marketti_mixer_tap_ceramic_disc_cartridge_5980081.jpg",
-  "dimensionDetail": "42mm dia x 90mm H"
+  "dimensionDetail": "42mm dia x 90mm H",
+  "tapPhoto": "https://greenstapware.com/wp-content/uploads/2024/12/16185001-Marketti-Blade-Fixed-Basin-Mixer-1.jpg"
  },
  {
   "id": 94,
@@ -1595,7 +1688,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://plumbingsales.com.au/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/g/r/greens_starmix_mixer_tap_ceramic_disc_cartridge_5980082.jpg",
-  "dimensionDetail": "42mm dia x 65mm H"
+  "dimensionDetail": "42mm dia x 65mm H",
+  "tapPhoto": ""
  },
  {
   "id": 95,
@@ -1612,7 +1706,8 @@
   "verified": "Low",
   "notes": "Seen in listing title only - confirm before use",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 96,
@@ -1629,7 +1724,8 @@
   "verified": "Y",
   "notes": "Caroma Spare Parts Booklet",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 97,
@@ -1646,7 +1742,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Caroma-Half-Turn-Basin-Spindle-2838.04.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 98,
@@ -1663,7 +1760,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 99,
@@ -1680,7 +1778,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Dorf-Ceramic-Disc-Wall-Spindles-6478.04.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 100,
@@ -1697,7 +1796,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 101,
@@ -1714,7 +1814,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 102,
@@ -1731,7 +1832,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 103,
@@ -1748,7 +1850,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Reno_Hub-Fienza-25mm-Mixer-Cartridge-WAS50.webp",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 104,
@@ -1765,7 +1868,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Phoenix-Vivid-Slimline-25mm-Cartridge.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 105,
@@ -1782,7 +1886,8 @@
   "verified": "Y",
   "notes": "Retailer SKU 40352",
   "photo": "https://sydneybathroomware.com.au/wp-content/uploads/2023/12/Phoenix-35mm-Cartridge-Shower-Mixer-40351NR-Front.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 106,
@@ -1799,7 +1904,8 @@
   "verified": "Y",
   "notes": "Reece product code",
   "photo": "https://digitalassets.reecegroup.com.au/m/40b32a0ce03f9755/Web_1200x900-Mizu-Soothe-Basin-Mixer-Cartridge-25mm.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/36459f6f177420df/Web_1200x900-Mizu-Soothe-Wall-Basin-Mixer-Set-200mm-Chrome-4-Star.jpg"
  },
  {
   "id": 107,
@@ -1816,7 +1922,8 @@
   "verified": "Y",
   "notes": "Diameter not published on Reece",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/1fce62a6431a02df/Web_1200x900-Mizu-Drift-MK2-Basin-Mixer-Tap-Chrome-5-6-Star.jpg"
  },
  {
   "id": 108,
@@ -1833,7 +1940,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/36459f6f177420df/Web_1200x900-Mizu-Soothe-Wall-Basin-Mixer-Set-200mm-Chrome-4-Star.jpg"
  },
  {
   "id": 109,
@@ -1850,7 +1958,8 @@
   "verified": "Y",
   "notes": "AU code; diameter not published; confirm NZ SKU",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/2c870a9a7a33fd6c/Web_1200x900-Posh-Solus-MK3-Basin-Mixer-Tap-Chrome-4-Star.jpg"
  },
  {
   "id": 110,
@@ -1867,7 +1976,8 @@
   "verified": "Y",
   "notes": "Diameter not published; confirm NZ SKU",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/2c870a9a7a33fd6c/Web_1200x900-Posh-Solus-MK3-Basin-Mixer-Tap-Chrome-4-Star.jpg"
  },
  {
   "id": 111,
@@ -1884,7 +1994,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/2c870a9a7a33fd6c/Web_1200x900-Posh-Solus-MK3-Basin-Mixer-Tap-Chrome-4-Star.jpg"
  },
  {
   "id": 112,
@@ -1901,7 +2012,8 @@
   "verified": "Y",
   "notes": "Model KSP0172; Bunnings I/N 0014721",
   "photo": "https://media.bunnings.com.au/api/public/content/7cc270d884c94b42b785cc319be29925?v=14fa6e67",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 113,
@@ -1918,7 +2030,8 @@
   "verified": "Y",
   "notes": "Bunnings I/N",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 114,
@@ -1935,7 +2048,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 115,
@@ -1952,7 +2066,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 116,
@@ -1969,7 +2084,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 117,
@@ -1986,7 +2102,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 118,
@@ -2003,7 +2120,8 @@
   "verified": "Y",
   "notes": "Replacement handle",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 119,
@@ -2020,7 +2138,8 @@
   "verified": "Y",
   "notes": "PW code; taps use 35mm ceramic cartridge but no standalone cartridge SKU",
   "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/5951_6081_10974.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 120,
@@ -2037,7 +2156,8 @@
   "verified": "Y",
   "notes": "Workhorse cartridge; 15yr warranty",
   "photo": "https://www.meir.com.au/cdn/shop/products/kerox-cartridge-1_1024x1024.jpg?v=1758420182",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": "https://meirblack.co.nz/cdn/shop/products/MB03-C-Chrome-Retro-Basin-Mixer-Tap-Meir-3_d771a4d8-9f42-40f2-b6a6-dd24b8b3f036_1024x1024.jpg"
  },
  {
   "id": 121,
@@ -2054,7 +2174,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://meirblack.co.nz/cdn/shop/products/MB03-C-Chrome-Retro-Basin-Mixer-Tap-Meir-3_d771a4d8-9f42-40f2-b6a6-dd24b8b3f036_1024x1024.jpg"
  },
  {
   "id": 122,
@@ -2071,7 +2192,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "80-85mm"
+  "dimensionDetail": "80-85mm",
+  "tapPhoto": "https://meirblack.co.nz/cdn/shop/products/MB03-C-Chrome-Retro-Basin-Mixer-Tap-Meir-3_d771a4d8-9f42-40f2-b6a6-dd24b8b3f036_1024x1024.jpg"
  },
  {
   "id": 123,
@@ -2088,7 +2210,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://meirblack.co.nz/cdn/shop/products/MB03-C-Chrome-Retro-Basin-Mixer-Tap-Meir-3_d771a4d8-9f42-40f2-b6a6-dd24b8b3f036_1024x1024.jpg"
  },
  {
   "id": 124,
@@ -2105,7 +2228,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://meirblack.co.nz/cdn/shop/products/MB03-C-Chrome-Retro-Basin-Mixer-Tap-Meir-3_d771a4d8-9f42-40f2-b6a6-dd24b8b3f036_1024x1024.jpg"
  },
  {
   "id": 125,
@@ -2122,7 +2246,8 @@
   "verified": "Y",
   "notes": "SKU CBX003C.CR",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 126,
@@ -2139,7 +2264,8 @@
   "verified": "Y",
   "notes": "Shown as B003.001 (35A)",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 127,
@@ -2156,7 +2282,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "30mm"
+  "dimensionDetail": "30mm",
+  "tapPhoto": ""
  },
  {
   "id": 128,
@@ -2173,7 +2300,8 @@
   "verified": "Y",
   "notes": "Shown as CB042.001 (35A)",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 129,
@@ -2190,7 +2318,8 @@
   "verified": "Y",
   "notes": "SKU CB040.CR",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 130,
@@ -2207,7 +2336,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://nero-tapware-assets.spicyweb.net.au/products/Products/_980xAUTO_crop_center-center_none/1912121/NR504110NT-35mm-Cartridge-Thumb.webp",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 131,
@@ -2224,7 +2354,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://nero-tapware-assets.spicyweb.net.au/products/Products/_980xAUTO_crop_center-center_none/1912115/NR504080NT-40mm-Cartridge-Thumb.webp",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 132,
@@ -2241,7 +2372,8 @@
   "verified": "Y",
   "notes": "Official Grohe spare",
   "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/16816_46374000-cartridge_0_CDNwebp.webp",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 133,
@@ -2258,7 +2390,8 @@
   "verified": "Y",
   "notes": "Official Grohe spare",
   "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/16708_46048000-cartridge_0_CDNwebp.webp",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 134,
@@ -2275,7 +2408,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/16715_46092000-metal-hose-starlight-chrome_0_CDNwebp.webp",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 135,
@@ -2292,7 +2426,8 @@
   "verified": "Y",
   "notes": "Discontinued",
   "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/16893_46592000-minta-pull-out-spray-starlight-chrome_0_CDNwebp.webp",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": "https://digitalassets.reecegroup.com.au/m/cab616c70c0485d4/Web_1200x900-GROHE-Minta-U-Sink-Mixer-with-Pull-Out-Squareline-Chrome-4-Star.jpg"
  },
  {
   "id": 136,
@@ -2309,7 +2444,8 @@
   "verified": "Y",
   "notes": "Official Franke SP number",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 137,
@@ -2326,7 +2462,8 @@
   "verified": "Y",
   "notes": "Also sold as SP3794-H",
   "photo": "",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 138,
@@ -2343,7 +2480,8 @@
   "verified": "Y",
   "notes": "Genuine Franke OEM no.; also SP1202/4010421",
   "photo": "https://www.divapor.com/spares/images/Franke-Spares/FR-EO12/Franke-EOS-Spares.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 139,
@@ -2360,7 +2498,8 @@
   "verified": "Y",
   "notes": "Workhorse; EAN 8000177002335",
   "photo": "https://www.elettronew.com/63804-large_default/cartridge-for-paini-taps-without-distributor-diameter-35-mm-53cc956gm.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 140,
@@ -2377,7 +2516,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.rubinetteriashop.com/16116-large_default/cartridge-replacement-paini-53cc956g25-1150090.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 141,
@@ -2394,7 +2534,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 142,
@@ -2411,7 +2552,8 @@
   "verified": "Y",
   "notes": "Fits many import single-lever mixers",
   "photo": "https://www.noelsplumbingsupply.com/wp-content/uploads/2019/02/91842-e1713891692672.png",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 143,
@@ -2428,7 +2570,8 @@
   "verified": "Y",
   "notes": "A = flat/standard seat",
   "photo": "https://www.robertsontrade.co.nz/storage/spare-parts/K35A%20new.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 144,
@@ -2445,7 +2588,8 @@
   "verified": "Y",
   "notes": "B = extended (raised) seat",
   "photo": "https://www.robertsontrade.co.nz/storage/parts/K35B-1639339419-COPY.jpg",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 145,
@@ -2462,7 +2606,8 @@
   "verified": "Y",
   "notes": "Also sold as K40A",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/universal/KO40A.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 146,
@@ -2479,7 +2624,8 @@
   "verified": "Y",
   "notes": "Also sold as K40B",
   "photo": "https://www.robertsontrade.co.nz/storage/product-image/KO40B.jpg",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": ""
  },
  {
   "id": 147,
@@ -2496,7 +2642,8 @@
   "verified": "Y",
   "notes": "Kerox 45mm single-lever",
   "photo": "https://www.noelsplumbingsupply.com/wp-content/uploads/2024/10/62255-3-e1729174747744.png",
-  "dimensionDetail": "45mm"
+  "dimensionDetail": "45mm",
+  "tapPhoto": ""
  },
  {
   "id": 148,
@@ -2513,7 +2660,8 @@
   "verified": "Y",
   "notes": "Sedal single-lever",
   "photo": "https://lulani.com/cdn/shop/files/LP-100-71PV1_86f4ece6-f597-4ac5-bd2a-1d2a7e3a71b4_2000x.jpg?v=1691090155",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 149,
@@ -2530,7 +2678,8 @@
   "verified": "Y",
   "notes": "Sedal 25mm (Cold Mirror brochure)",
   "photo": "",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  },
  {
   "id": 150,
@@ -2547,7 +2696,8 @@
   "verified": "Y",
   "notes": "Mico house brand",
   "photo": "https://vodaplumbingware.co.nz/wp-content/uploads/VDAPT19.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": "https://vodaplumbingware.co.nz/wp-content/uploads/VECM20LFCH.jpg"
  },
  {
   "id": 151,
@@ -2564,7 +2714,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": "https://vodaplumbingware.co.nz/wp-content/uploads/VECM20LFCH.jpg"
  },
  {
   "id": 152,
@@ -2581,7 +2732,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "40mm"
+  "dimensionDetail": "40mm",
+  "tapPhoto": "https://vodaplumbingware.co.nz/wp-content/uploads/VECM20LFCH.jpg"
  },
  {
   "id": 153,
@@ -2598,7 +2750,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "45mm"
+  "dimensionDetail": "45mm",
+  "tapPhoto": ""
  },
  {
   "id": 154,
@@ -2615,7 +2768,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "",
-  "dimensionDetail": "47mm"
+  "dimensionDetail": "47mm",
+  "tapPhoto": ""
  },
  {
   "id": 155,
@@ -2632,7 +2786,8 @@
   "verified": "Y",
   "notes": "Diameter ~35mm per third-party listing; confirm",
   "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpu60454_tif.png?format=HBW2",
-  "dimensionDetail": "35mm"
+  "dimensionDetail": "35mm",
+  "tapPhoto": ""
  },
  {
   "id": 156,
@@ -2649,7 +2804,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa01043_tif.png?format=HBW2",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 157,
@@ -2666,7 +2822,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa01043_tif.png?format=HBW2",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 158,
@@ -2683,7 +2840,8 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://files.ekmcdn.com/ebaths2/images/newform-ergo-65921-kitchen-tap-cartridge-14720-90062-p.jpg",
-  "dimensionDetail": ""
+  "dimensionDetail": "",
+  "tapPhoto": ""
  },
  {
   "id": 159,
@@ -2700,6 +2858,7 @@
   "verified": "Y",
   "notes": "",
   "photo": "https://www.rubinetteriashop.com/69417-large_default/replacement-cartridge-for-newform-taps-d25-25903.jpg",
-  "dimensionDetail": "25mm"
+  "dimensionDetail": "25mm",
+  "tapPhoto": ""
  }
 ]
