@@ -20,6 +20,7 @@ function readKey() {
 const BRANDS = [
   "Foreno","Felton","Robertson","Methven","Greens","Caroma","Dorf","Phoenix",
   "Mizu","Posh","Mondella","LeVivi","Meir","Buddy","Nero","Grohe","Franke","Paini",
+  "Voda","Newform","Hansgrohe",
 ];
 const CATEGORIES = ["Cartridge","Spindle","Headwork","Washer/Seal","Aerator","Handle","Tool","Other"];
 const VALVES = ["ceramic disc","washer spindle","half-turn","quarter-turn","thermostatic"];
