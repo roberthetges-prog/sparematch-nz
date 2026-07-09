@@ -3,10 +3,10 @@ import { useMemo, useState } from "react";
 import parts from "../../lib/parts.json";
 import { listBrands, applyFilters, nextQuestion } from "../../lib/matcher.js";
 
-const FIELD_LABEL = { brand: "Brand", category: "Type", dimension: "Size", valveType: "Valve" };
+const FIELD_LABEL = { productType: "Fixing", valveFamily: "Valve", brand: "Brand", category: "Part", dimension: "Size", valveType: "Mechanism" };
 
 function detectionsToAnswers(all, ai) {
-  const order = [["brand", ai.brand], ["category", ai.category], ["dimension", ai.dimension], ["valveType", ai.valveType]];
+  const order = [["productType", "Tapware"], ["brand", ai.brand], ["category", ai.category], ["dimension", ai.dimension], ["valveType", ai.valveType]];
   const ans = []; let cur = {};
   for (const [field, val] of order) {
     if (!val) continue;
@@ -14,6 +14,12 @@ function detectionsToAnswers(all, ai) {
     if (applyFilters(all, trial).length > 0) { cur = trial; ans.push({ field, value: val }); }
   }
   return ans;
+}
+
+function distinctValues(rows, field) {
+  const m = new Map();
+  for (const p of rows) { const v = (p[field] || "").trim(); if (v) m.set(v, (m.get(v) || 0) + 1); }
+  return [...m.entries()].map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
 }
 
 function MeasureHelp() {
@@ -33,15 +39,13 @@ export default function Find() {
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
 
-  const brands = useMemo(() => listBrands(parts), []);
-  const brandSet = useMemo(() => new Set(brands.map((b) => b.brand)), [brands]);
   const sel = useMemo(() => answers.reduce((o, a) => ((o[a.field] = a.value), o), {}), [answers]);
-  const matches = useMemo(() => applyFilters(parts, sel), [sel]);
-  const q = useMemo(() => nextQuestion(parts, sel), [sel]);
-  const guesses = useMemo(
-    () => (ai && Array.isArray(ai.brandGuesses) ? ai.brandGuesses.filter((g) => brandSet.has(g)) : []),
-    [ai, brandSet]
-  );
+  const pool = useMemo(() => applyFilters(parts, sel), [sel]);
+  const brands = useMemo(() => listBrands(pool), [pool]);
+  const brandSet = useMemo(() => new Set(listBrands(parts).map((b) => b.brand)), []);
+  const matches = pool;
+  const q = useMemo(() => (sel.brand ? nextQuestion(parts, sel) : null), [sel]);
+  const guesses = useMemo(() => (ai && Array.isArray(ai.brandGuesses) ? ai.brandGuesses.filter((g) => brandSet.has(g)) : []), [ai, brandSet]);
 
   const add = (field, value) => { setForceResults(false); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
   const back = () => { setForceResults(false); setAnswers((a) => a.slice(0, -1)); };
@@ -65,19 +69,21 @@ export default function Find() {
     } catch { setAi({ status: "error" }); } finally { setAnalysing(false); }
   }
 
-  const showResults = !sel.brand ? false : forceResults || !q;
+  const stage = !sel.productType ? "type"
+    : (sel.productType === "Valve" && !sel.valveFamily) ? "family"
+    : !sel.brand ? "brand"
+    : (forceResults || !q) ? "results" : "question";
 
   return (
     <main className="finder">
       <div className="container">
         <h1 style={{ fontSize: 24, margin: "8px 0 2px" }}>Find your spare part</h1>
-        <p style={{ color: "var(--muted)", marginTop: 0 }}>Snap or upload a photo, or pick your brand, and we&apos;ll match the exact part.</p>
+        <p style={{ color: "var(--muted)", marginTop: 0 }}>Snap or upload a photo, or pick your way to the exact part.</p>
 
-        {ai && ai.description && (
+        {ai && ai.description && stage !== "results" && (
           <div className="aibar">
             <b>From your photo:</b> {ai.description}
             {ai.handleDesign ? <div className="reads"><span><b>Handle:</b> {ai.handleDesign}</span>{ai.spoutShape ? <span><b>Spout:</b> {ai.spoutShape}</span> : null}</div> : null}
-            {ai.leverType === "single-lever" ? <div>Looks like a single-lever mixer — that means a cartridge, so the size is the key thing.</div> : null}
             {ai.measureTip ? <div>{ai.measureTip}</div> : null}
           </div>
         )}
@@ -89,13 +95,13 @@ export default function Find() {
           {answers.length > 0 && (<><button className="crumb" onClick={back}>← Back</button><button className="crumb" onClick={reset}>Start over</button></>)}
         </div>
 
-        {!sel.brand && (
+        {stage === "type" && (
           <div className="panel">
             <div className="uploader">
               <div className="icon">📷</div>
               <div className="txt">
-                <b>{analysing ? "Analysing your photo…" : "Show us the tap or the removed cartridge"}</b>
-                {analysing ? "Reading the handle and spout design to guess the brand." : "We look at the handle and spout to guess the brand, then ask you the size."}
+                <b>{analysing ? "Analysing your photo…" : "Fixing a tap? Show us a photo"}</b>
+                {analysing ? "Reading the handle and spout to guess the brand." : "We look at the handle and spout to guess the brand, then ask the size."}
               </div>
               <div className="upbtns">
                 <label className="btn btn-ghost">📷 Take photo<input type="file" accept="image/*" capture="environment" onChange={onPhoto} style={{ display: "none" }} /></label>
@@ -103,34 +109,48 @@ export default function Find() {
               </div>
               {photo && <img src={photo} className="thumb" alt="your part" />}
             </div>
+            <h2>What are you fixing?</h2>
+            <div className="grid">
+              <button className="opt bigopt" onClick={() => add("productType", "Tapware")}>🚰 Tap / mixer <span className="c">{parts.filter((p) => p.productType === "Tapware").length}</span></button>
+              <button className="opt bigopt" onClick={() => add("productType", "Valve")}>🎛 Valve <span className="c">{parts.filter((p) => p.productType === "Valve").length}</span></button>
+            </div>
+          </div>
+        )}
 
-            {guesses.length > 0 && (
+        {stage === "family" && (
+          <div className="panel">
+            <h2>What kind of valve?</h2>
+            <p className="sub">Tempering valves reduce hot-water temperature; the others control pressure and relief.</p>
+            <div className="grid">
+              {distinctValues(applyFilters(parts, { productType: "Valve" }), "valveFamily").map((o) => (
+                <button className="opt" key={o.value} onClick={() => add("valveFamily", o.value)}>{o.value} <span className="c">{o.count}</span></button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {stage === "brand" && (
+          <div className="panel">
+            {sel.productType === "Tapware" && guesses.length > 0 && (
               <div className="guessrow">
                 <span className="glabel">Looks like:</span>
                 {guesses.map((g) => (<button key={g} className="opt guess" onClick={() => add("brand", g)}>{g}</button>))}
-                <span className="ghint">— tap one, or pick from the full list below</span>
+                <span className="ghint">— tap one, or pick from the list</span>
               </div>
             )}
-
             <h2>Which brand is it?</h2>
-            <p className="sub">Look for a name on the tap, handle or flange. No name? Pick <b>Universal</b> — most taps use a standard cartridge.</p>
+            <p className="sub">{sel.productType === "Tapware" ? <>Look for a name on the tap, handle or flange. No name? Pick <b>Universal</b>.</> : "Check the valve body or label for the maker."}</p>
             <div className="grid">
               {brands.map((b) => (<button className="opt" key={b.brand} onClick={() => add("brand", b.brand)}>{b.brand} <span className="c">{b.count}</span></button>))}
             </div>
           </div>
         )}
 
-        {sel.brand && !showResults && q && (
+        {stage === "question" && q && (
           <div className="panel">
-            {photo && (
-              <div className="uploader" style={{ marginBottom: 16 }}>
-                <img src={photo} className="thumb" alt="your part" />
-                <div className="txt"><b>Your photo</b>{ai && ai.description ? ai.description : "Answer the question to narrow it down."}</div>
-              </div>
-            )}
             <h2>{q.label}</h2>
             <p className="sub">{q.remaining} possible parts so far — pick one to narrow it down.</p>
-            {q.field === "dimension" && <MeasureHelp />}
+            {q.field === "dimension" && sel.productType === "Tapware" && <MeasureHelp />}
             <div className="grid">
               {q.options.map((o) => (<button className="opt" key={o.value} onClick={() => add(q.field, o.value)}>{o.value} <span className="c">{o.count}</span></button>))}
             </div>
@@ -141,10 +161,10 @@ export default function Find() {
           </div>
         )}
 
-        {showResults && (
+        {stage === "results" && (
           <div className="results">
             <h2>{matches.length} matching part{matches.length === 1 ? "" : "s"}</h2>
-            <p className="sub">{matches.length > 1 ? "These all fit your answers. Check the tap photo against yours, then match the part." : "Here is your part — check the tap photo matches yours."}</p>
+            <p className="sub">{matches.length > 1 ? "These all fit your answers. Check the photo (and exploded diagram) against yours." : "Here is your part — check it against yours."}</p>
             <div className="cards">{matches.map((p) => <PartCard key={p.id} p={p} />)}</div>
             <div className="toolbar">
               <button className="btn btn-ghost" onClick={back}>← Refine answers</button>
@@ -164,7 +184,7 @@ function PartCard({ p }) {
       <div className="imgs">
         <figure className="imgfig">
           <div className="imgwrap">{p.photo ? <img src={p.photo} alt={p.component} loading="lazy" /> : <span className="ph">{p.category}</span>}</div>
-          <figcaption>Spare part</figcaption>
+          <figcaption>{p.productType === "Valve" ? "The part" : "Spare part"}</figcaption>
         </figure>
         {p.tapPhoto && (
           <figure className="imgfig">
@@ -178,6 +198,7 @@ function PartCard({ p }) {
         <div className="name">{p.component}</div>
         {p.range && <div className="fits">Fits: {p.range}</div>}
         <div className="chips">
+          {p.valveFamily && <span className="chip">{p.valveFamily}</span>}
           {p.valveType && <span className="chip">{p.valveType}</span>}
           {p.dimension && <span className="chip">{p.dimension}</span>}
           <span className="chip">{p.brand}</span>
@@ -186,7 +207,8 @@ function PartCard({ p }) {
         {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
         <div className="foot">
           {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
-          {p.sourceUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
+          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Exploded diagram</a>}
+          {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
         </div>
       </div>
     </div>
