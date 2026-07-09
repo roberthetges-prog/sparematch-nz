@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import parts from "../../lib/parts.json";
 import { listBrands, applyFilters, nextQuestion } from "../../lib/matcher.js";
 
-const FIELD_LABEL = { productType: "Fixing", valveFamily: "Valve", brand: "Brand", category: "Part", dimension: "Size", valveType: "Mechanism" };
+const FIELD_LABEL = { productType: "Fixing", valveFamily: "Valve", brand: "Brand", range: "Model", category: "Part", dimension: "Size", valveType: "Mechanism" };
 
 function detectionsToAnswers(all, ai) {
   const order = [["productType", "Tapware"], ["brand", ai.brand], ["category", ai.category], ["dimension", ai.dimension], ["valveType", ai.valveType]];
@@ -35,6 +35,7 @@ function MeasureHelp() {
 export default function Find() {
   const [answers, setAnswers] = useState([]);
   const [forceResults, setForceResults] = useState(false);
+  const [skipModel, setSkipModel] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
@@ -47,9 +48,21 @@ export default function Find() {
   const q = useMemo(() => (sel.brand ? nextQuestion(parts, sel) : null), [sel]);
   const guesses = useMemo(() => (ai && Array.isArray(ai.brandGuesses) ? ai.brandGuesses.filter((g) => brandSet.has(g)) : []), [ai, brandSet]);
 
-  const add = (field, value) => { setForceResults(false); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
-  const back = () => { setForceResults(false); setAnswers((a) => a.slice(0, -1)); };
-  const reset = () => { setForceResults(false); setAnswers([]); setPhoto(null); setAi(null); };
+  const modelOptions = useMemo(() => {
+    if (sel.productType !== "Tapware" || !sel.brand || sel.range) return [];
+    const rows = applyFilters(parts, sel).filter((p) => p.tapPhoto);
+    const byRange = new Map();
+    for (const p of rows) {
+      let e = byRange.get(p.range);
+      if (!e) { e = { range: p.range, tap: p.tapPhoto, cart: null }; byRange.set(p.range, e); }
+      if (!e.cart && p.category === "Cartridge") e.cart = p;
+    }
+    return [...byRange.values()];
+  }, [sel]);
+
+  const add = (field, value) => { setForceResults(false); setSkipModel(false); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
+  const back = () => { setForceResults(false); setSkipModel(false); setAnswers((a) => a.slice(0, -1)); };
+  const reset = () => { setForceResults(false); setSkipModel(false); setAnswers([]); setPhoto(null); setAi(null); };
 
   async function onPhoto(e) {
     const f = e.target.files && e.target.files[0];
@@ -72,6 +85,7 @@ export default function Find() {
   const stage = !sel.productType ? "type"
     : (sel.productType === "Valve" && !sel.valveFamily) ? "family"
     : !sel.brand ? "brand"
+    : (sel.productType === "Tapware" && !sel.range && !skipModel && modelOptions.length >= 2) ? "model"
     : (forceResults || !q) ? "results" : "question";
 
   return (
@@ -101,7 +115,7 @@ export default function Find() {
               <div className="icon">📷</div>
               <div className="txt">
                 <b>{analysing ? "Analysing your photo…" : "Fixing a tap? Show us a photo"}</b>
-                {analysing ? "Reading the handle and spout to guess the brand." : "We look at the handle and spout to guess the brand, then ask the size."}
+                {analysing ? "Reading the handle and spout to guess the brand." : "We look at the handle and spout to guess the brand, then help you pick the model."}
               </div>
               <div className="upbtns">
                 <label className="btn btn-ghost">📷 Take photo<input type="file" accept="image/*" capture="environment" onChange={onPhoto} style={{ display: "none" }} /></label>
@@ -146,6 +160,28 @@ export default function Find() {
           </div>
         )}
 
+        {stage === "model" && (
+          <div className="panel">
+            <h2>Which of these is your tap?</h2>
+            <p className="sub">Recognise it by shape — the model tells us the cartridge, so you won&apos;t need to measure. Not sure? Skip and go by size.</p>
+            <div className="models">
+              {modelOptions.map((m) => (
+                <button className="modelcard" key={m.range} onClick={() => add("range", m.range)}>
+                  <div className="mimg">{m.tap ? <img src={m.tap} alt={m.range} loading="lazy" /> : null}</div>
+                  <div className="minfo">
+                    <div className="mname">{m.range}</div>
+                    {m.cart && <div className="mhint">→ {m.cart.dimension ? m.cart.dimension + " " : ""}{m.cart.partNumber}</div>}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="toolbar">
+              <button className="btn btn-ghost" onClick={() => setSkipModel(true)}>Not sure — go by size instead</button>
+              <button className="btn btn-ghost" onClick={back}>Back</button>
+            </div>
+          </div>
+        )}
+
         {stage === "question" && q && (
           <div className="panel">
             <h2>{q.label}</h2>
@@ -164,7 +200,7 @@ export default function Find() {
         {stage === "results" && (
           <div className="results">
             <h2>{matches.length} matching part{matches.length === 1 ? "" : "s"}</h2>
-            <p className="sub">{matches.length > 1 ? "These all fit your answers. Check the photo (and exploded diagram) against yours." : "Here is your part — check it against yours."}</p>
+            <p className="sub">{matches.length > 1 ? "These all fit your answers. Check the photo (and diagram) against yours." : "Here is your part — check it against yours."}</p>
             <div className="cards">{matches.map((p) => <PartCard key={p.id} p={p} />)}</div>
             <div className="toolbar">
               <button className="btn btn-ghost" onClick={back}>← Refine answers</button>
@@ -207,7 +243,7 @@ function PartCard({ p }) {
         {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
         <div className="foot">
           {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
-          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Exploded diagram</a>}
+          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Diagram</a>}
           {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
         </div>
       </div>
