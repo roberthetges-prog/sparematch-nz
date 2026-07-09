@@ -9,7 +9,10 @@ const modelsByBrand = {};
 for (const mo of models) (modelsByBrand[mo.brand] ||= []).push(mo);
 
 function detectionsToAnswers(all, ai) {
-  const order = [["productType", "Tapware"], ["brand", ai.brand], ["category", ai.category], ["dimension", ai.dimension], ["valveType", ai.valveType]];
+  // Only ever set the product type and a confidently-named brand. Never hard-filter by
+  // AI category/size (those collapse the catalogue). Land the user on the brand's visual
+  // model picker so they confirm by shape.
+  const order = [["productType", "Tapware"], ["brand", ai.brand]];
   const ans = []; let cur = {};
   for (const [field, val] of order) {
     if (!val) continue;
@@ -41,6 +44,7 @@ export default function Find() {
   const [skipModel, setSkipModel] = useState(false);
   const [modelResult, setModelResult] = useState(null);
   const [photo, setPhoto] = useState(null);
+  const [file, setFile] = useState(null);
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
 
@@ -63,7 +67,7 @@ export default function Find() {
 
   const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
   const back = () => { setForceResults(false); setSkipModel(false); if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
-  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setAi(null); };
+  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); };
 
   function pickModel(card) {
     const found = card.cartPart ? parts.filter((p) => p.partNumber === card.cartPart) : [];
@@ -73,12 +77,17 @@ export default function Find() {
     setModelResult(res);
   }
 
-  async function onPhoto(e) {
+  function onPhoto(e) {
     const f = e.target.files && e.target.files[0];
     if (!f) return;
-    setPhoto(URL.createObjectURL(f)); setAi(null); setAnalysing(true); setModelResult(null);
+    setFile(f); setPhoto(URL.createObjectURL(f)); setAi(null); setModelResult(null);
+  }
+
+  async function runIdentify() {
+    if (!file || analysing) return;
+    setAi(null); setAnalysing(true); setModelResult(null);
     try {
-      const dataUrl = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(f); });
+      const dataUrl = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
       const base64 = String(dataUrl).split(",")[1];
       const mediaType = (String(dataUrl).match(/data:(.*?);/) || [])[1] || "image/jpeg";
       const resp = await fetch("/api/identify", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType }) });
@@ -134,6 +143,7 @@ export default function Find() {
                 <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} /></label>
               </div>
               {photo && <img src={photo} className="thumb" alt="your part" />}
+              {photo && <button className="btn btn-primary goid" onClick={runIdentify} disabled={analysing}>{analysing ? "Identifying…" : "🔍 Identify this tap"}</button>}
             </div>
             <h2>What are you fixing?</h2>
             <div className="grid">
