@@ -92,3 +92,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .aibar{background:#eef4fb;border:1px solid #cfe0f2;color:#274b78;border-radius:10px;padding:11px 14px;font-size:14px;margin:6px 0 4px}
 .aibar.muted{background:#f3f5f8;border-color:var(--line);color:var(--muted)}
 .aibar b{color:var(--navy)}
+.measure{background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.measure summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:14px}
+.measure p{font-size:13.5px;color:var(--muted);margin:8px 0 0}
+.measure p b{color:var(--ink)}
+.hero .actions .btn i{font-style:normal}
