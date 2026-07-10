@@ -115,6 +115,8 @@ export default function Find() {
 
   function onPickMatch(m) {
     setVmatch(null);
+    if (m.kind === "part" && m.part) { setAnswers([{ field: "productType", value: m.part.productType || "Valve" }, { field: "brand", value: m.brand }]); setModelResult([m.part]); return; }
+    if (m.kind === "cart" && m.card) { setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand || "Universal" }]); setModelResult([m.card]); return; }
     setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand }]);
     pickModel(m, m.brand);
   }
