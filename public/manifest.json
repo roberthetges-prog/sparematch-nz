@@ -1,0 +1,17 @@
+{
+  "name": "TapSnap — Tap spare part finder",
+  "short_name": "TapSnap",
+  "description": "Snap a tap, valve or cartridge and get the exact spare part — with the part number and where to buy it. Built for NZ & Australian plumbers.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1f3a5f",
+  "categories": ["utilities", "productivity", "shopping"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
