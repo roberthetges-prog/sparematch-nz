@@ -137,7 +137,6 @@ export default function Find() {
       if (j.error) { setAi({ status: "error" }); return; }
       setAi(j);
       const pref = detectionsToAnswers(parts, j);
-      if (pref.length) { setForceResults(false); setAnswers(pref); }
       try {
         const bg = [j.brand, ...(Array.isArray(j.brandGuesses) ? j.brandGuesses : [])].filter(Boolean);
         const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType, type: inferType(j), brandGuesses: bg }) });
@@ -147,10 +146,12 @@ export default function Find() {
           if (top.length) setVmatch(top);
         }
       } catch { /* visual match is best-effort; ignore failures */ }
+      if (pref.length) { setForceResults(false); setAnswers(pref); }
     } catch { setAi({ status: "error" }); } finally { setAnalysing(false); }
   }
 
-  const stage = (vmatch && vmatch.length) ? "matches"
+  const stage = analysing ? "loading"
+    : (vmatch && vmatch.length) ? "matches"
     : modelResult ? "modelresult"
     : !sel.productType ? "type"
     : ((sel.productType === "Valve" || sel.productType === "Toilet") && !sel.valveFamily) ? "family"
@@ -166,7 +167,7 @@ export default function Find() {
         <h1 style={{ fontSize: 24, margin: "8px 0 2px" }}>Find your spare part</h1>
         <p style={{ color: "var(--muted)", marginTop: 0 }}>Snap or upload a photo, or pick your way to the exact part.</p>
 
-        {ai && ai.description && stage !== "results" && stage !== "modelresult" && (
+        {ai && ai.description && !analysing && stage !== "results" && stage !== "modelresult" && (
           <div className="aibar">
             <b>From your photo:</b> {ai.description}
             {ai.handleDesign ? <div className="reads"><span><b>Handle:</b> {ai.handleDesign}</span>{ai.spoutShape ? <span><b>Spout:</b> {ai.spoutShape}</span> : null}</div> : null}
@@ -180,6 +181,19 @@ export default function Find() {
           {modelResult && <span className="crumb">Model: <b>{modelResult[0].range}</b></span>}
           {(answers.length > 0 || modelResult) && (<><button className="crumb" onClick={back}>← Back</button><button className="crumb" onClick={reset}>Start over</button></>)}
         </div>
+
+        {stage === "loading" && (
+          <div className="panel">
+            <div className="loadcard">
+              <span className="spin big" />
+              <div>
+                <b>Identifying your tap…</b>
+                <div className="sub">Reading the shape, then comparing it against our catalogue photos. This takes a few seconds.</div>
+              </div>
+            </div>
+            {photo && <img src={photo} className="thumb" alt="your tap" style={{ marginTop: 12 }} />}
+          </div>
+        )}
 
         {stage === "type" && (
           <div className="panel">
