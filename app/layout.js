@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
         <header className="site-header">
           <div className="container">
             <Link href="/" className="brand-logo">
-              <span className="brand-mark">🔧</span> Tap<span style={{ color: "#e8722c" }}>Snap</span>
+              <span className="brand-mark">🔧</span> <span>Tap<span style={{ color: "#e8722c" }}>Snap</span></span>
             </Link>
             <nav className="nav">
               <Link href="/">Home</Link>
