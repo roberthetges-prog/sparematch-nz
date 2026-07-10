@@ -78,7 +78,7 @@ export default function Find() {
   const [modelResult, setModelResult] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [file, setFile] = useState(null);
-  const [matches, setMatches] = useState(null);
+  const [vmatch, setVmatch] = useState(null);
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
 
@@ -99,9 +99,9 @@ export default function Find() {
     return [...byRange.values()];
   }, [sel]);
 
-  const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setMatches(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
-  const back = () => { setForceResults(false); setSkipModel(false); if (matches) { setMatches(null); return; } if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
-  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setMatches(null); };
+  const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setVmatch(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
+  const back = () => { setForceResults(false); setSkipModel(false); if (vmatch) { setVmatch(null); return; } if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
+  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); };
 
   function pickModel(card, brandOverride) {
     const brand = brandOverride || card.brand || sel.brand;
@@ -113,7 +113,7 @@ export default function Find() {
   }
 
   function onPickMatch(m) {
-    setMatches(null);
+    setVmatch(null);
     setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand }]);
     pickModel(m, m.brand);
   }
@@ -146,14 +146,14 @@ export default function Find() {
           if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
             const byModel = new Map(cands.map((c) => [c.model, c]));
             const top = mj.ranked.map((r) => ({ ...(byModel.get(r.model) || {}), score: r.score, same: r.same, reason: r.reason })).filter((r) => r.photo).slice(0, 6);
-            if (top.length) setMatches(top);
+            if (top.length) setVmatch(top);
           }
         } catch { /* visual match is best-effort; ignore failures */ }
       }
     } catch { setAi({ status: "error" }); } finally { setAnalysing(false); }
   }
 
-  const stage = (matches && matches.length) ? "matches"
+  const stage = (vmatch && vmatch.length) ? "matches"
     : modelResult ? "modelresult"
     : !sel.productType ? "type"
     : ((sel.productType === "Valve" || sel.productType === "Toilet") && !sel.valveFamily) ? "family"
@@ -247,7 +247,7 @@ export default function Find() {
               </div>
             </div>
             <div className="models">
-              {matches.map((m) => (
+              {vmatch.map((m) => (
                 <button className="modelcard" key={m.brand + m.model} onClick={() => onPickMatch(m)}>
                   <div className="mimg">{m.photo ? <img src={m.photo} alt={m.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
                   <div className="minfo">
@@ -258,7 +258,7 @@ export default function Find() {
               ))}
             </div>
             <div className="toolbar">
-              <button className="btn btn-ghost" onClick={() => setMatches(null)}>None of these — browse brands</button>
+              <button className="btn btn-ghost" onClick={() => setVmatch(null)}>None of these — browse brands</button>
               <button className="btn btn-ghost" onClick={reset}>Start over</button>
             </div>
           </div>
