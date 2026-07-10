@@ -50,11 +50,8 @@ async function toInline(photo) {
   } catch { return null; }
 }
 
-async function rerank(key, userData, userMedia, cands) {
-  // inline candidate images, drop failures
-  const inlined = await Promise.all(cands.map((c) => toInline(c.photo)));
-  const prepared = cands.map((c, i) => ({ ...c, img: inlined[i] })).filter((c) => c.img);
-  if (prepared.length < 2) return null;
+// One vision call over a prepared candidate list. Returns ranked items or null on failure.
+async function visionCall(key, userData, userMedia, prepared) {
   const content = [
     { type: "text", text: "CUSTOMER PHOTO (the tap to identify):" },
     { type: "image", source: { type: "base64", media_type: userMedia || "image/jpeg", data: userData } },
@@ -81,13 +78,33 @@ async function rerank(key, userData, userMedia, cands) {
       let parsed; try { parsed = JSON.parse(m[0]); } catch { return null; }
       return (parsed.ranked || [])
         .filter((r) => r && Number.isFinite(+r.id) && +r.id >= 1 && +r.id <= prepared.length)
-        .map((r) => { const c = prepared[+r.id - 1]; return { ...c, img: undefined, score: Math.max(0, Math.min(100, +r.score || 0)), same: !!r.same, reason: String(r.reason || "").slice(0, 60) }; })
-        .sort((a, b) => b.score - a.score);
+        .map((r) => { const c = prepared[+r.id - 1]; return { ...c, img: undefined, score: Math.max(0, Math.min(100, +r.score || 0)), same: !!r.same, reason: String(r.reason || "").slice(0, 60) }; });
     }
     const t = await resp.text();
-    if (!/not_found/i.test(t)) return null;
+    if (!/not_found/i.test(t)) return null; // real error (e.g. one bad image) -> let caller fall back
   }
   return null;
+}
+
+async function rerank(key, userData, userMedia, cands) {
+  const inlined = await Promise.all(cands.map((c) => toInline(c.photo)));
+  const prepared = cands.map((c, i) => ({ ...c, img: inlined[i] })).filter((c) => c.img);
+  if (prepared.length < 2) return null;
+  // Fast path: one call over the whole set.
+  const full = await visionCall(key, userData, userMedia, prepared);
+  if (full && full.length) return full.sort((a, b) => b.score - a.score);
+  // Resilient path: a single image is breaking the batch. Score in small chunks so only the
+  // chunk containing the bad image is lost, and keep everything else.
+  const CH = 5; const merged = [];
+  for (let i = 0; i < prepared.length; i += CH) {
+    const chunk = prepared.slice(i, i + CH);
+    if (chunk.length < 2) { if (chunk.length === 1 && prepared.length > 1) chunk.push(prepared[(i + CH) % prepared.length]); else continue; }
+    const r = await visionCall(key, userData, userMedia, chunk);
+    if (r && r.length) merged.push(...r);
+  }
+  const seen = new Set(); const dedup = [];
+  for (const r of merged.sort((a, b) => b.score - a.score)) { const k = r.brand + "|" + r.model; if (seen.has(k)) continue; seen.add(k); dedup.push(r); }
+  return dedup.length ? dedup : null;
 }
 
 function cardOf(m) {
