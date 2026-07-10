@@ -138,18 +138,15 @@ export default function Find() {
       setAi(j);
       const pref = detectionsToAnswers(parts, j);
       if (pref.length) { setForceResults(false); setAnswers(pref); }
-      const cands = buildCandidates(j);
-      if (cands.length >= 2) {
-        try {
-          const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType, candidates: cands.map((c) => ({ id: c.model, brand: c.brand, model: c.model, photo: c.photo })) }) });
-          const mj = await mResp.json();
-          if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
-            const byModel = new Map(cands.map((c) => [c.model, c]));
-            const top = mj.ranked.map((r) => ({ ...(byModel.get(r.model) || {}), score: r.score, same: r.same, reason: r.reason })).filter((r) => r.photo).slice(0, 6);
-            if (top.length) setVmatch(top);
-          }
-        } catch { /* visual match is best-effort; ignore failures */ }
-      }
+      try {
+        const bg = [j.brand, ...(Array.isArray(j.brandGuesses) ? j.brandGuesses : [])].filter(Boolean);
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType, type: inferType(j), brandGuesses: bg }) });
+        const mj = await mResp.json();
+        if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
+          const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
+          if (top.length) setVmatch(top);
+        }
+      } catch { /* visual match is best-effort; ignore failures */ }
     } catch { setAi({ status: "error" }); } finally { setAnalysing(false); }
   }
 
