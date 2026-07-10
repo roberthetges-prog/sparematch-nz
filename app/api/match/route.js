@@ -129,11 +129,22 @@ export async function POST(request) {
   for (const r of round1) { if (!topBrands.includes(r.brand)) topBrands.push(r.brand); if (topBrands.length >= 5) break; }
 
   // ---- Round 2: precision within top brand(s) — compare against ALL their models ----
-  let precision = [];
-  for (const b of topBrands) { precision.push(...(byBrand[b] || [])); }
-  // de-dupe + cap; keep the strongest brand's models first
+  // Round-robin across the top brands so EACH is represented in round 2 (otherwise the first
+  // brand's many models fill the cap and the true brand never gets compared).
+  const perBrand = topBrands.map((b) => (byBrand[b] || []));
   const seen = new Set(); const precCands = [];
-  for (const m of precision) { const k = m.brand + "|" + m.model; if (seen.has(k)) continue; seen.add(k); precCands.push(m); if (precCands.length >= 14) break; }
+  for (let idx = 0; precCands.length < 14; idx++) {
+    let added = false;
+    for (const list of perBrand) {
+      const m = list[idx];
+      if (!m) continue;
+      const k = m.brand + "|" + m.model;
+      if (seen.has(k)) continue;
+      seen.add(k); precCands.push(m); added = true;
+      if (precCands.length >= 14) break;
+    }
+    if (!added) break;
+  }
 
   let round2 = null;
   if (precCands.length >= 2) {
