@@ -78,7 +78,7 @@ Return STRICT JSON only: {"ranked":[{"id":<number>,"score":<0-100>,"same":<true|
 - Include every candidate id (1..N) once, sorted by score descending. score = visual-design similarity. same = true only if very likely the same product. Be discriminating.`;
 async function toInline(photo) {
   try { const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 8000);
-    const r = await fetch(photo, { signal: ctrl.signal, headers: { "user-agent": "Mozilla/5.0 SpareMatchBot" } }); clearTimeout(t);
+    const r = await fetch(photo, { signal: ctrl.signal, headers: { "user-agent": "Mozilla/5.0 TapSnapBot" } }); clearTimeout(t);
     if (!r.ok) return null; let media = (r.headers.get("content-type") || "").split(";")[0].trim().toLowerCase();
     const buf = Buffer.from(await r.arrayBuffer()); if (!buf.length || buf.length > 4500000) return null;
     if (!/^image\/(jpeg|png|webp|gif)$/.test(media)) { if (buf[0] === 0xff && buf[1] === 0xd8) media = "image/jpeg"; else if (buf[0] === 0x89 && buf[1] === 0x50) media = "image/png"; else if (buf.slice(0,4).toString("ascii") === "RIFF") media = "image/webp"; else return null; }
@@ -129,6 +129,26 @@ async function twoRound(key, data, mediaType, type, guesses) {
   return (r2 && r2.length ? r2 : r1);
 }
 
+// ---- Cost / abuse guardrails (best-effort, per warm instance) ----
+const RL = { ip: new Map(), global: [] };
+const IP_MAX = 25, IP_WINDOW = 5 * 60 * 1000;      // 25 matches / 5 min per IP
+const GLOBAL_MAX = 60, GLOBAL_WINDOW = 60 * 1000;  // 60 matches / min circuit-breaker
+const MAX_IMG = 9_000_000;                          // ~6.5MB of base64
+function clientIp(request) {
+  const h = request.headers;
+  return ((h.get("x-forwarded-for") || "").split(",")[0].trim()) || h.get("x-real-ip") || "unknown";
+}
+function rateLimited(ip) {
+  const now = Date.now();
+  RL.global = RL.global.filter((t) => now - t < GLOBAL_WINDOW);
+  if (RL.global.length >= GLOBAL_MAX) return { limited: true, scope: "global" };
+  let arr = (RL.ip.get(ip) || []).filter((t) => now - t < IP_WINDOW);
+  if (arr.length >= IP_MAX) { RL.ip.set(ip, arr); return { limited: true, scope: "ip" }; }
+  arr.push(now); RL.ip.set(ip, arr); RL.global.push(now);
+  if (RL.ip.size > 5000) { for (const [k, v] of RL.ip) { if (!v.length || now - v[v.length - 1] > IP_WINDOW) RL.ip.delete(k); } }
+  return { limited: false };
+}
+
 export async function POST(request) {
   const key = readKey();
   if (!key || !key.startsWith("sk-ant-")) return Response.json({ configured: false });
@@ -137,6 +157,9 @@ export async function POST(request) {
   const type = (body?.type || "").toLowerCase();
   const guesses = Array.isArray(body?.brandGuesses) ? body.brandGuesses.filter(Boolean) : [];
   if (!data) return Response.json({ configured: true, error: "no image" }, { status: 400 });
+  if (typeof data === "string" && data.length > MAX_IMG) return Response.json({ configured: true, error: "image_too_large", message: "That image is too large — please try a smaller photo." }, { status: 413 });
+  const rl = rateLimited(clientIp(request));
+  if (rl.limited) return Response.json({ configured: true, error: "rate_limited", message: "You're going a bit fast — give it a few seconds and try again." }, { status: 429 });
 
   let ranked = [], stage = "fallback";
   const jkey = keyJina();
