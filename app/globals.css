@@ -86,8 +86,24 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .smallbtn{background:var(--navy);color:#fff;border-radius:9px;padding:9px 12px;font-weight:700;font-size:13px}
 .smallbtn:hover{background:var(--navy-2);text-decoration:none;color:#fff}
 @media(max-width:720px){
-  .hero h1{font-size:30px}.steps{grid-template-columns:1fr}
-  .site-header .container{height:56px}.nav a{margin-left:12px}
+  .container{padding-left:16px;padding-right:16px}
+  .hero{padding:40px 0 34px}
+  .hero h1{font-size:30px}
+  .hero p{font-size:15px}
+  .hero .actions{flex-wrap:wrap}
+  .hero .actions .btn{flex:1 1 46%;justify-content:center}
+  .steps{grid-template-columns:1fr}
+  .site-header{padding-top:env(safe-area-inset-top)}
+  .site-header .container{height:56px}
+  .nav a{margin-left:12px}
+  .upbtns{margin-left:0;width:100%;margin-top:8px}
+  .upbtns .btn{flex:1 1 auto;justify-content:center}
+  .guessrow{gap:6px}
+  .models{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+@media(max-width:400px){
+  .hero h1{font-size:26px}
+  .brand-logo{font-size:17px}
 }
 .aibar{background:#eef4fb;border:1px solid #cfe0f2;color:#274b78;border-radius:10px;padding:11px 14px;font-size:14px;margin:6px 0 4px}
 .aibar.muted{background:#f3f5f8;border-color:var(--line);color:var(--muted)}

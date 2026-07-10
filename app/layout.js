@@ -2,9 +2,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata = {
+  applicationName: "TapSnap",
   title: "TapSnap — Find the right tap spare part fast",
   description:
     "Identify the exact spare part for your tap or mixer. Answer a couple of quick questions and get the correct cartridge, spindle, washer or aerator — with the part number and where to buy it. Built for plumbers across New Zealand and Australia.",
+  manifest: "/manifest.json",
+  appleWebApp: { capable: true, title: "TapSnap", statusBarStyle: "default" },
+  formatDetection: { telephone: false },
+  icons: {
+    icon: "/icon-192.png",
+    shortcut: "/icon-192.png",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport = {
+  themeColor: "#1f3a5f",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }) {
@@ -27,8 +43,15 @@ export default function RootLayout({ children }) {
           <div className="container">
             TapSnap — spare-part finder for New Zealand and Australian tapware. Part data is sourced from
             manufacturer and retailer listings; always confirm the part before fitting. © {new Date().getFullYear()}.
+            {" "}<Link href="/privacy">Privacy</Link>
           </div>
         </footer>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}",
+          }}
+        />
       </body>
     </html>
   );
