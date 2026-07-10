@@ -189,3 +189,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 @media(max-width:400px){
   .badge2{min-width:0;flex:1 1 auto}
 }
+
+/* footer links */
+footer .footlinks{display:inline-flex;gap:14px;margin-left:10px}
+footer .footlinks a{color:#c2cfe0;text-decoration:underline;text-underline-offset:2px}
+footer .footlinks a:hover{color:#fff}
+/* feedback link in finder */
+.feedback-row{margin:14px 0 0;font-size:13px;color:var(--muted)}
+.feedback-row a{color:var(--navy-2);font-weight:600}
