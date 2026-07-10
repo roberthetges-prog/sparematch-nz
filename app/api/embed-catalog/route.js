@@ -4,12 +4,13 @@
 // Paginate with ?start=0&count=60. Capture output and commit as lib/embeddings.json.
 
 import models from "../../../lib/models.json";
+import sharp from "sharp";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
 
 const DIM = 256;
-const BATCH = 8;
+const BATCH = 20;
 const scrub = (s) => String(s).replace(/jina_[A-Za-z0-9_\-]+/g, "[redacted]");
 function keyJina() { return (process.env.JINA_API_KEY || "").trim(); }
 
@@ -21,14 +22,11 @@ async function toDataURI(url) {
     if (!r.ok) return null;
     let media = (r.headers.get("content-type") || "").split(";")[0].trim().toLowerCase();
     const buf = Buffer.from(await r.arrayBuffer());
-    if (!buf.length || buf.length > 4500000) return null;
-    if (!/^image\/(jpeg|png|webp|gif)$/.test(media)) {
-      if (buf[0] === 0xff && buf[1] === 0xd8) media = "image/jpeg";
-      else if (buf[0] === 0x89 && buf[1] === 0x50) media = "image/png";
-      else if (buf.slice(0, 4).toString("ascii") === "RIFF") media = "image/webp";
-      else return null;
-    }
-    return `data:${media};base64,${buf.toString("base64")}`;
+    if (!buf.length || buf.length > 12000000) return null;
+    try {
+      const small = await sharp(buf).resize(512, 512, { fit: "inside", withoutEnlargement: true }).flatten({ background: "#ffffff" }).jpeg({ quality: 82 }).toBuffer();
+      return `data:image/jpeg;base64,${small.toString("base64")}`;
+    } catch { return null; }
   } catch { return null; }
 }
 
