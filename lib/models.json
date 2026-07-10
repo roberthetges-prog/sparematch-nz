@@ -31,6 +31,36 @@
  },
  {
   "brand": "Caroma",
+  "model": "Contura II Basin Mixer",
+  "size": "25mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0014/6938/2771/files/Caroma_ConturaII_TowerBasinMixer_BrushedNickel.jpg?v=1775145545",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Caroma",
+  "model": "Liano II Basin Mixer",
+  "size": "25mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0014/6938/2771/products/the-blue-space-caroma-liano-ii-basin-mixer-brushed-nickel_3eee2f71-07d5-4eed-b155-5a188f432239.jpg?v=1775148992",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Caroma",
+  "model": "Luna Basin Mixer",
+  "size": "25mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0014/6938/2771/files/Swift_CaromaLuna_Chrome-zoom.jpg?v=1775155306",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Caroma",
   "model": "Saracom Basin Mixer",
   "size": "35mm",
   "cartPart": "",
@@ -41,10 +71,10 @@
  },
  {
   "brand": "Caroma",
-  "model": "Contura II Basin Mixer",
+  "model": "Urbane II Basin Mixer",
   "size": "25mm",
   "cartPart": "",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0014/6938/2771/files/caroma-urbane-ii-lead-free-basin-mixer-chrome-98608c6af-the-blue-space.jpg?v=1775152769",
   "exploded": "",
   "confirm": true,
   "buyUrl": ""
@@ -61,38 +91,8 @@
  },
  {
   "brand": "Caroma",
-  "model": "Liano II Basin Mixer",
-  "size": "25mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
-  "brand": "Caroma",
-  "model": "Luna Basin Mixer",
-  "size": "25mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
-  "brand": "Caroma",
   "model": "Track Basin Mixer",
   "size": "35mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
-  "brand": "Caroma",
-  "model": "Urbane II Basin Mixer",
-  "size": "25mm",
   "cartPart": "",
   "photo": "",
   "exploded": "",
@@ -1741,20 +1741,10 @@
  },
  {
   "brand": "Franke",
-  "model": "Franke Active Sink Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.franke.com/nz/en/home-solutions/products/kitchen-taps.html"
- },
- {
-  "brand": "Franke",
   "model": "Franke Atlas Neo Sink Mixer",
   "size": "",
   "cartPart": "",
-  "photo": "",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6412_6542_12159.jpg",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.franke.com/nz/en/home-solutions/products/kitchen-taps.html"
@@ -1764,9 +1754,19 @@
   "model": "Franke Eos Neo Pull-Out Sink Mixer",
   "size": "",
   "cartPart": "",
-  "photo": "",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6417_6547_12164.jpg",
   "exploded": "",
   "confirm": true,
+  "buyUrl": "https://www.franke.com/nz/en/home-solutions/products/kitchen-taps.html"
+ },
+ {
+  "brand": "Franke",
+  "model": "Franke Active Sink Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "",
+  "exploded": "",
+  "confirm": false,
   "buyUrl": "https://www.franke.com/nz/en/home-solutions/products/kitchen-taps.html"
  },
  {
@@ -2064,7 +2064,47 @@
   "model": "Grohe Atrio Basin Mixer",
   "size": "35mm",
   "cartPart": "46374000",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/161361_Atrio_SiloRight_24351000_0001_Feb2023_0_CDNwebp.webp?v=1758660588",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
+ },
+ {
+  "brand": "Grohe",
+  "model": "Grohe Concetto Basin Mixer",
+  "size": "35mm",
+  "cartPart": "46374000",
+  "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/15077_32138002-concetto-single-handle-bathroom-faucet-l-size-starlight-chrome_0_CDNwebp.webp?v=1758661525",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
+ },
+ {
+  "brand": "Grohe",
+  "model": "Grohe Eurosmart Basin Mixer",
+  "size": "35mm",
+  "cartPart": "46374000",
+  "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/49699_23990003_0_CDNwebp.webp?v=1758660429",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
+ },
+ {
+  "brand": "Grohe",
+  "model": "Grohe Eurosmart Sink Mixer",
+  "size": "35mm",
+  "cartPart": "46374000",
+  "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/53090_30306001_0_CDNwebp.webp?v=1758661333",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
+ },
+ {
+  "brand": "Grohe",
+  "model": "Grohe Allure Basin Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0866/6811/6281/files/161336_Allure_SiloRight_23857001_0001_Feb2023_0_CDNwebp.webp?v=1760591561",
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
@@ -2092,16 +2132,6 @@
  {
   "brand": "Grohe",
   "model": "Grohe BauLoop Sink Mixer",
-  "size": "35mm",
-  "cartPart": "46374000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
- },
- {
-  "brand": "Grohe",
-  "model": "Grohe Concetto Basin Mixer",
   "size": "35mm",
   "cartPart": "46374000",
   "photo": "",
@@ -2171,16 +2201,6 @@
  },
  {
   "brand": "Grohe",
-  "model": "Grohe Eurosmart Basin Mixer",
-  "size": "35mm",
-  "cartPart": "46374000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
- },
- {
-  "brand": "Grohe",
   "model": "Grohe Eurosmart Bath Mixer",
   "size": "46mm",
   "cartPart": "46048000",
@@ -2194,16 +2214,6 @@
   "model": "Grohe Eurosmart Shower Mixer",
   "size": "46mm",
   "cartPart": "46048000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
- },
- {
-  "brand": "Grohe",
-  "model": "Grohe Eurosmart Sink Mixer",
-  "size": "35mm",
-  "cartPart": "46374000",
   "photo": "",
   "exploded": "",
   "confirm": true,
@@ -2271,16 +2281,6 @@
  },
  {
   "brand": "Grohe",
-  "model": "Grohe Allure Basin Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.grohe.com/en-GB/service-support/spare-parts-finder"
- },
- {
-  "brand": "Grohe",
   "model": "Grohe Get Basin Mixer",
   "size": "",
   "cartPart": "",
@@ -2304,7 +2304,7 @@
   "model": "Hansgrohe Focus Single Lever Basin Mixer 100",
   "size": "35mm",
   "cartPart": "92730000",
-  "photo": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa00676_tif.png?format=HBW2",
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
@@ -2314,7 +2314,7 @@
   "model": "Hansgrohe Focus Single Lever Shower Mixer",
   "size": "35mm",
   "cartPart": "92730000",
-  "photo": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa00102_tif.png?format=HBW2",
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
@@ -2324,17 +2324,7 @@
   "model": "Hansgrohe Logis Single Lever Basin Mixer 100",
   "size": "35mm",
   "cartPart": "92730000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Logis Single Lever Shower Mixer",
-  "size": "35mm",
-  "cartPart": "92730000",
-  "photo": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa01408_TIF.png?format=HBW2",
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
@@ -2342,6 +2332,86 @@
  {
   "brand": "Hansgrohe",
   "model": "Hansgrohe Metris Single Lever Basin Mixer",
+  "size": "35mm",
+  "cartPart": "92730000",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa00546_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Novus Single Lever Basin Mixer 100",
+  "size": "35mm",
+  "cartPart": "92730000",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr00478_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Talis E Single Lever Basin Mixer 110",
+  "size": "35mm",
+  "cartPart": "92730000",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr02216_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Talis S Single Lever Basin Mixer",
+  "size": "35mm",
+  "cartPart": "92730000",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpa01624_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Vernis Blend Single Lever Basin Mixer 100",
+  "size": "35mm",
+  "cartPart": "92730000",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr02534_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Focus M42 Single Lever Kitchen Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr01670_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Rebris S Single Lever Basin Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr04470_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Tecturis S Single Lever Basin Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://assets.hansgrohe.com/mam/celum/celum_assets/154__hpr05866_tif.png?format=HBW2",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
+ },
+ {
+  "brand": "Hansgrohe",
+  "model": "Hansgrohe Logis Single Lever Shower Mixer",
   "size": "35mm",
   "cartPart": "92730000",
   "photo": "",
@@ -2361,27 +2431,7 @@
  },
  {
   "brand": "Hansgrohe",
-  "model": "Hansgrohe Novus Single Lever Basin Mixer 100",
-  "size": "35mm",
-  "cartPart": "92730000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
   "model": "Hansgrohe Novus Single Lever Shower Mixer",
-  "size": "35mm",
-  "cartPart": "92730000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Talis E Single Lever Basin Mixer 110",
   "size": "35mm",
   "cartPart": "92730000",
   "photo": "",
@@ -2401,27 +2451,7 @@
  },
  {
   "brand": "Hansgrohe",
-  "model": "Hansgrohe Talis S Single Lever Basin Mixer",
-  "size": "35mm",
-  "cartPart": "92730000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
   "model": "Hansgrohe Talis Single Lever Basin Mixer",
-  "size": "35mm",
-  "cartPart": "92730000",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Vernis Blend Single Lever Basin Mixer 100",
   "size": "35mm",
   "cartPart": "92730000",
   "photo": "",
@@ -2438,36 +2468,6 @@
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.hansgrohe.com/articledetail-ceramic-cartridge-complete-m3-m2-92730000"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Focus M42 Single Lever Kitchen Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Rebris S Single Lever Basin Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
- },
- {
-  "brand": "Hansgrohe",
-  "model": "Hansgrohe Tecturis S Single Lever Basin Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.hansgrohe.com/service/spare-parts-search"
  },
  {
   "brand": "Hansgrohe",
@@ -2498,6 +2498,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVPF1071SS/LeVivi-Aspen-Basin-Mixer-Stainless-Steel.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Aspen Extended Basin Mixer Stainless Steel (LEVPF1072SS)",
+  "size": "35mm",
+  "cartPart": "LEVY150500130",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4560_4645_8486.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVPF1072SS/LeVivi-Aspen-Extended-Basin-Mixer-Stainless-Steel.html"
  },
  {
   "brand": "LeVivi",
@@ -2571,6 +2581,36 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Classic Sink Mixer Chrome (LEVSNKAPCP)",
+  "size": "40mm",
+  "cartPart": "LEVPCART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4367_4439_8016.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVSNKAPCP/LeVivi-Classic-Sink-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Elba Basin Mixer Black (LEVELBBMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4604_4689_8662.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPBK/LeVivi-Elba-Basin-Mixer-Black.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Elba Basin Mixer Brushed Nickel (LEVELBBMMPBN)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/9221_9389_18388.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPBN/LeVivi-Elba-Basin-Mixer-Brushed-Nickel.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Elba Basin Mixer Chrome (LEVELBBMMPCP)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2578,6 +2618,26 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPCP/LeVivi-Elba-Basin-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Elba Basin Mixer Gunmetal (LEVELBBMMPGM)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/9217_9385_18373.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPGM/LeVivi-Elba-Basin-Mixer-Gunmetal.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Elba Shower Mixer Black (LEVELBSMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4668_4754_8791.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBSMMPBK/LeVivi-Elba-Shower-Mixer-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -2601,6 +2661,26 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Milan Basin Mixer Black (LEVMILBMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4656_4742_8780.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPBK/LeVivi-Milan-Basin-Mixer-Black.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Milan Basin Mixer Brushed Nickel (LEVMILBMMPBN)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/8854_9022_17317.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPBN/LeVivi-Milan-Basin-Mixer-Brushed-Nickel.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Milan Basin Mixer Chrome (LEVMILBMMPCP)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2608,6 +2688,36 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPCP/LeVivi-Milan-Basin-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Milan Basin Mixer Gunmetal (LEVMILBMMPGM)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/8846_9014_17313.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPGM/LeVivi-Milan-Basin-Mixer-Gunmetal.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Milan Extended Basin Mixer Chrome (LEVMILEXBMMPCP)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4661_4747_8784.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILEXBMMPCP/LeVivi-Milan-Extended-Basin-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Milan Gooseneck Sink Mixer Brushed Nickel (LEVMILSNKMPBN)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/8847_9015_17314.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSNKMPBN/LeVivi-Milan-Gooseneck-Sink-Mixer-Brushed-Nickel.html"
  },
  {
   "brand": "LeVivi",
@@ -2631,6 +2741,16 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Milan Shower Mixer Black (LEVMILSMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4670_4756_8760.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSMMPBK/LeVivi-Milan-Shower-Mixer-Black.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Milan Shower Mixer Chrome (LEVMILSMMPCP)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2638,6 +2758,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSMMPCP/LeVivi-Milan-Shower-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Milan Wall Basin Mixer Black (LEVMILWBMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVEM35BK1CART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4666_4752_8789.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILWBMMPBK/LeVivi-Milan-Wall-Basin-Mixer-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -2661,6 +2791,26 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Newport Extended Basin Mixer Stainless Steel (LEV115313ASS)",
+  "size": "40mm",
+  "cartPart": "LEVM40DW",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4562_4647_8488.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV115313ASS/LeVivi-Newport-Extended-Basin-Mixer-Stainless-Steel.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Roma Basin Mixer Black (LEVROMBMAPBK)",
+  "size": "40mm",
+  "cartPart": "LEVPCART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6168_6298_11639.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMBMAPBK/LeVivi-Roma-Basin-Mixer-Black.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Roma Basin Mixer Chrome (LEVROMBMAPCP)",
   "size": "40mm",
   "cartPart": "LEVPCART",
@@ -2668,6 +2818,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMBMAPCP/LeVivi-Roma-Basin-Mixer-Chrome.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Roma Shower Mixer Black (LEVROMSMAPBK)",
+  "size": "40mm",
+  "cartPart": "LEVPCART",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6167_6297_11638.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMSMAPBK/LeVivi-Roma-Shower-Mixer-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -2701,6 +2861,16 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Slim Basin Mixer Vapour Black (LEV25BMMPBK)",
+  "size": "25mm",
+  "cartPart": "LEVCART25",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6303_6433_11995.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25BMMPBK/LeVivi-Slim-Stainless-Steel-Basin-Mixer-Vapour-Black.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Slim Pull-Down Sink Mixer Stainless Steel (LEV25PDSMMPSS)",
   "size": "25mm",
   "cartPart": "LEVCART25",
@@ -2711,6 +2881,16 @@
  },
  {
   "brand": "LeVivi",
+  "model": "Slim Pull-Down Sink Mixer Vapour Black (LEV25PDSMMPBK)",
+  "size": "25mm",
+  "cartPart": "LEVCART25",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6298_6428_11990.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25PDSMMPBK/LeVivi-Slim-Pull-Down-Sink-Mixer-Vapour-Black.html"
+ },
+ {
+  "brand": "LeVivi",
   "model": "Slim Shower Mixer Stainless Steel (LEV25SMMPSS)",
   "size": "35mm",
   "cartPart": "LEVY150500130",
@@ -2718,6 +2898,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25SMMPSS/LeVivi-Slim-Stainless-Steel-Shower-Mixer-Stainless-Steel.html"
+ },
+ {
+  "brand": "LeVivi",
+  "model": "Slim Shower Mixer Vapour Black (LEV25SMMPBK)",
+  "size": "35mm",
+  "cartPart": "LEVY150500130",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6304_6434_11996.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25SMMPBK/LeVivi-Slim-Stainless-Steel-Shower-Mixer-Vapour-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -2771,16 +2961,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Aspen Extended Basin Mixer Stainless Steel (LEVPF1072SS)",
-  "size": "35mm",
-  "cartPart": "LEVY150500130",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVPF1072SS/LeVivi-Aspen-Extended-Basin-Mixer-Stainless-Steel.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Aspen Gooseneck Sink Mixer w/ Flexi Hose Stainless Steel (LEVPF7505SS)",
   "size": "35mm",
   "cartPart": "LEVY150500130",
@@ -2821,56 +3001,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Classic Sink Mixer Chrome (LEVSNKAPCP)",
-  "size": "40mm",
-  "cartPart": "LEVPCART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVSNKAPCP/LeVivi-Classic-Sink-Mixer-Chrome.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Elba Basin Mixer Black (LEVELBBMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPBK/LeVivi-Elba-Basin-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Elba Basin Mixer Brushed Nickel (LEVELBBMMPBN)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPBN/LeVivi-Elba-Basin-Mixer-Brushed-Nickel.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Elba Basin Mixer Gunmetal (LEVELBBMMPGM)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBBMMPGM/LeVivi-Elba-Basin-Mixer-Gunmetal.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Elba Shower Mixer Black (LEVELBSMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBSMMPBK/LeVivi-Elba-Shower-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Elba Shower Mixer Brushed Nickel (LEVELBSMMPBN)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2888,36 +3018,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVELBSMMPGM/LeVivi-Elba-Shower-Mixer-Gunmetal.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Milan Basin Mixer Black (LEVMILBMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPBK/LeVivi-Milan-Basin-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Milan Basin Mixer Brushed Nickel (LEVMILBMMPBN)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPBN/LeVivi-Milan-Basin-Mixer-Brushed-Nickel.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Milan Basin Mixer Gunmetal (LEVMILBMMPGM)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILBMMPGM/LeVivi-Milan-Basin-Mixer-Gunmetal.html"
  },
  {
   "brand": "LeVivi",
@@ -2941,16 +3041,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Milan Extended Basin Mixer Chrome (LEVMILEXBMMPCP)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILEXBMMPCP/LeVivi-Milan-Extended-Basin-Mixer-Chrome.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Milan Extended Basin Mixer Gunmetal (LEVMILEXBMMPGM)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2961,16 +3051,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Milan Gooseneck Sink Mixer Brushed Nickel (LEVMILSNKMPBN)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSNKMPBN/LeVivi-Milan-Gooseneck-Sink-Mixer-Brushed-Nickel.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Milan Gooseneck Sink Mixer Gunmetal (LEVMILSNKMPGM)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -2978,16 +3058,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSNKMPGM/LeVivi-Milan-Gooseneck-Sink-Mixer-Gunmetal.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Milan Shower Mixer Black (LEVMILSMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILSMMPBK/LeVivi-Milan-Shower-Mixer-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -3011,16 +3081,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Milan Wall Basin Mixer Black (LEVMILWBMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVEM35BK1CART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILWBMMPBK/LeVivi-Milan-Wall-Basin-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Milan Wall Basin Mixer Brushed Nickel (LEVMILWBMMPBN)",
   "size": "35mm",
   "cartPart": "LEVEM35BK1CART",
@@ -3038,26 +3098,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVMILWBMMPGM/LeVivi-Milan-Wall-Basin-Mixer-Gunmetal.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Newport Extended Basin Mixer Stainless Steel (LEV115313ASS)",
-  "size": "40mm",
-  "cartPart": "LEVM40DW",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV115313ASS/LeVivi-Newport-Extended-Basin-Mixer-Stainless-Steel.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Roma Basin Mixer Black (LEVROMBMAPBK)",
-  "size": "40mm",
-  "cartPart": "LEVPCART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMBMAPBK/LeVivi-Roma-Basin-Mixer-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -3081,16 +3121,6 @@
  },
  {
   "brand": "LeVivi",
-  "model": "Roma Shower Mixer Black (LEVROMSMAPBK)",
-  "size": "40mm",
-  "cartPart": "LEVPCART",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMSMAPBK/LeVivi-Roma-Shower-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
   "model": "Roma Wall Mounted Basin Mixer Black (LEVROMWBMAPBK)",
   "size": "40mm",
   "cartPart": "LEVPCART",
@@ -3098,16 +3128,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEVROMWBMAPBK/LeVivi-Roma-Wall-Mounted-Basin-Mixer-Black.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Slim Basin Mixer Vapour Black (LEV25BMMPBK)",
-  "size": "25mm",
-  "cartPart": "LEVCART25",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25BMMPBK/LeVivi-Slim-Stainless-Steel-Basin-Mixer-Vapour-Black.html"
  },
  {
   "brand": "LeVivi",
@@ -3130,31 +3150,11 @@
   "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25EXBMMPBK/LeVivi-Slim-Stainless-Steel-Extended-Basin-Mixer-Vapour-Black.html"
  },
  {
-  "brand": "LeVivi",
-  "model": "Slim Pull-Down Sink Mixer Vapour Black (LEV25PDSMMPBK)",
-  "size": "25mm",
-  "cartPart": "LEVCART25",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25PDSMMPBK/LeVivi-Slim-Pull-Down-Sink-Mixer-Vapour-Black.html"
- },
- {
-  "brand": "LeVivi",
-  "model": "Slim Shower Mixer Vapour Black (LEV25SMMPBK)",
-  "size": "35mm",
-  "cartPart": "LEVY150500130",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.plumbingworld.co.nz/shop-by-brand/levivi/LEV25SMMPBK/LeVivi-Slim-Stainless-Steel-Shower-Mixer-Vapour-Black.html"
- },
- {
   "brand": "Meir",
   "model": "Meir Piccola Basin Mixer Tap",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/files/MB03XS-PVDBZ_Meir_Lustre_Bronze_Round_Piccola_Curved_Basin_Mixer-1_cba462c3-8a4c-4c50-ba79-fce8ab745530.jpg?v=1758420183",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3164,7 +3164,7 @@
   "model": "Meir Round Basin Mixer",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/products/MB02-Matte-Black-Basin-Mixer-Tap-Meir-1_11e172e2-02a7-464c-8ebd-a7a1fcb1b164.jpg?v=1584074022",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3174,7 +3174,7 @@
   "model": "Meir Round Gooseneck Basin Mixer with Cold Start",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/files/mb17-meir_matte_black_round_gooseneck_basin_mixer_with_cold_start1.jpg?v=1696567042",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3184,7 +3184,7 @@
   "model": "Meir Round Gooseneck Kitchen Mixer Tap",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/products/mk03-pvdbn-brushed-nickel-swivel-kitchen-pull-out-mixer-tap-meir-1.jpg?v=1633400774",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3194,7 +3194,7 @@
   "model": "Meir Round Paddle Basin Mixer",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/products/mb02pd-ch_meir_champagne_round_paddle_basin_mixer_tap_meir-1.jpg?v=1668150177",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3204,7 +3204,7 @@
   "model": "Meir Round Piccola Pull Out Kitchen Mixer Tap",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/products/MK17-CIMAGE1.jpg?v=1592961465",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3214,7 +3214,7 @@
   "model": "Meir Round Wall Mixer (Trim Kit)",
   "size": "35mm",
   "cartPart": "MX35",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/0047/5686/5094/files/MW03-FIN-PVDBN_Meir_Brushed_Nickel_Round_Wall_Mixer-Finish_Kit-1_1f6fee20-f4a1-4988-8d6b-ffc2ffedb64e.jpg?v=1758420182",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.meir.com.au/products/kerox-ceramic-cartridge-35mm"
@@ -3241,12 +3241,32 @@
  },
  {
   "brand": "Methven",
+  "model": "Minimalist MK2 Shower Mixer with Fastflow 2",
+  "size": "35mm",
+  "cartPart": "SP98088",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/20210616-MNAPS2CP-standard_000.png",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.methven.com/nz/product/cartridge-35mm-minimalist-ii-shower-mixer-136536/"
+ },
+ {
+  "brand": "Methven",
   "model": "Minimalist MK2 Sink Mixer Goose Neck",
   "size": "35mm",
   "cartPart": "SP98184",
   "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/MNKGNCPF-Minimalist%20MK2%20Sink%20Mixer%20Goose%20Neck%20Chrome_standard_000.jpg",
   "exploded": "",
   "confirm": false,
+  "buyUrl": "https://www.methven.com/au/product/cartridge-35mm-minimalist-ii-sink-mixer-124397/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Minimalist MK2 Sink Mixer Pull Down",
+  "size": "35mm",
+  "cartPart": "SP98184",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/MNKGNPDCP-Minimalist%20MK2%20Sink%20Mixer%20Pull%20Down%20Chrome_standard_000.jpg",
+  "exploded": "",
+  "confirm": true,
   "buyUrl": "https://www.methven.com/au/product/cartridge-35mm-minimalist-ii-sink-mixer-124397/"
  },
  {
@@ -3291,6 +3311,16 @@
  },
  {
   "brand": "Methven",
+  "model": "Echo Strata Basin Mixer All Pressure",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/03-2006%20Echo%20Strata%20Basin%20Mixer2.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/echo-strata-basin-mixer-ap-cp-lead-free-chrome-137257/"
+ },
+ {
+  "brand": "Methven",
   "model": "Echo Strata Shower Mixer",
   "size": "",
   "cartPart": "",
@@ -3301,6 +3331,16 @@
  },
  {
   "brand": "Methven",
+  "model": "Echo Strata Shower Mixer with Diverter",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/E8216_BK_Image_HeroImage_ECHO_STRATA_SHOWER_MIXER_WITH_DIVERETER_CP.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/echo-strata-shower-mixer-with-diverter-cp-chrome-102971/"
+ },
+ {
+  "brand": "Methven",
   "model": "Echo Strata Sink Mixer",
   "size": "",
   "cartPart": "",
@@ -3308,6 +3348,16 @@
   "exploded": "https://6f5808fed5df953b5ce8-f7092dceca7c6a0fa248f5b05eee4343.ssl.cf3.rackcdn.com/nz/exploded-view/e8114-exploded-view.pdf",
   "confirm": false,
   "buyUrl": "https://www.methven.com/nz/product/echo-strata-sink-mixer-chrome-chrome-125247/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Echo Strata Sink Mixer All Pressure",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/E8214_BK_Image_HeroImage_ECHO_STRATA_SINK_MIXER_CP.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/echo-strata-sink-mixer-all-pressure-chrome-lead-free-chrome-127212/"
  },
  {
   "brand": "Methven",
@@ -3341,6 +3391,26 @@
  },
  {
   "brand": "Methven",
+  "model": "Futura Shower Mixer with Diverter",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/FTSHDCP2_BK_Image_HeroImage_FUTURA_SHOWER_WITH_DIVERTER_CP.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/futura-shower-with-diverter-cp-chrome-102806/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Futura Shower Mixer with Hyperflow",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/FTHFSCP2_BK_Image_HeroImage_FUTURA_HYPERFLOW_MIXER_CP.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/futura-hyperflow-mixer-cp-chrome-102740/"
+ },
+ {
+  "brand": "Methven",
   "model": "Futura Sink Mixer",
   "size": "40mm",
   "cartPart": "",
@@ -3358,6 +3428,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.methven.com/nz/product/glide-basin-mixer-lead-free-chrome-121008/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Glide Shower Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/GLHPSCP_BK_Image_HeroImage_GLIDE_SHOWER_MIXER.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/glide-shower-mixer-chrome-102705/"
  },
  {
   "brand": "Methven",
@@ -3411,6 +3491,16 @@
  },
  {
   "brand": "Methven",
+  "model": "Maku Shower Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/01-8567%20-%20%20Maku%20shower%20mixer.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/maku-shower-mixer-chrome-99709/"
+ },
+ {
+  "brand": "Methven",
   "model": "Minimalist Metro Pull Out Sink Mixer",
   "size": "35mm",
   "cartPart": "",
@@ -3418,6 +3508,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.methven.com/nz/product/minimalist-metro-pull-out-sink-mixer-chrome-lead-free-chrome-138317/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Minimalist Spring Pull Down Sink Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/MMKSPR_MMKSPRF_Square_Image.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/minimalist-spring-pull-down-sink-mixer-with-twin-action-spray-chrome-134105/"
  },
  {
   "brand": "Methven",
@@ -3448,6 +3548,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": ""
+ },
+ {
+  "brand": "Methven",
+  "model": "Promix Shower Mixer",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/PRSHCP2_BK_Image_HeroImage_PROMIX_SHOWER_MIXER_CP.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/promix-shower-mixer-cp-chrome-102722/"
  },
  {
   "brand": "Methven",
@@ -3501,6 +3611,16 @@
  },
  {
   "brand": "Methven",
+  "model": "Waipori MK2 Basin Mixer 6 Star",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/WPBBBZ6F%20WAIPORI%20MK2%20BASIN%20MIXER%206%20STAR%20BRUSHED%20BRONZE%20-%20LF_side%20copy.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/waipori-mk2-basin-mixer-6-star-brushed-bronze-lead-free-chrome-121623/"
+ },
+ {
+  "brand": "Methven",
   "model": "Waipori MK2 Shower Mixer",
   "size": "",
   "cartPart": "",
@@ -3508,6 +3628,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.methven.com/nz/product/waipori-mk2-shower-mixer-lead-free-chrome-121610/"
+ },
+ {
+  "brand": "Methven",
+  "model": "Waipori MK2 Sink Mixer 4 Star",
+  "size": "",
+  "cartPart": "",
+  "photo": "https://stsharedaueastprodn8wg.blob.core.windows.net/pim-assets/ProductThumbnail/WPKGM4F%20WAIPORI%20MK2%20SINK%20MIXER%204%20STAR%20GUNMETAL%20-%20LF%20copy.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": "https://www.methven.com/nz/product/waipori-mk2-sink-mixer-4-star-lead-free-chrome-121571/"
  },
  {
   "brand": "Methven",
@@ -3531,26 +3661,6 @@
  },
  {
   "brand": "Methven",
-  "model": "Minimalist MK2 Shower Mixer with Fastflow 2",
-  "size": "35mm",
-  "cartPart": "SP98088",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.methven.com/nz/product/cartridge-35mm-minimalist-ii-shower-mixer-136536/"
- },
- {
-  "brand": "Methven",
-  "model": "Minimalist MK2 Sink Mixer Pull Down",
-  "size": "35mm",
-  "cartPart": "SP98184",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.methven.com/au/product/cartridge-35mm-minimalist-ii-sink-mixer-124397/"
- },
- {
-  "brand": "Methven",
   "model": "Minimalist MK2 Wall Mounted Mixer with Spout",
   "size": "25mm",
   "cartPart": "SP98083",
@@ -3561,66 +3671,6 @@
  },
  {
   "brand": "Methven",
-  "model": "Echo Strata Basin Mixer All Pressure",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/echo-strata-basin-mixer-ap-cp-lead-free-chrome-137257/"
- },
- {
-  "brand": "Methven",
-  "model": "Echo Strata Shower Mixer with Diverter",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/echo-strata-shower-mixer-with-diverter-cp-chrome-102971/"
- },
- {
-  "brand": "Methven",
-  "model": "Echo Strata Sink Mixer All Pressure",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/echo-strata-sink-mixer-all-pressure-chrome-lead-free-chrome-127212/"
- },
- {
-  "brand": "Methven",
-  "model": "Futura Shower Mixer with Diverter",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/futura-shower-with-diverter-cp-chrome-102806/"
- },
- {
-  "brand": "Methven",
-  "model": "Futura Shower Mixer with Hyperflow",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/futura-hyperflow-mixer-cp-chrome-102740/"
- },
- {
-  "brand": "Methven",
-  "model": "Glide Shower Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/glide-shower-mixer-chrome-102705/"
- },
- {
-  "brand": "Methven",
   "model": "Maku Basin Mixer",
   "size": "",
   "cartPart": "",
@@ -3628,56 +3678,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.methven.com/nz/product/maku-basin-mixer-chrome-120944/"
- },
- {
-  "brand": "Methven",
-  "model": "Maku Shower Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/maku-shower-mixer-chrome-99709/"
- },
- {
-  "brand": "Methven",
-  "model": "Minimalist Spring Pull Down Sink Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/minimalist-spring-pull-down-sink-mixer-with-twin-action-spray-chrome-134105/"
- },
- {
-  "brand": "Methven",
-  "model": "Promix Shower Mixer",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/promix-shower-mixer-cp-chrome-102722/"
- },
- {
-  "brand": "Methven",
-  "model": "Waipori MK2 Basin Mixer 6 Star",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/waipori-mk2-basin-mixer-6-star-brushed-bronze-lead-free-chrome-121623/"
- },
- {
-  "brand": "Methven",
-  "model": "Waipori MK2 Sink Mixer 4 Star",
-  "size": "",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.methven.com/nz/product/waipori-mk2-sink-mixer-4-star-lead-free-chrome-121571/"
  },
  {
   "brand": "Mizu",
@@ -3751,6 +3751,26 @@
  },
  {
   "brand": "Nero",
+  "model": "Bianca Basin Mixer",
+  "size": "35mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/nero-tapware-basin-mixer-nero-bianca-basin-mixer-brushed-gold-30360415010894.webp?v=1696222678",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Nero",
+  "model": "Ecco Basin Mixer",
+  "size": "25mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/NR301301CH.jpg?v=1762398405",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Nero",
   "model": "Mecca Basin Mixer",
   "size": "35mm",
   "cartPart": "",
@@ -3761,30 +3781,20 @@
  },
  {
   "brand": "Nero",
-  "model": "Bianca Basin Mixer",
-  "size": "35mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
-  "brand": "Nero",
-  "model": "Ecco Basin Mixer",
-  "size": "25mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
-  "brand": "Nero",
   "model": "Opal Basin Mixer",
   "size": "25mm",
   "cartPart": "",
-  "photo": "",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/NR251901BN-2-600x600.png?v=1762399411",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Nero",
+  "model": "Zen Basin Mixer",
+  "size": "25mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/nero-tapware-basin-mixer-nero-zen-ss316l-basin-mixer-brushed-nickel-32927399870542.webp?v=1732767063",
   "exploded": "",
   "confirm": true,
   "buyUrl": ""
@@ -3800,14 +3810,14 @@
   "buyUrl": ""
  },
  {
-  "brand": "Nero",
-  "model": "Zen Basin Mixer",
-  "size": "25mm",
-  "cartPart": "",
-  "photo": "",
+  "brand": "Newform",
+  "model": "Newform XT Basin Mixer",
+  "size": "35mm",
+  "cartPart": "14720",
+  "photo": "https://www.tattahome.com/15858-thickbox_default/newform-xt-single-lever-basin-mixer.jpg",
   "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
+  "confirm": false,
+  "buyUrl": "https://www.newform.it/files/00-catalogo-prodotti/4208/4208_instructions.pdf"
  },
  {
   "brand": "Newform",
@@ -3860,31 +3870,11 @@
   "buyUrl": "https://www.newform.it/files/00-catalogo-prodotti/63420/63420_instructions.pdf"
  },
  {
-  "brand": "Newform",
-  "model": "Newform XT Basin Mixer",
-  "size": "35mm",
-  "cartPart": "14720",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": "https://www.newform.it/files/00-catalogo-prodotti/4208/4208_instructions.pdf"
- },
- {
-  "brand": "Paini",
-  "model": "Paini Arena Kitchen/Sink Mixer",
-  "size": "35mm",
-  "cartPart": "53CC956GM",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
- },
- {
   "brand": "Paini",
   "model": "Paini Cox Basin Mixer",
   "size": "35mm",
   "cartPart": "53CC956GM",
-  "photo": "",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/5751_5881_10623.jpg",
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
@@ -3894,6 +3884,36 @@
   "model": "Paini Cox Pull-Out Sink Mixer",
   "size": "35mm",
   "cartPart": "53CC956G35ON",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/6249_6379_11820.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
+ },
+ {
+  "brand": "Paini",
+  "model": "Paini Nove Basin Mixer",
+  "size": "35mm",
+  "cartPart": "53CC956GM",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/2846_2914_6444.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
+ },
+ {
+  "brand": "Paini",
+  "model": "Paini Nove Sink Mixer",
+  "size": "35mm",
+  "cartPart": "53CC956G35ON",
+  "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/4257_4328_7787.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
+ },
+ {
+  "brand": "Paini",
+  "model": "Paini Arena Kitchen/Sink Mixer",
+  "size": "35mm",
+  "cartPart": "53CC956GM",
   "photo": "",
   "exploded": "",
   "confirm": true,
@@ -3921,29 +3941,9 @@
  },
  {
   "brand": "Paini",
-  "model": "Paini Nove Basin Mixer",
-  "size": "35mm",
-  "cartPart": "53CC956GM",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
- },
- {
-  "brand": "Paini",
   "model": "Paini Nove Shower Mixer",
   "size": "35mm",
   "cartPart": "53CC956GM",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
- },
- {
-  "brand": "Paini",
-  "model": "Paini Nove Sink Mixer",
-  "size": "35mm",
-  "cartPart": "53CC956G35ON",
   "photo": "",
   "exploded": "",
   "confirm": true,
@@ -3958,6 +3958,16 @@
   "exploded": "",
   "confirm": true,
   "buyUrl": "https://www.paini.co.uk/products/0/spares/cartridge-valves.html"
+ },
+ {
+  "brand": "Phoenix",
+  "model": "Gloss MKII Basin Mixer",
+  "size": "25mm",
+  "cartPart": "40380NR",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/phoenix-basin-mixer-phoenix-gloss-mkii-basin-mixer-chrome-30835075514446.webp?v=1709280138",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://sydneybathroomware.com.au/spare-parts/"
  },
  {
   "brand": "Phoenix",
@@ -3978,6 +3988,16 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://sydneybathroomware.com.au/spare-parts/"
+ },
+ {
+  "brand": "Phoenix",
+  "model": "Ivy MKII Basin Mixer",
+  "size": "35mm",
+  "cartPart": "",
+  "photo": "https://cdn.shopify.com/s/files/1/1115/9004/files/phoenix-basin-mixer-phoenix-ivy-mkii-fixed-basin-mixer-chrome-30835125649486.webp?v=1709333944",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": ""
  },
  {
   "brand": "Phoenix",
@@ -4011,16 +4031,6 @@
  },
  {
   "brand": "Phoenix",
-  "model": "Gloss MKII Basin Mixer",
-  "size": "25mm",
-  "cartPart": "40380NR",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://sydneybathroomware.com.au/spare-parts/"
- },
- {
-  "brand": "Phoenix",
   "model": "Kubus Basin Mixer",
   "size": "35mm",
   "cartPart": "40351NR",
@@ -4040,16 +4050,6 @@
   "buyUrl": "https://sydneybathroomware.com.au/spare-parts/"
  },
  {
-  "brand": "Phoenix",
-  "model": "Ivy MKII Basin Mixer",
-  "size": "35mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": ""
- },
- {
   "brand": "Posh",
   "model": "Solus MK3 Basin Mixer",
   "size": "",
@@ -4064,7 +4064,7 @@
   "model": "Solus MK3 Sink Mixer",
   "size": "",
   "cartPart": "2250688",
-  "photo": "",
+  "photo": "https://digitalassets.reecegroup.com.au/m/96b4c6a7491c4fdf/Web_1200x900-Posh-Solus-MK3-Standard-Sink-Mixer-Chrome-4-Star.jpg",
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.reece.com.au/"
@@ -4081,10 +4081,80 @@
  },
  {
   "brand": "Robertson",
+  "model": "Elementi ION Kitchen/Sink Mixer",
+  "size": "",
+  "cartPart": "1B0106EWNT",
+  "photo": "https://www.robertson.co.nz/storage/product-image/ion/new/44203.02%20Right%20.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/ion-parts"
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Uno Basin Mixer",
+  "size": "35mm",
+  "cartPart": "K35A",
+  "photo": "https://www.robertson.co.nz/storage/product-image/uno/43951.02-1622416920-COPY.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Uno Shower Mixer",
+  "size": "35mm",
+  "cartPart": "K35A",
+  "photo": "https://www.robertson.co.nz/storage/product-image/uno/43370.02.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Uno Shower/Diverter Mixer",
+  "size": "40mm",
+  "cartPart": "KO40A",
+  "photo": "https://www.robertson.co.nz/storage/product-image/uno/42971.02.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Uno Wall Basin Mixer",
+  "size": "35mm",
+  "cartPart": "K35A",
+  "photo": "https://www.robertson.co.nz/storage/product-image/uno/43955.04a.jpg",
+  "exploded": "",
+  "confirm": true,
+  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Savon Basin Mixer",
+  "size": "35mm",
+  "cartPart": "",
+  "photo": "https://www.robertson.co.nz/storage/product-image/elementi/savon/43151.02.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Robertson",
   "model": "Elementi Uno Basin/Shower Mixer",
   "size": "35mm",
   "cartPart": "",
   "photo": "https://www.plumbingworld.co.nz/productimages/MEDIUM/1/3501_3569_18454.jpg",
+  "exploded": "",
+  "confirm": false,
+  "buyUrl": ""
+ },
+ {
+  "brand": "Robertson",
+  "model": "Elementi Verona Kitchen Mixer",
+  "size": "40mm",
+  "cartPart": "",
+  "photo": "https://www.robertson.co.nz/storage/product-image/elementi/verona-components/44182.02.jpg",
   "exploded": "",
   "confirm": false,
   "buyUrl": ""
@@ -4098,56 +4168,6 @@
   "exploded": "",
   "confirm": false,
   "buyUrl": "https://www.robertsontrade.co.nz/products/tapware-and-mixer-parts/cartridges-and-headworks"
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi ION Kitchen/Sink Mixer",
-  "size": "",
-  "cartPart": "1B0106EWNT",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/ion-parts"
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi Uno Basin Mixer",
-  "size": "35mm",
-  "cartPart": "K35A",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi Uno Shower Mixer",
-  "size": "35mm",
-  "cartPart": "K35A",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi Uno Shower/Diverter Mixer",
-  "size": "40mm",
-  "cartPart": "KO40A",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi Uno Wall Basin Mixer",
-  "size": "35mm",
-  "cartPart": "K35A",
-  "photo": "",
-  "exploded": "",
-  "confirm": true,
-  "buyUrl": "https://www.robertsontrade.co.nz/brand/elementi/uno-parts"
  },
  {
   "brand": "Robertson",
@@ -4191,28 +4211,8 @@
  },
  {
   "brand": "Robertson",
-  "model": "Elementi Savon Basin Mixer",
-  "size": "35mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": ""
- },
- {
-  "brand": "Robertson",
   "model": "Elementi Up City Basin Mixer",
   "size": "35mm",
-  "cartPart": "",
-  "photo": "",
-  "exploded": "",
-  "confirm": false,
-  "buyUrl": ""
- },
- {
-  "brand": "Robertson",
-  "model": "Elementi Verona Kitchen Mixer",
-  "size": "40mm",
   "cartPart": "",
   "photo": "",
   "exploded": "",
