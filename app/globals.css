@@ -134,3 +134,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .matchhead h2 { margin: 0; }
 .mscore { font-size: 12px; font-weight: 700; color: var(--muted, #667); margin-top: 2px; }
 .mscore.good { color: #1a7f37; }
+
+/* Loading indicator for identify/match */
+.spin { display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.45); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:6px; }
+.spin.big { width:26px; height:26px; border-width:3px; border-color:rgba(31,58,95,.25); border-top-color:#1f3a5f; margin-right:0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loadcard { display:flex; align-items:center; gap:14px; background:#eef4fb; border:1px solid #d7e3f2; border-radius:12px; padding:14px 16px; margin:6px 0 12px; }
+.loadcard b { color:#1f3a5f; }
