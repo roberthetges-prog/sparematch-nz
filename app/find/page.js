@@ -1,5 +1,4 @@
 "use client";
-// build: brand-filter v2
 import { useMemo, useState } from "react";
 import parts from "../../lib/parts.json";
 import models from "../../lib/models.json";
@@ -267,7 +266,7 @@ export default function Find() {
                   {shown.map((b) => (<button className="opt" key={b.brand} onClick={() => { setBFilter(""); add("brand", b.brand); }}>{b.brand} <span className="c">{b.count}</span></button>))}
                 </div>
               ) : (
-                <p className="sub" style={{ marginTop: 10 }}>No brand matches &ldquo;{bFilter.trim()}&rdquo;. Try fewer letters, or pick <b>Universal</b> once you clear the box.</p>
+                <p className="sub" style={{ marginTop: 10 }}>No brand matches that. Try fewer letters, or clear the box and pick Universal.</p>
               );
             })()}
           </div>
@@ -388,4 +387,15 @@ function PartCard({ p }) {
           {p.dimension && <span className="chip">{p.dimension}</span>}
           <span className="chip">{p.brand}</span>
         </div>
-  
+        <span className={"badge " + (verified ? "v" : "d")}>{verified ? "✓ Verified source" : "⚠ Confirm fit"}</span>
+        {p.notes && <div className="note2">{p.notes}</div>}
+        {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
+        <div className="foot">
+          {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
+          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Diagram</a>}
+          {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
+        </div>
+      </div>
+    </div>
+  );
+}
