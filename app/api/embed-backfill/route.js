@@ -27,6 +27,8 @@ async function jinaEmbed(key, dataUri) {
 
 export async function GET(request) {
   const url = new URL(request.url);
+  const admin = (process.env.EMBED_TOKEN || "").trim();
+  if (!admin || (url.searchParams.get("key") || "").trim() !== admin) return Response.json({ error: "forbidden" }, { status: 403 });
   if (url.searchParams.get("go") !== "backfill-tapsnap") return Response.json({ error: "add ?go=backfill-tapsnap" }, { status: 400 });
   const sb = sbAdmin(); if (!sb) return Response.json({ error: "db not configured" }, { status: 500 });
   const jkey = keyJina(); if (!jkey) return Response.json({ error: "no JINA_API_KEY" }, { status: 500 });
