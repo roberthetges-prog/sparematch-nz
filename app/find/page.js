@@ -1,4 +1,5 @@
 "use client";
+// build: brand-filter v2
 import { useMemo, useState } from "react";
 import parts from "../../lib/parts.json";
 import models from "../../lib/models.json";
@@ -387,15 +388,4 @@ function PartCard({ p }) {
           {p.dimension && <span className="chip">{p.dimension}</span>}
           <span className="chip">{p.brand}</span>
         </div>
-        <span className={"badge " + (verified ? "v" : "d")}>{verified ? "✓ Verified source" : "⚠ Confirm fit"}</span>
-        {p.notes && <div className="note2">{p.notes}</div>}
-        {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
-        <div className="foot">
-          {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
-          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Diagram</a>}
-          {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
-        </div>
-      </div>
-    </div>
-  );
-}
+  
