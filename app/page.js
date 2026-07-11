@@ -1,145 +1,401 @@
-import Link from "next/link";
-import parts from "../lib/parts.json";
+"use client";
+import { useMemo, useState } from "react";
+import parts from "../../lib/parts.json";
+import models from "../../lib/models.json";
+import cartimg from "../../lib/cartimg.json";
+import { listBrands, applyFilters, nextQuestion } from "../../lib/matcher.js";
 
-function AppleBadge() {
+const FIELD_LABEL = { productType: "Fixing", valveFamily: "Valve", brand: "Brand", category: "Part", dimension: "Size", valveType: "Mechanism" };
+const modelsByBrand = {};
+for (const mo of models) (modelsByBrand[mo.brand] ||= []).push(mo);
+
+function inferType(ai) {
+  const s = (((ai && ai.description) || "") + " " + ((ai && ai.category) || "")).toLowerCase();
+  if (/shower/.test(s)) return "shower";
+  if (/(sink|kitchen)/.test(s)) return "sink";
+  if (/bath/.test(s)) return "bath";
+  if (/basin|lavatory|vanity/.test(s)) return "basin";
+  return "";
+}
+const BRAND_PRIORITY = ["Felton","Methven","Foreno","Voda","Greens","LeVivi","Robertson","Caroma","Grohe","Hansgrohe","Phoenix","Nero","Meir","Dorf","Mizu","Posh","Paini","Newform","Mondella","Buddy","Franke"];
+function buildCandidates(ai) {
+  const t = inferType(ai);
+  const brandsToTry = [];
+  if (ai && ai.brand) brandsToTry.push(ai.brand);
+  if (ai && Array.isArray(ai.brandGuesses)) for (const g of ai.brandGuesses) if (!brandsToTry.includes(g)) brandsToTry.push(g);
+  let pool = [];
+  for (const b of brandsToTry) { const arr = modelsByBrand[b]; if (arr) pool.push(...arr.filter((m) => m.photo)); }
+  if (pool.length >= 2) {
+    if (t) { const f = pool.filter((m) => (m.model || "").toLowerCase().includes(t)); if (f.length >= 2) pool = f; }
+    const seen = new Set(); const out = [];
+    for (const m of pool) { if (seen.has(m.model)) continue; seen.add(m.model); out.push(m); if (out.length >= 12) break; }
+    return out;
+  }
+  // Fallback: no confident brand — sample one photographed model per brand (type-filtered)
+  // so the visual matcher can still surface the right brand family from the whole catalogue.
+  const sample = [];
+  for (const b of BRAND_PRIORITY) {
+    const arr = (modelsByBrand[b] || []).filter((m) => m.photo && (!t || (m.model || "").toLowerCase().includes(t)));
+    if (arr.length) sample.push(arr[0]);
+    if (sample.length >= 12) break;
+  }
+  return sample;
+}
+
+function detectionsToAnswers(all, ai) {
+  // Only ever set the product type and a confidently-named brand. Never hard-filter by
+  // AI category/size (those collapse the catalogue). Land the user on the brand's visual
+  // model picker so they confirm by shape.
+  const order = [["productType", "Tapware"], ["brand", ai.brand]];
+  const ans = []; let cur = {};
+  for (const [field, val] of order) {
+    if (!val) continue;
+    const trial = { ...cur, [field]: val };
+    if (applyFilters(all, trial).length > 0) { cur = trial; ans.push({ field, value: val }); }
+  }
+  return ans;
+}
+
+function distinctValues(rows, field) {
+  const m = new Map();
+  for (const p of rows) { const v = (p[field] || "").trim(); if (v) m.set(v, (m.get(v) || 0) + 1); }
+  return [...m.entries()].map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+}
+
+function MeasureHelp() {
   return (
-    <span className="badge2">
-      <svg viewBox="0 0 384 512" width="20" height="20" fill="currentColor" aria-hidden="true">
-        <path d="M318.7 268c-.5-58 47.4-85.8 49.5-87.2-27-39.5-69-45-83.9-45.6-35.7-3.6-69.7 21-87.8 21-18 0-46-20.5-75.6-20-38.9.6-74.8 22.6-94.8 57.4-40.4 70.1-10.3 173.8 29 230.7 19.2 27.8 42.1 59 72.1 57.9 28.9-1.2 39.8-18.7 74.8-18.7 34.7 0 44.7 18.7 75.2 18.1 31-.5 50.7-28.3 69.7-56.2 21.9-32 30.9-63 31.4-64.6-.7-.3-60.3-23.1-60.8-91.8zM255.9 82.6c15.9-19.3 26.7-46.1 23.8-72.6-22.9.9-50.6 15.3-67.1 34.5-14.7 17-27.6 44.3-24.2 70.3 25.6 2 51.7-13 67.5-32.2z" />
-      </svg>
-      <span className="badge2txt"><small>Download on the</small><b>App Store</b></span>
-    </span>
+    <details className="measure">
+      <summary>📏 How to measure your cartridge</summary>
+      <p>Pull the old cartridge out and measure straight across the round body (the diameter) with a ruler or vernier calipers. That measurement in millimetres is what decides the part.</p>
+      <p><b>Common sizes:</b> 25mm, 35mm, 40mm and 45mm.</p>
+    </details>
   );
 }
 
-function GoogleBadge() {
-  return (
-    <span className="badge2">
-      <svg viewBox="0 0 512 512" width="20" height="20" aria-hidden="true">
-        <defs>
-          <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#00d3ff" />
-            <stop offset="0.4" stopColor="#00e676" />
-            <stop offset="0.7" stopColor="#ffd600" />
-            <stop offset="1" stopColor="#ff3d00" />
-          </linearGradient>
-        </defs>
-        <path d="M48 24c-6 3-10 9-10 17v430c0 8 4 14 10 17l246-232L48 24z" fill="url(#pg)" />
-        <path d="M294 256l70-66-286-165c-5-3-11-3-16-1l232 232z" fill="#00d3ff" />
-        <path d="M294 256L62 488c5 2 11 2 16-1l286-165-70-66z" fill="#ff3d00" />
-        <path d="M446 222l-82-47-70 81 70 66 82-47c16-9 16-44 0-53z" fill="#ffd600" />
-      </svg>
-      <span className="badge2txt"><small>Get it on</small><b>Google Play</b></span>
-    </span>
-  );
-}
+export default function Find() {
+  const [answers, setAnswers] = useState([]);
+  const [forceResults, setForceResults] = useState(false);
+  const [skipModel, setSkipModel] = useState(false);
+  const [modelResult, setModelResult] = useState(null);
+  const [photo, setPhoto] = useState(null);
+  const [file, setFile] = useState(null);
+  const [vmatch, setVmatch] = useState(null);
+  const [analysing, setAnalysing] = useState(false);
+  const [ai, setAi] = useState(null);
+  const [bFilter, setBFilter] = useState("");
 
-function PhoneMock() {
-  return (
-    <svg className="phone" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TapSnap app preview">
-      <rect x="8" y="8" width="284" height="584" rx="44" fill="#0f1f33" />
-      <rect x="20" y="20" width="260" height="560" rx="32" fill="#f6f8fb" />
-      <rect x="112" y="30" width="76" height="16" rx="8" fill="#0f1f33" />
-      {/* app header */}
-      <rect x="20" y="56" width="260" height="52" fill="#1f3a5f" />
-      <rect x="42" y="70" width="24" height="24" rx="6" fill="#e8722c" />
-      <path d="M54 74 l6 14 a7 7 0 1 1 -12 0 z" fill="#fff" />
-      <text x="76" y="87" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="800" fill="#ffffff">Tap<tspan fill="#e8722c">Snap</tspan></text>
-      {/* hero card */}
-      <text x="42" y="150" fontFamily="Arial, sans-serif" fontSize="17" fontWeight="800" fill="#1c2530">Find the right</text>
-      <text x="42" y="172" fontFamily="Arial, sans-serif" fontSize="17" fontWeight="800" fill="#1c2530">tap part fast</text>
-      <rect x="42" y="192" width="216" height="46" rx="10" fill="#e8722c" />
-      <text x="150" y="221" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="800" fill="#ffffff" textAnchor="middle">📷  Snap a photo</text>
-      {/* result card */}
-      <rect x="42" y="262" width="216" height="286" rx="14" fill="#ffffff" stroke="#e2e8f0" />
-      <rect x="42" y="262" width="216" height="150" rx="14" fill="#eef2f7" />
-      <rect x="120" y="292" width="60" height="90" rx="6" fill="#cdd7e3" />
-      <circle cx="150" cy="315" r="15" fill="#aeb9c7" />
-      <rect x="60" y="428" width="120" height="12" rx="6" fill="#1c2530" />
-      <rect x="60" y="450" width="170" height="9" rx="4" fill="#8b97a6" />
-      <rect x="60" y="470" width="96" height="22" rx="6" fill="#e7f4ec" />
-      <text x="108" y="486" fontFamily="Arial, sans-serif" fontSize="11" fontWeight="800" fill="#2f8a4e" textAnchor="middle">Part #CC35</text>
-      <rect x="60" y="504" width="180" height="30" rx="8" fill="#1f3a5f" />
-      <text x="150" y="524" fontFamily="Arial, sans-serif" fontSize="12" fontWeight="700" fill="#ffffff" textAnchor="middle">Where to buy →</text>
-    </svg>
-  );
-}
+  const sel = useMemo(() => answers.reduce((o, a) => ((o[a.field] = a.value), o), {}), [answers]);
+  const pool = useMemo(() => applyFilters(parts, sel), [sel]);
+  const brands = useMemo(() => listBrands(pool), [pool]);
+  const brandSet = useMemo(() => new Set(listBrands(parts).map((b) => b.brand)), []);
+  const q = useMemo(() => (sel.brand ? nextQuestion(parts, sel) : null), [sel]);
+  const guesses = useMemo(() => (ai && Array.isArray(ai.brandGuesses) ? ai.brandGuesses.filter((g) => brandSet.has(g)) : []), [ai, brandSet]);
 
-export default function Home() {
-  const brands = [...new Set(parts.map((p) => p.brand))];
-  const total = parts.length;
+  const modelCards = useMemo(() => {
+    if (sel.productType !== "Tapware" || !sel.brand) return [];
+    const cat = modelsByBrand[sel.brand];
+    if (cat && cat.length) return cat.map((mo) => ({ model: mo.model, photo: mo.photo, size: mo.size, cartPart: mo.cartPart, buyUrl: mo.buyUrl, exploded: mo.exploded, confirm: mo.confirm }));
+    const rows = applyFilters(parts, sel).filter((p) => p.tapPhoto && p.category === "Cartridge");
+    const byRange = new Map();
+    for (const p of rows) if (!byRange.has(p.range)) byRange.set(p.range, { model: p.range, photo: p.tapPhoto, size: p.dimension, cartPart: p.partNumber, buyUrl: p.buyUrl, exploded: p.explodedUrl, confirm: false });
+    return [...byRange.values()];
+  }, [sel]);
+
+  const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setVmatch(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
+  const back = () => { setForceResults(false); setSkipModel(false); if (vmatch) { setVmatch(null); return; } if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
+  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); };
+
+  function pickModel(card, brandOverride) {
+    const brand = brandOverride || card.brand || sel.brand;
+    const found = card.cartPart ? parts.filter((p) => p.partNumber === card.cartPart) : [];
+    let res;
+    if (found.length) res = found.map((p) => ({ ...p, range: card.model, tapPhoto: card.photo || p.tapPhoto, explodedUrl: p.explodedUrl || card.exploded }));
+    else res = [{ id: "m-" + card.model, brand: brand, range: card.model, component: card.size ? card.size + " ceramic cartridge" : "Replacement cartridge", category: "Cartridge", partNumber: card.cartPart || "", valveType: "", dimension: card.size || "", supersession: "", buyUrl: card.buyUrl, sourceUrl: card.buyUrl, verified: card.confirm ? "" : "Y", notes: card.confirm ? "Cartridge size from a retailer listing — confirm before ordering." : "This model uses a standard cartridge of this size; the maker doesn't sell a separate cartridge code.", photo: "", tapPhoto: card.photo, productType: "Tapware", valveFamily: "", explodedUrl: card.exploded }];
+    setModelResult(res);
+  }
+
+  function onPickMatch(m) {
+    setVmatch(null);
+    if (m.kind === "part" && m.part) { setAnswers([{ field: "productType", value: m.part.productType || "Valve" }, { field: "brand", value: m.brand }]); setModelResult([m.part]); return; }
+    if (m.kind === "cart" && m.card) { setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand || "Universal" }]); setModelResult([m.card]); return; }
+    setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand }]);
+    pickModel(m, m.brand);
+  }
+
+  function onPhoto(e) {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    setFile(f); setPhoto(URL.createObjectURL(f)); setAi(null); setModelResult(null);
+  }
+
+  async function runIdentify() {
+    if (!file || analysing) return;
+    setAi(null); setAnalysing(true); setModelResult(null);
+    try {
+      const dataUrl = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+      const base64 = String(dataUrl).split(",")[1];
+      const mediaType = (String(dataUrl).match(/data:(.*?);/) || [])[1] || "image/jpeg";
+      const resp = await fetch("/api/identify", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType }) });
+      const j = await resp.json();
+      if (!resp.ok && j && (j.error === "rate_limited" || j.error === "image_too_large")) { setAi({ status: "notice", message: j.message }); return; }
+      if (!j || j.configured === false) { setAi({ status: "off" }); return; }
+      if (j.error) { setAi({ status: "error" }); return; }
+      setAi(j);
+      const pref = detectionsToAnswers(parts, j);
+      try {
+        const bg = [j.brand, ...(Array.isArray(j.brandGuesses) ? j.brandGuesses : [])].filter(Boolean);
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType, type: inferType(j), brandGuesses: bg }) });
+        const mj = await mResp.json();
+        if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
+          const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
+          if (top.length) setVmatch(top);
+        }
+      } catch { /* visual match is best-effort; ignore failures */ }
+      if (pref.length) { setForceResults(false); setAnswers(pref); }
+    } catch { setAi({ status: "error" }); } finally { setAnalysing(false); }
+  }
+
+  const stage = analysing ? "loading"
+    : (vmatch && vmatch.length) ? "matches"
+    : modelResult ? "modelresult"
+    : !sel.productType ? "type"
+    : ((sel.productType === "Valve" || sel.productType === "Toilet") && !sel.valveFamily) ? "family"
+    : !sel.brand ? "brand"
+    : (sel.productType === "Tapware" && !skipModel && modelCards.length >= 1) ? "model"
+    : (forceResults || !q) ? "results" : "question";
+
+  const matches = pool;
+
   return (
-    <main>
-      <section className="hero apphero">
-        <div className="container heroGrid">
-          <div className="heroCopy">
-            <span className="pill">Built for NZ &amp; Australian plumbers</span>
-            <h1>Snap a tap. Get the exact spare part.</h1>
-            <p>
-              Stop guessing at the merchant counter. Photograph the tap or the removed cartridge,
-              tell us the size, and get the exact part — with the part number and where to buy it.
+    <main className="finder">
+      <div className="container">
+        <h1 style={{ fontSize: 24, margin: "8px 0 2px" }}>Find your spare part</h1>
+        <p style={{ color: "var(--muted)", marginTop: 0 }}>Snap or upload a photo, or pick your way to the exact part.</p>
+
+        {ai && ai.description && !analysing && stage !== "results" && stage !== "modelresult" && (
+          <div className="aibar">
+            <b>From your photo:</b> {ai.description}
+            {ai.handleDesign ? <div className="reads"><span><b>Handle:</b> {ai.handleDesign}</span>{ai.spoutShape ? <span><b>Spout:</b> {ai.spoutShape}</span> : null}</div> : null}
+          </div>
+        )}
+        {ai && ai.status === "off" && <div className="aibar muted">Photo recognition isn&apos;t switched on yet — pick your brand below.</div>}
+        {ai && ai.status === "error" && <div className="aibar muted">Couldn&apos;t read that photo — pick your brand below.</div>}
+        {ai && ai.status === "notice" && <div className="aibar muted">{ai.message || "Please try again in a moment."} You can also pick your brand below.</div>}
+
+        <div className="crumbs">
+          {answers.map((a) => (<span className="crumb" key={a.field}>{FIELD_LABEL[a.field]}: <b>{a.value}</b></span>))}
+          {modelResult && <span className="crumb">Model: <b>{modelResult[0].range}</b></span>}
+          {(answers.length > 0 || modelResult) && (<><button className="crumb" onClick={back}>← Back</button><button className="crumb" onClick={reset}>Start over</button></>)}
+        </div>
+
+        {stage === "loading" && (
+          <div className="panel">
+            <div className="loadcard">
+              <span className="spin big" />
+              <div>
+                <b>Identifying your tap…</b>
+                <div className="sub">Reading the shape, then comparing it against our catalogue photos. This takes a few seconds.</div>
+              </div>
+            </div>
+            {photo && <img src={photo} className="thumb" alt="your tap" style={{ marginTop: 12 }} />}
+          </div>
+        )}
+
+        {stage === "type" && (
+          <div className="panel">
+            <div className="uploader">
+              <div className="icon">📷</div>
+              <div className="txt">
+                <b>{analysing ? "Analysing your photo…" : "Fixing a tap? Show us a photo"}</b>
+                {analysing ? "Reading the handle and spout to guess the brand." : "We guess the brand, then you pick the exact model."}
+              </div>
+              <div className="upbtns">
+                <label className="btn btn-ghost">📷 Take photo<input type="file" accept="image/*" capture="environment" onChange={onPhoto} style={{ display: "none" }} /></label>
+                <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} /></label>
+              </div>
+              {photo && <img src={photo} className="thumb" alt="your part" />}
+              {photo && <button className="btn btn-primary goid" onClick={runIdentify} disabled={analysing}>{analysing ? <><span className="spin" /> Identifying…</> : "🔍 Identify this tap"}</button>}
+            </div>
+            {analysing && (
+              <div className="loadcard">
+                <span className="spin big" />
+                <div>
+                  <b>Identifying your tap…</b>
+                  <div className="sub">Reading the shape, then comparing it against our catalogue photos. This takes a few seconds.</div>
+                </div>
+              </div>
+            )}
+            <h2>What are you fixing?</h2>
+            <div className="grid">
+              <button className="opt bigopt" onClick={() => add("productType", "Tapware")}>🚰 Tap / mixer <span className="c">{parts.filter((p) => p.productType === "Tapware").length}</span></button>
+              <button className="opt bigopt" onClick={() => add("productType", "Valve")}>🎛 Valve <span className="c">{parts.filter((p) => p.productType === "Valve").length}</span></button>
+              <button className="opt bigopt" onClick={() => add("productType", "Toilet")}>🚽 Toilet <span className="c">{parts.filter((p) => p.productType === "Toilet").length}</span></button>
+            </div>
+          </div>
+        )}
+
+        {stage === "family" && (
+          <div className="panel">
+            <h2>{sel.productType === "Toilet" ? "What toilet part?" : "What kind of valve?"}</h2>
+            <p className="sub">{sel.productType === "Toilet" ? "Inlet (fill) and outlet (flush) valves are matchable exactly; seats are matched by fixing type and shape." : "Tempering valves reduce hot-water temperature; the others control pressure and relief."}</p>
+            <div className="grid">
+              {distinctValues(applyFilters(parts, { productType: sel.productType }), "valveFamily").map((o) => (
+                <button className="opt" key={o.value} onClick={() => add("valveFamily", o.value)}>{o.value} <span className="c">{o.count}</span></button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {stage === "brand" && (
+          <div className="panel">
+            {sel.productType === "Tapware" && guesses.length > 0 && (
+              <div className="guessrow">
+                <span className="glabel">Looks like:</span>
+                {guesses.map((g) => (<button key={g} className="opt guess" onClick={() => add("brand", g)}>{g}</button>))}
+                <span className="ghint">— tap one, or pick from the list</span>
+              </div>
+            )}
+            <h2>Which brand is it?</h2>
+            <p className="sub">{sel.productType === "Tapware" ? <>Look for a name on the tap, handle or flange. No name? Pick <b>Universal</b>.</> : "Check the valve body or label for the maker."}</p>
+            <input className="brandfilter" type="text" inputMode="search" placeholder="🔍 Start typing your brand…" value={bFilter} onChange={(e) => setBFilter(e.target.value)} />
+            {(() => {
+              const t = bFilter.trim().toLowerCase();
+              const shown = t ? brands.filter((b) => b.brand.toLowerCase().includes(t)) : brands;
+              return shown.length ? (
+                <div className="grid">
+                  {shown.map((b) => (<button className="opt" key={b.brand} onClick={() => { setBFilter(""); add("brand", b.brand); }}>{b.brand} <span className="c">{b.count}</span></button>))}
+                </div>
+              ) : (
+                <p className="sub" style={{ marginTop: 10 }}>No brand matches &ldquo;{bFilter.trim()}&rdquo;. Try fewer letters, or pick <b>Universal</b> once you clear the box.</p>
+              );
+            })()}
+          </div>
+        )}
+
+        {stage === "matches" && (
+          <div className="panel">
+            <div className="matchhead">
+              {photo && <img src={photo} className="thumb" alt="your tap" />}
+              <div>
+                <h2>Closest matches to your photo</h2>
+                <p className="sub">Ranked by how closely each matches your tap. Pick the right one — or browse all brands.</p>
+              </div>
+            </div>
+            <div className="models">
+              {vmatch.map((m) => (
+                <button className="modelcard" key={m.brand + m.model} onClick={() => onPickMatch(m)}>
+                  <div className="mimg">{m.photo ? <img src={m.photo} alt={m.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
+                  <div className="minfo">
+                    <div className="mname">{m.brand} {m.model}</div>
+                    <div className={m.same ? "mscore good" : "mscore"}>{m.same ? "Strong match" : "Possible"} · {Math.round(m.score)}%</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="toolbar">
+              <button className="btn btn-ghost" onClick={() => setVmatch(null)}>None of these — browse brands</button>
+              <button className="btn btn-ghost" onClick={reset}>Start over</button>
+            </div>
+            <p className="feedback-row">
+              None of these right, or your part isn&apos;t listed?{" "}
+              <a href="mailto:myhappyplace@web.de?subject=TapSnap%20%E2%80%94%20wrong%20or%20missing%20part&body=Tell%20us%20what%20you%20were%20looking%20for%20(brand%20and%20model%20if%20known)%2C%20and%20attach%20your%20photo%20if%20you%20can%3A%0A%0A">Tell us</a>{" "}
+              and we&apos;ll add it.
             </p>
-            <div className="storebadges">
-              <Link href="/find" className="storebadge" aria-label="App Store — coming soon">
-                <AppleBadge />
-                <span className="soon">Coming soon</span>
-              </Link>
-              <Link href="/find" className="storebadge" aria-label="Google Play — coming soon">
-                <GoogleBadge />
-                <span className="soon">Coming soon</span>
-              </Link>
-            </div>
-            <div className="actions">
-              <Link href="/find" className="btn btn-primary">📷 Use it now — free in your browser</Link>
-            </div>
-            <p className="installhint">On your phone? Open TapSnap and tap <b>Add to Home Screen</b> to install it like an app — no store needed.</p>
           </div>
-          <div className="heromock">
-            <PhoneMock />
-          </div>
-        </div>
-      </section>
+        )}
 
-      <section className="section" id="how">
-        <div className="container">
-          <h2>How it works</h2>
-          <p className="lead">No account, no manuals — just a couple of taps.</p>
-          <div className="steps">
-            <div className="step">
-              <div className="n">1</div>
-              <h3>Snap or pick your brand</h3>
-              <p>Photograph the tap or the removed cartridge, or just pick the brand. No brand name? Choose Universal.</p>
+        {stage === "model" && (
+          <div className="panel">
+            <h2>Which of these is your tap?</h2>
+            <p className="sub">Recognise it by shape — the model tells us the cartridge, so you won&apos;t need to measure. Not sure? Skip and go by size.</p>
+            <div className="models">
+              {modelCards.map((mo) => (
+                <button className="modelcard" key={mo.model} onClick={() => pickModel(mo)}>
+                  <div className="mimg">{mo.photo ? <img src={mo.photo} alt={mo.model} loading="lazy" /> : <span className="mph">no photo yet</span>}</div>
+                  <div className="minfo">
+                    <div className="mname">{mo.model}</div>
+                    {(mo.size || mo.cartPart) && <div className="mhint">→ {[mo.size, mo.cartPart].filter(Boolean).join(" ")}{mo.confirm ? " ?" : ""}</div>}
+                  </div>
+                </button>
+              ))}
             </div>
-            <div className="step">
-              <div className="n">2</div>
-              <h3>Give us the size</h3>
-              <p>Almost every single-lever mixer takes a cartridge, so the size is what matters — measure the diameter (25, 35, 40 or 45mm).</p>
-            </div>
-            <div className="step">
-              <div className="n">3</div>
-              <h3>Get the exact part</h3>
-              <p>See the part number, a reference photo to confirm the match, any supersession, and a link to buy it.</p>
+            <div className="toolbar">
+              <button className="btn btn-ghost" onClick={() => setSkipModel(true)}>Not sure — go by size instead</button>
+              <button className="btn btn-ghost" onClick={back}>Back</button>
             </div>
           </div>
-        </div>
-      </section>
+        )}
 
-      <section className="section" style={{ background: "#fff", borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)" }}>
-        <div className="container">
-          <h2>{brands.length} brands, {total}+ genuine parts and growing</h2>
-          <p className="lead">Every part number is sourced from a manufacturer or retailer listing — nothing made up.</p>
-          <div className="brands">{brands.map((b) => (<span className="brand-chip" key={b}>{b}</span>))}</div>
-          <p className="note">Starting with tapware spares. Hot water / califonts, cylinders and fittings are on the roadmap.</p>
-        </div>
-      </section>
+        {stage === "question" && q && (
+          <div className="panel">
+            <h2>{sel.productType === "Toilet" && q.field === "dimension" ? "Which type is it?" : q.label}</h2>
+            <p className="sub">{q.remaining} possible parts so far — pick one to narrow it down.</p>
+            {q.field === "dimension" && sel.productType === "Tapware" && <MeasureHelp />}
+            <div className="grid">
+              {q.options.map((o) => (<button className="opt" key={o.value} onClick={() => add(q.field, o.value)}>{o.value} <span className="c">{o.count}</span></button>))}
+            </div>
+            <div className="toolbar">
+              <button className="btn btn-primary" onClick={() => setForceResults(true)}>Show matching parts ({matches.length})</button>
+              <button className="btn btn-ghost" onClick={back}>Back</button>
+            </div>
+          </div>
+        )}
 
-      <section className="section">
-        <div className="container" style={{ textAlign: "center" }}>
-          <h2>Ready to find a part?</h2>
-          <p className="lead" style={{ marginBottom: 20 }}>It takes about ten seconds.</p>
-          <Link href="/find" className="btn btn-primary">📷 Snap a photo</Link>
-        </div>
-      </section>
+        {(stage === "results" || stage === "modelresult") && (
+          <div className="results">
+            {(() => { const list = modelResult || matches; return (<>
+              <h2>{list.length} matching part{list.length === 1 ? "" : "s"}</h2>
+              <p className="sub">{list.length > 1 ? "These all fit. Check the photo (and diagram) against yours." : "Here is your part — check it against yours."}</p>
+              <div className="cards">{list.map((p) => <PartCard key={p.id} p={p} />)}</div>
+              <div className="toolbar">
+                <button className="btn btn-ghost" onClick={back}>← Back</button>
+                <button className="btn btn-ghost" onClick={reset}>Start over</button>
+              </div>
+            </>); })()}
+          </div>
+        )}
+      </div>
     </main>
+  );
+}
+
+function PartCard({ p }) {
+  const verified = p.verified === "Y";
+  const pn = p.partNumber || (p.dimension ? p.dimension + " cartridge" : "Cartridge");
+  const spareImg = p.photo || (cartimg.byCode && cartimg.byCode[p.partNumber]) || (cartimg.bySize && cartimg.bySize[p.dimension]) || "";
+  return (
+    <div className="card">
+      <div className="imgs">
+        <figure className="imgfig">
+          <div className="imgwrap">{spareImg ? <img src={spareImg} alt={p.component} loading="lazy" /> : <span className="ph">{p.category}</span>}</div>
+          <figcaption>{p.productType === "Valve" ? "The part" : "Spare part"}</figcaption>
+        </figure>
+        {p.tapPhoto && (
+          <figure className="imgfig">
+            <div className="imgwrap"><img src={p.tapPhoto} alt="the tap this fits" loading="lazy" /></div>
+            <figcaption>Fits this tap</figcaption>
+          </figure>
+        )}
+      </div>
+      <div className="body">
+        <div className="pn">{pn}</div>
+        <div className="name">{p.component}</div>
+        {p.range && <div className="fits">Fits: {p.range}</div>}
+        <div className="chips">
+          {p.valveFamily && <span className="chip">{p.valveFamily}</span>}
+          {p.valveType && <span className="chip">{p.valveType}</span>}
+          {p.dimension && <span className="chip">{p.dimension}</span>}
+          <span className="chip">{p.brand}</span>
+        </div>
+        <span className={"badge " + (verified ? "v" : "d")}>{verified ? "✓ Verified source" : "⚠ Confirm fit"}</span>
+        {p.notes && <div className="note2">{p.notes}</div>}
+        {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
+        <div className="foot">
+          {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
+          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Diagram</a>}
+          {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
+        </div>
+      </div>
+    </div>
   );
 }
