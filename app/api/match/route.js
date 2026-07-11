@@ -80,7 +80,8 @@ function cardFromRow(row, component) {
 function candFromRow(row) {
   const cat = String(row.category || "").toLowerCase();
   if (cat === "cartridge") return { kind: "cart", brand: row.brand || "", model: row.model, photo: row.photo_url, card: cardFromRow(row, "Ceramic disc cartridge") };
-  if (cat === "mixer") return { kind: "tap", brand: row.brand, model: row.model, photo: row.photo_url, size: row.size, cartPart: row.part_no, buyUrl: row.buy_url, exploded: row.exploded, confirm: row.confirm };
+  // Any mixer/tap variant (basin mixer, shower mixer, sink mixer, bath mixer, combos) renders as a tap.
+  if (cat.includes("mixer") || cat === "tap") return { kind: "tap", brand: row.brand, model: row.model, photo: row.photo_url, size: row.size, cartPart: row.part_no, buyUrl: row.buy_url, exploded: row.exploded, confirm: row.confirm };
   return { kind: "part", brand: row.brand || "", model: row.model, photo: row.photo_url, part: cardFromRow(row) };
 }
 async function recallDB(qvec, topN) {
@@ -93,14 +94,34 @@ async function recallDB(qvec, topN) {
   for (const row of data) {
     let c = row.source_key ? resolveKey(row.source_key) : null; // rich card from bundled data when available
     if (!c) c = candFromRow(row);                                 // else build straight from the DB row (e.g. newly ingested)
-    if (c && c.photo) out.push(c);
+    if (c && c.photo) { c.cat = String(row.category || "").toLowerCase(); out.push(c); }
   }
   return out;
+}
+
+// A basin mixer and its matching shower mixer are sold as a styled PAIR (same handle, near-identical
+// faceplate), so raw visual similarity alone confuses them. Once the vision step tells us the fixture,
+// keep only candidates of that fixture when we have enough of them.
+function narrowByFixture(cands, type) {
+  if (!type || !Array.isArray(cands) || !cands.length) return cands;
+  const hit = cands.filter((c) => (c.cat || "").includes(type));
+  const rest = cands.filter((c) => !(c.cat || "").includes(type));
+  if (hit.length >= 6) return hit;
+  if (hit.length) return [...hit, ...rest];
+  return cands;
 }
 
 // ---------- Claude vision rerank ----------
 const SYSTEM = `You are a plumbing tapware visual-matching expert. A CUSTOMER PHOTO of a tap/mixer is shown first, then several numbered CATALOGUE photos of known products.
 Judge which catalogue products are the SAME physical tap design as the customer's: overall silhouette/proportions; spout shape and cross-section; handle/lever design and position; mount type. Ignore finish/colour, background, angle, lighting.
+
+CRITICAL - FIXTURE TYPE COMES FIRST. Within a tapware range the manufacturer sells a BASIN mixer and a SHOWER mixer as a matched pair: identical handle and near-identical faceplate. They are DIFFERENT products and must never be matched to each other. Decide the fixture BEFORE judging style:
+- BASIN mixer: a body standing on the basin/vanity WITH A SPOUT that water pours from.
+- SHOWER mixer: mounted IN THE WALL - just a round or square faceplate plus a handle, and NO spout.
+- SINK/kitchen mixer: tall or gooseneck spout, often a pull-out spray, over a kitchen sink.
+- BATH mixer: spout over a bath, or wall-mounted with a bath spout.
+A candidate whose FIXTURE differs from the customer photo must score below 30 and same=false, no matter how alike the handle or faceplate looks.
+
 Return STRICT JSON only: {"ranked":[{"id":<number>,"score":<0-100>,"same":<true|false>,"reason":"<max 8 words>"}]}
 - Include every candidate id (1..N) once, sorted by score descending. score = visual-design similarity. same = true only if very likely the same product. Be discriminating.`;
 async function toInline(photo) {
@@ -194,12 +215,13 @@ export async function POST(request) {
     if (jkey) {
       const qv = await embedQuery(jkey, data, mediaType);
       if (qv) {
-        let cands = await recallDB(qv, 18);            // Supabase pgvector (live catalogue, no redeploy)
+        let cands = await recallDB(qv, 40);            // Supabase pgvector (live catalogue, no redeploy)
         let src = "db";
+        if (cands) cands = narrowByFixture(cands, type);  // basin vs shower vs sink vs bath
         if (!cands && embeddings && embeddings.length > 5) { cands = recall(qv, type, 18); src = "bundled"; }
         if (cands && cands.length >= 2) {
           const rr = await rerank(key, data, mediaType, cands.slice(0, 12));
-          if (rr && rr.length) { ranked = rr; stage = "embed+rerank:" + src; }
+          if (rr && rr.length) { ranked = rr; stage = "embed+rerank:" + src + (type ? ":" + type : ""); }
         }
       }
     }
