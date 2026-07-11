@@ -9,6 +9,7 @@ import models from "../../../lib/models.json";
 import parts from "../../../lib/parts.json";
 import cartimg from "../../../lib/cartimg.json";
 import embeddings from "../../../lib/embeddings.json";
+import { sbAdmin, sbRead } from "../../../lib/supabase.js";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -68,6 +69,32 @@ function recall(qvec, type, topN) {
   scored.sort((a, b) => b.s - a.s);
   const out = []; const seen = new Set();
   for (const r of scored) { if (seen.has(r.k)) continue; seen.add(r.k); const c = resolveKey(r.k); if (c && c.photo) out.push(c); if (out.length >= topN) break; }
+  return out;
+}
+
+// ---------- Supabase pgvector recall (scales to 100k+, no redeploy to add items) ----------
+function cap(s) { s = String(s || ""); return s ? s[0].toUpperCase() + s.slice(1) : s; }
+function cardFromRow(row, component) {
+  return { id: "db-" + row.id, brand: row.brand || "", range: row.fits || "", component: component || row.model, category: cap(row.category), partNumber: row.part_no || "", valveType: "", dimension: row.size || "", supersession: "", buyUrl: row.buy_url || "", sourceUrl: row.buy_url || "", verified: "Y", notes: row.confirm ? "Confirm the size and fit before ordering." : "", photo: row.photo_url, tapPhoto: "", productType: "Tapware", valveFamily: "", explodedUrl: row.exploded || "" };
+}
+function candFromRow(row) {
+  const cat = String(row.category || "").toLowerCase();
+  if (cat === "cartridge") return { kind: "cart", brand: row.brand || "", model: row.model, photo: row.photo_url, card: cardFromRow(row, "Ceramic disc cartridge") };
+  if (cat === "mixer") return { kind: "tap", brand: row.brand, model: row.model, photo: row.photo_url, size: row.size, cartPart: row.part_no, buyUrl: row.buy_url, exploded: row.exploded, confirm: row.confirm };
+  return { kind: "part", brand: row.brand || "", model: row.model, photo: row.photo_url, part: cardFromRow(row) };
+}
+async function recallDB(qvec, topN) {
+  const sb = sbAdmin() || sbRead();
+  if (!sb) return null;
+  const vecStr = "[" + Array.from(qvec).join(",") + "]";
+  const { data, error } = await sb.rpc("match_products", { query_embedding: vecStr, match_count: topN, filter_category: null });
+  if (error || !Array.isArray(data)) return null;
+  const out = [];
+  for (const row of data) {
+    let c = row.source_key ? resolveKey(row.source_key) : null; // rich card from bundled data when available
+    if (!c) c = candFromRow(row);                                 // else build straight from the DB row (e.g. newly ingested)
+    if (c && c.photo) out.push(c);
+  }
   return out;
 }
 
@@ -164,13 +191,15 @@ export async function POST(request) {
   let ranked = [], stage = "fallback";
   const jkey = keyJina();
   try {
-    if (jkey && embeddings && embeddings.length > 5) {
+    if (jkey) {
       const qv = await embedQuery(jkey, data, mediaType);
       if (qv) {
-        const cands = recall(qv, type, 18);            // whole-catalogue nearest neighbours
-        if (cands.length >= 2) {
+        let cands = await recallDB(qv, 18);            // Supabase pgvector (live catalogue, no redeploy)
+        let src = "db";
+        if (!cands && embeddings && embeddings.length > 5) { cands = recall(qv, type, 18); src = "bundled"; }
+        if (cands && cands.length >= 2) {
           const rr = await rerank(key, data, mediaType, cands.slice(0, 12));
-          if (rr && rr.length) { ranked = rr; stage = "embed+rerank"; }
+          if (rr && rr.length) { ranked = rr; stage = "embed+rerank:" + src; }
         }
       }
     }
