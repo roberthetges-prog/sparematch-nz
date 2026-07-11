@@ -58,10 +58,9 @@ export async function GET(request) {
   const key = keyJina();
   if (!key) return Response.json({ error: "no JINA_API_KEY" }, { status: 400 });
   const url = new URL(request.url);
-  // TEMP: gate reopened for a one-off re-embed of new Felton models (size-capped). Re-lock after.
   const admin = (process.env.EMBED_TOKEN || "").trim();
   const given = (url.searchParams.get("key") || "").trim();
-  if (admin && given !== admin) return Response.json({ error: "forbidden" }, { status: 403 });
+  if (!admin || given !== admin) return Response.json({ error: "forbidden" }, { status: 403 });
   const start = parseInt(url.searchParams.get("start") || "0", 10);
   const count = Math.min(Math.max(parseInt(url.searchParams.get("count") || "20", 10) || 20, 1), 60);
 
