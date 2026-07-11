@@ -98,6 +98,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   .nav a{margin-left:12px}
   .upbtns{margin-left:0;width:100%;margin-top:8px}
   .upbtns .btn{flex:1 1 auto;justify-content:center}
+  .uploader{flex-direction:column;align-items:stretch;gap:10px}
+  .uploader .icon{display:none}
+  .uploader .txt{width:100%}
+  .uploader .thumb{align-self:center;width:72px;height:72px;margin-top:2px}
+  .uploader .goid{margin-top:2px}
   .guessrow{gap:6px}
   .models{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
 }
