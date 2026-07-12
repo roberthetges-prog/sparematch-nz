@@ -31,7 +31,7 @@ async function runBackfill(limit) {
   const sb = sbAdmin(); if (!sb) return { error: "db not configured", status: 500 };
   const jkey = keyJina(); if (!jkey) return { error: "no JINA_API_KEY", status: 500 };
   const lim = Math.min(Math.max(parseInt(limit || "40", 10) || 40, 1), 40);
-  const { data: rows, error: selErr } = await sb.from("products").select("id,photo_url").is("embedding", null).not("photo_url", "is", null).order("id", { ascending: false }).limit(lim);
+  const { data: rows, error: selErr } = await sb.from("products").select("id,photo_url").is("embedding", null).not("photo_url", "is", null).not("photo_url", "is", null).order("id", { ascending: false }).limit(lim);
   if (selErr) return { error: selErr.message, status: 500 };
   let done = 0; const errors = [];
   for (const r of rows || []) {
@@ -42,7 +42,7 @@ async function runBackfill(limit) {
     const { error } = await sb.from("products").update({ embedding: "[" + vec.join(",") + "]" }).eq("id", r.id);
     if (error) errors.push({ id: r.id, e: error.message }); else done++;
   }
-  const { count: remaining } = await sb.from("products").select("*", { count: "exact", head: true }).is("embedding", null);
+  const { count: remaining } = await sb.from("products").select("*", { count: "exact", head: true }).is("embedding", null).not("photo_url", "is", null);
   return { processed: (rows || []).length, embedded: done, remaining, errors, status: 200 };
 }
 
