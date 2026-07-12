@@ -1,11 +1,12 @@
 // Claude vision endpoint: classifies a tap/part photo into our schema.
-// Keeps the API key server-side. Returns {configured:false} gracefully if no key set,
-// so the site keeps working (question-only flow) until a key is added in Vercel.
+// v2: accepts ONE OR TWO angles of the same tap. Two angles let the model see the spout
+// profile AND the handle join, and give it a second chance at any stamped brand name -
+// which is the single most reliable identification signal there is.
+// Returns one box PER image so the client can crop each angle to the tap.
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-// Try these in order; use the first the account has access to. Override with VISION_MODEL.
 const MODELS = process.env.VISION_MODEL
   ? [process.env.VISION_MODEL]
   : ["claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-4-8"];
@@ -25,56 +26,55 @@ const BRANDS = [
 const CATEGORIES = ["Cartridge","Spindle","Headwork","Washer/Seal","Aerator","Handle","Tool","Other"];
 const VALVES = ["ceramic disc","washer spindle","half-turn","quarter-turn","thermostatic"];
 
-const SYSTEM = `You are a New Zealand plumbing spare-parts assistant. You are shown a photo of a tap/mixer or a removed tap part.
-Return STRICT JSON, no prose:
-{"brand": string, "brandGuesses": string[], "fixture": string, "box": {"x": number, "y": number, "w": number, "h": number}, "markings": string[], "category": string, "valveType": string, "dimension": string, "leverType": string, "handleDesign": string, "spoutShape": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}
+const SYSTEM = [
+  "You are a New Zealand plumbing spare-parts assistant. You are shown ONE or TWO photos of the SAME tap/mixer (or a removed part), taken from different angles.",
+  "Return STRICT JSON, no prose:",
+  '{"brand": string, "brandGuesses": string[], "fixture": string, "boxes": [{"x":num,"y":num,"w":num,"h":num}], "markings": string[], "category": string, "valveType": string, "dimension": string, "leverType": string, "handleDesign": string, "spoutShape": string, "distinctive": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}',
+  "",
+  "READ ANY TEXT FIRST - THIS BEATS EVERYTHING ELSE. Scan both photos for a brand name or model stamped, etched, printed or moulded anywhere: the front of the lever, the top of the body, under the spout, on the base ring, on a sticker. Put every legible string you can read into markings, exactly as written. A legible name on the part outranks ANY judgement you make from shape - if you can read it, the identification is settled.",
+  "",
+  "USE BOTH ANGLES TOGETHER. They show the same physical tap. One angle usually hides something the other reveals - a straight-on shot shows the spout profile, a top-down shot shows the lever and the base. Combine them. If the two photos disagree about a detail, trust the photo where that detail is clearer, and lower your confidence.",
+  "",
+  "FIXTURE TYPE IS CRITICAL - get this right before anything else. Manufacturers sell the basin mixer and the shower mixer of a range as a matched PAIR: same handle, near-identical faceplate. The ONLY reliable difference is the spout and where it mounts. Set fixture to exactly one of basin, shower, sink, bath, toilet, or empty string if the photo is a loose part (cartridge, spindle, valve) rather than an installed tap.",
+  "- basin: body sits ON the basin/vanity and HAS A SPOUT that water pours from.",
+  "- shower: mounted IN THE WALL - just a round/square faceplate and a handle, NO SPOUT at all.",
+  "- sink: kitchen tap - tall or gooseneck spout, often a pull-out spray.",
+  "- bath: spout filling a bath.",
+  "If you see a wall plate with a handle and no spout, it is shower - never basin.",
+  "",
+  "LOCATE THE PRODUCT. For EACH photo you are given, in order, return one entry in boxes: a tight bounding box around the tap/part itself as fractions of that image (x,y = top-left, w,h = width/height, all 0-1). Exclude the basin, bench, tiles and background. If you are shown two photos, boxes must have two entries.",
+  "",
+  "IDENTIFYING THE BRAND from shape is the hardest and least reliable part. The strongest visual clues, in order:",
+  "1. THE HANDLE DESIGN - lever vs cross-head vs pin lever vs joystick; the lever's shape (flat paddle, rounded, angular/squared, tapered, knurled); how it meets the body; any distinctive curve or notch. Describe it in handleDesign.",
+  "2. THE SPOUT SHAPE - gooseneck vs straight vs squared vs low-arc; round vs flat/rectangular in section; how it joins the body. Describe it in spoutShape.",
+  "Reason about which brand these cues most resemble, choosing only from: " + BRANDS.join(", ") + ".",
+  "",
+  "DISTINCTIVE FEATURE. In distinctive, name the ONE feature of this tap that would rule other models OUT - the thing that is unusual about it (e.g. 'spout is square in cross-section', 'lever is a flat paddle mounted on top', 'body tapers towards the base', 'exposed hex nut under the spout'). If the tap is a completely generic cylindrical mixer with nothing unusual, say exactly: generic. Being honest here is more valuable than inventing a feature.",
+  "",
+  "Rules:",
+  "- brand: set ONLY if a name/logo is legibly visible in one of the photos. If you are inferring it from styling, leave brand empty and put your candidates in brandGuesses instead. Do not dress a guess up as a reading.",
+  "- brandGuesses: ALWAYS give your best 1-2 candidate brands from the list based on handle and spout design, even when unsure. Use [] only if you truly cannot tell.",
+  "- confidence: high ONLY if you read a brand name, or the tap has a genuinely distinctive silhouette. If it is a generic cylindrical single-lever mixer - the commonest shape in New Zealand - confidence is low, and that is the correct answer.",
+  "- Most single-lever mixers are repaired with a CARTRIDGE, so set category to Cartridge for a single-lever tap or a cylindrical cartridge.",
+  "- category one of " + CATEGORIES.join(", ") + "; valveType one of " + VALVES.join(", ") + " if clear.",
+  "- leverType: single-lever / two-handle / empty.",
+  "- dimension: DO NOT guess mm from the photo (no scale reference). Only fill if a size is physically printed and legible; else empty.",
+  "- measureTip: one line reminding the user to measure the cartridge body diameter (25/35/40/45mm) for the exact part.",
+  "- description: one short sentence for the user.",
+  "- Never invent a brand, part number or marking. Prefer empty over guessing something you cannot see.",
+].join("\n");
 
-FIXTURE TYPE IS CRITICAL - get this right before anything else. Manufacturers sell the basin mixer and the shower mixer of a range as a matched PAIR: same handle, near-identical faceplate. The ONLY reliable difference is the spout and where it mounts. Set "fixture" to exactly one of "basin", "shower", "sink", "bath", "toilet", or "" if the photo is a loose part (cartridge, spindle, valve) rather than an installed fixture.\n- "toilet": a toilet pan, cistern or WC suite. Use this whenever a toilet is shown, even partially. In "description" name the SEAT SHAPE (D-shape / square / oval / round) and the FLUSH BUTTON style (round twin / square twin / rectangular plate / single) - those two separate one toilet from another. Do NOT state bottom or back inlet: it is invisible in a photo and we ask the user.
-- "basin": body sits ON the basin/vanity and HAS A SPOUT that water pours from.
-- "shower": mounted IN THE WALL - just a round/square faceplate and a handle, NO SPOUT at all.
-- "sink": kitchen tap - tall or gooseneck spout, often a pull-out spray.
-- "bath": spout filling a bath (often wall-mounted with a separate bath spout).
-If you see a wall plate with a handle and no spout, it is "shower" - never "basin".
-
-LOCATE THE PRODUCT. Set "box" to the tight bounding box of the tap/part ITSELF (exclude the basin, bench, tiles, wall and any background). Use fractions of the image: x and y are the top-left corner, w and h the width and height, each between 0 and 1. If the part fills the frame use {"x":0,"y":0,"w":1,"h":1}. Be tight but do not clip the spout, the handle or the base.
-
-READ ANY TEXT FIRST - THIS BEATS EVERYTHING ELSE. Manufacturers stamp, etch or print their name on the handle, the body, the faceplate, the aerator or the base. Zoom in mentally and read every character you can see, even if it is worn, upside down, at an angle, partly in shadow, or chipped. Put every legible word or code you can read into "markings" (e.g. ["METHVEN"], ["FELTON","CC35"]). If a brand name is legible ANYWHERE on the part, set "brand" to it and set confidence "high" - a name on the part outranks any judgement about its shape. Only fall back on shape when there is no readable text.
-
-IDENTIFYING THE BRAND is the hardest and most valuable part. The strongest visual clues, in order, are:
-1. THE HANDLE DESIGN — look hard at it: lever vs cross-head vs pin lever vs joystick; the lever's shape (flat paddle, rounded, angular/squared, tapered, knurled); how it meets the body; any distinctive curve or notch. Describe it in "handleDesign".
-2. THE SPOUT SHAPE — gooseneck/swan-neck vs straight vs squared vs low-arc; round vs flat/rectangular section; how it joins the body. Describe it in "spoutShape".
-Reason about which brand these design cues most resemble, choosing only from this list: ${BRANDS.join(", ")}.
-
-Rules:
-- brand: set ONLY if a name/logo is legibly visible OR the handle+spout design is a confident match. Otherwise "".
-- brandGuesses: ALWAYS give your best 1-2 candidate brands from the list based on the handle and spout design, even when unsure (this helps the user start). Use [] only if you truly cannot tell.
-- Most single-lever mixers are repaired with a CARTRIDGE, so set category to "Cartridge" for a single-lever tap or a cylindrical cartridge.
-- category one of ${CATEGORIES.join(", ")}; valveType one of ${VALVES.join(", ")} if clear.
-- leverType: "single-lever" / "two-handle" / "".
-- dimension: DO NOT guess mm from the photo (no scale reference). Only fill if a size is physically printed and legible; else "".
-- measureTip: one line reminding the user to measure the cartridge body diameter (25/35/40/45mm) for the exact part.
-- description: one short sentence for the user.
-- Never invent a brand or part number. Prefer "" / [] over guessing a name you are not seeing cues for.`;
-
-async function callModel(key, model, data, mediaType) {
+async function callModel(key, model, shots) {
+  const content = [];
+  shots.forEach((s, i) => {
+    content.push({ type: "text", text: shots.length > 1 ? "Photo " + (i + 1) + " of " + shots.length + " (same tap, different angle):" : "Photo of the part:" });
+    content.push({ type: "image", source: { type: "base64", media_type: s.mediaType || "image/jpeg", data: s.data } });
+  });
+  content.push({ type: "text", text: "Identify this plumbing part using ALL the photos above. Return only the JSON, with one box per photo." });
   return fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({
-      model,
-      max_tokens: 400,
-      temperature: 0,
-      system: SYSTEM,
-      messages: [
-        {
-          role: "user",
-          content: [
-            { type: "image", source: { type: "base64", media_type: mediaType || "image/jpeg", data } },
-            { type: "text", text: "Identify this plumbing part. Return only the JSON." },
-          ],
-        },
-      ],
-    }),
+    body: JSON.stringify({ model, max_tokens: 600, temperature: 0, system: SYSTEM, messages: [{ role: "user", content }] }),
   });
 }
 
@@ -82,7 +82,7 @@ async function callModel(key, model, data, mediaType) {
 const RL = { ip: new Map(), global: [] };
 const IP_MAX = 25, IP_WINDOW = 5 * 60 * 1000;
 const GLOBAL_MAX = 60, GLOBAL_WINDOW = 60 * 1000;
-const MAX_IMG = 9_000_000;
+const MAX_IMG = 9000000;
 function clientIp(request) {
   const h = request.headers;
   return ((h.get("x-forwarded-for") || "").split(",")[0].trim()) || h.get("x-real-ip") || "unknown";
@@ -98,31 +98,70 @@ function rateLimited(ip) {
   return false;
 }
 
+function okBox(b) {
+  if (!b || typeof b !== "object") return null;
+  const n = (v) => (Number.isFinite(+v) ? Math.max(0, Math.min(1, +v)) : null);
+  const x = n(b.x), y = n(b.y), w = n(b.w), h = n(b.h);
+  if (x === null || y === null || w === null || h === null) return null;
+  if (w < 0.05 || h < 0.05) return null;
+  return { x, y, w, h };
+}
+
 export async function POST(request) {
   const key = readKey();
   if (!key || !key.startsWith("sk-ant-")) return Response.json({ configured: false });
 
   let body;
   try { body = await request.json(); } catch { return Response.json({ configured: true, error: "bad request" }, { status: 400 }); }
-  const { data, mediaType } = body || {};
-  if (!data) return Response.json({ configured: true, error: "no image" }, { status: 400 });
-  if (typeof data === "string" && data.length > MAX_IMG) return Response.json({ configured: true, error: "image_too_large", message: "That image is too large — please try a smaller photo." }, { status: 413 });
-  if (rateLimited(clientIp(request))) return Response.json({ configured: true, error: "rate_limited", message: "You're going a bit fast — give it a few seconds and try again." }, { status: 429 });
+
+  // New: {images:[{data,mediaType}]}. Legacy: {data,mediaType}.
+  let shots = Array.isArray(body && body.images) ? body.images : [];
+  if (!shots.length && body && body.data) shots = [{ data: body.data, mediaType: body.mediaType }];
+  shots = shots.filter((s) => s && typeof s.data === "string" && s.data.length).slice(0, 2);
+  if (!shots.length) return Response.json({ configured: true, error: "no image" }, { status: 400 });
+  if (shots.some((s) => s.data.length > MAX_IMG)) return Response.json({ configured: true, error: "image_too_large", message: "That image is too large - please try a smaller photo." }, { status: 413 });
+  if (rateLimited(clientIp(request))) return Response.json({ configured: true, error: "rate_limited", message: "You're going a bit fast - give it a few seconds and try again." }, { status: 429 });
 
   let lastDetail = "";
   try {
     for (const model of MODELS) {
-      const resp = await callModel(key, model, data, mediaType);
+      const resp = await callModel(key, model, shots);
       if (resp.ok) {
         const json = await resp.json();
         const text = (json.content || []).map((c) => c.text || "").join("").trim();
         const match = text.match(/\{[\s\S]*\}/);
         if (!match) return Response.json({ configured: true, error: "no json" });
-        return Response.json({ configured: true, model, ...JSON.parse(match[0]) });
+        const out = JSON.parse(match[0]);
+
+        // Normalise boxes: always an array as long as the photos we were given.
+        let boxes = Array.isArray(out.boxes) ? out.boxes.map(okBox) : [];
+        if (!boxes.length && out.box) boxes = [okBox(out.box)];
+        while (boxes.length < shots.length) boxes.push(null);
+        boxes = boxes.slice(0, shots.length);
+
+        const markings = (Array.isArray(out.markings) ? out.markings : []).map((s) => String(s).slice(0, 40)).filter(Boolean).slice(0, 8);
+
+        // A brand is only "read" if it actually appears in the text we read off the part.
+        // Everything else is a guess, and gets labelled as one.
+        const marks = markings.join(" ").toLowerCase();
+        const brand = String(out.brand || "");
+        const brandSure = !!(brand && marks.includes(brand.toLowerCase()));
+
+        return Response.json({
+          configured: true,
+          model,
+          ...out,
+          brand,
+          brandSure,
+          markings,
+          boxes,
+          box: boxes[0] || null,   // back-compat with the single-photo client
+          angles: shots.length,
+        });
       }
       const t = await resp.text();
       lastDetail = scrub(t).slice(0, 300);
-      if (!/not_found/i.test(t)) break; // only fall through when the model isn't available
+      if (!/not_found/i.test(t)) break;
     }
     return Response.json({ configured: true, error: "vision api error", detail: lastDetail }, { status: 502 });
   } catch (e) {
