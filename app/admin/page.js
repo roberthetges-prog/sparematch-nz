@@ -11,6 +11,8 @@ export default function Admin() {
   const [added, setAdded] = useState([]);
   const [bfBusy, setBfBusy] = useState(false);
   const [bf, setBf] = useState(null);
+  const [rhBusy, setRhBusy] = useState(false);
+  const [rh, setRh] = useState(null);
   const set = (k) => (e) => setF({ ...f, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
 
   async function backfill() {
@@ -23,6 +25,20 @@ export default function Admin() {
       else setBf({ ok: `Fingerprinted ${j.embedded} image${j.embedded === 1 ? "" : "s"}. ${j.remaining} still without a photo fingerprint.`, errors: (j.errors || []).length });
     } catch { setBf({ err: "Network error" }); }
     setBfBusy(false);
+  }
+
+  // Some suppliers block their images from loading on our site (hotlink protection), so the
+  // plumber sees a broken picture. This copies those images into our own storage for good.
+  async function rehost() {
+    if (!pw) { setRh({ err: "Enter the admin password first." }); return; }
+    setRhBusy(true); setRh(null);
+    try {
+      const r = await fetch("/api/rehost", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password: pw }) });
+      const j = await r.json();
+      if (!r.ok) setRh({ err: j.error || "Failed" });
+      else setRh({ ok: `Re-hosted ${j.rehosted} image${j.rehosted === 1 ? "" : "s"} onto our own storage. ${j.remaining} still on the blocked host.` });
+    } catch { setRh({ err: "Network error" }); }
+    setRhBusy(false);
   }
 
   async function submit(e) {
@@ -71,6 +87,10 @@ export default function Admin() {
         <p className="sub" style={{ color: "#5b6875", marginTop: 0, fontSize: 14 }}>Fingerprint any catalogue products that are missing a photo match (runs up to 40 at a time — click again if more remain).</p>
         <button type="button" className="btn" onClick={backfill} disabled={bfBusy} style={{ justifyContent: "center" }}>{bfBusy ? "Fingerprinting…" : "Fingerprint missing images"}</button>
         {bf && <div className={"aibar " + (bf.err ? "muted" : "")} style={{ marginTop: 12, color: bf.err ? "#b4413c" : undefined }}>{bf.err || bf.ok}{bf.errors ? ` (${bf.errors} couldn’t be fetched)` : ""}</div>}
+
+        <p className="sub" style={{ color: "#5b6875", marginTop: 20, fontSize: 14 }}>Some suppliers block their images from showing on our site, so customers see a broken picture. This copies those images into TapSnap&rsquo;s own storage so they always display.</p>
+        <button type="button" className="btn" onClick={rehost} disabled={rhBusy} style={{ justifyContent: "center" }}>{rhBusy ? "Copying…" : "Fix blocked images"}</button>
+        {rh && <div className={"aibar " + (rh.err ? "muted" : "")} style={{ marginTop: 12, color: rh.err ? "#b4413c" : undefined }}>{rh.err || rh.ok}</div>}
       </div>
 
       {added.length > 0 && (
