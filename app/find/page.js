@@ -193,11 +193,15 @@ export default function Find() {
       const pref = detectionsToAnswers(parts, j);
       try {
         const bg = [j.brand, ...(Array.isArray(j.brandGuesses) ? j.brandGuesses : [])].filter(Boolean);
+        // Did we actually READ the maker's name off the tap (stamped on the handle/body)? That is
+        // near-certain, unlike a guess from its shape - tell the matcher it can trust it.
+        const marks = (Array.isArray(j.markings) ? j.markings : []).join(" ").toLowerCase();
+        const brandSure = !!(j.brand && marks.includes(String(j.brand).toLowerCase()));
         // fingerprint the CROPPED tap, not the whole bathroom
         const cropped = await cropToBox(String(dataUrl), j.box);
         const qData = cropped || base64;
         const qMedia = cropped ? "image/jpeg" : mediaType;
-        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: qData, mediaType: qMedia, type: inferType(j), brandGuesses: bg }) });
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: qData, mediaType: qMedia, type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
         const mj = await mResp.json();
         if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
           const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
