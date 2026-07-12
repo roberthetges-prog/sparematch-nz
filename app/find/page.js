@@ -13,7 +13,7 @@ function inferType(ai) {
   // Prefer the explicit fixture the vision step now returns (basin/shower/sink/bath).
   // A basin mixer and its paired shower mixer look near-identical, so this call matters.
   const fx = String((ai && ai.fixture) || "").toLowerCase().trim();
-  if (["basin", "shower", "sink", "bath"].includes(fx)) return fx;
+  if (["basin", "shower", "sink", "bath", "toilet"].includes(fx)) return fx;
   const s = (((ai && ai.description) || "") + " " + ((ai && ai.category) || "")).toLowerCase();
   if (/shower/.test(s)) return "shower";
   if (/(sink|kitchen)/.test(s)) return "sink";
@@ -87,6 +87,7 @@ export default function Find() {
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
   const [bFilter, setBFilter] = useState("");
+  const [toilet, setToilet] = useState(null);
 
   const sel = useMemo(() => answers.reduce((o, a) => ((o[a.field] = a.value), o), {}), [answers]);
   const pool = useMemo(() => applyFilters(parts, sel), [sel]);
@@ -107,7 +108,19 @@ export default function Find() {
 
   const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setVmatch(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
   const back = () => { setForceResults(false); setSkipModel(false); if (vmatch) { setVmatch(null); return; } if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
-  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); };
+  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); setToilet(null); };
+
+  // A cistern gives no clue from the front whether the water feeds in at the bottom, the back
+  // or the side. We cannot see it, so we ask - guessing would send someone home with the wrong valve.
+  async function loadToiletParts(inlet) {
+    if (!toilet) return;
+    setToilet((t) => ({ ...t, inlet, loading: true, parts: null }));
+    try {
+      const r = await fetch("/api/toilet?suite=" + encodeURIComponent(toilet.suiteId) + "&inlet=" + encodeURIComponent(inlet));
+      const j = await r.json();
+      setToilet((t) => ({ ...t, inlet, loading: false, parts: j && !j.error ? j : null }));
+    } catch { setToilet((t) => ({ ...t, inlet, loading: false, parts: null })); }
+  }
 
   function pickModel(card, brandOverride) {
     const brand = brandOverride || card.brand || sel.brand;
@@ -120,6 +133,11 @@ export default function Find() {
 
   function onPickMatch(m) {
     setVmatch(null);
+    const _cat = String((m.part && m.part.category) || "").toLowerCase();
+    if (m.kind === "part" && m.part && _cat.indexOf("toilet suite") !== -1) {
+      setToilet({ suiteId: String(m.part.id || "").replace(/^db-/, ""), suite: { brand: m.brand, model: m.model, partNo: m.part.partNumber || "" }, inlet: null, parts: null, loading: false });
+      return;
+    }
     if (m.kind === "part" && m.part) { setAnswers([{ field: "productType", value: m.part.productType || "Valve" }, { field: "brand", value: m.brand }]); setModelResult([m.part]); return; }
     if (m.kind === "cart" && m.card) { setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand || "Universal" }]); setModelResult([m.card]); return; }
     setAnswers([{ field: "productType", value: "Tapware" }, { field: "brand", value: m.brand }]);
@@ -160,6 +178,7 @@ export default function Find() {
   }
 
   const stage = analysing ? "loading"
+    : toilet ? "toilet"
     : (vmatch && vmatch.length) ? "matches"
     : modelResult ? "modelresult"
     : !sel.productType ? "type"
@@ -342,6 +361,64 @@ export default function Find() {
               <button className="btn btn-primary" onClick={() => setForceResults(true)}>Show matching parts ({matches.length})</button>
               <button className="btn btn-ghost" onClick={back}>Back</button>
             </div>
+          </div>
+        )}
+
+        {stage === "toilet" && toilet && (
+          <div className="panel">
+            <div className="matchhead">
+              <div>
+                <h2 style={{ margin: 0, fontSize: 18 }}>{[toilet.suite.brand, toilet.suite.model].filter(Boolean).join(" ")}</h2>
+                <p className="mhint" style={{ margin: "2px 0 0" }}>Toilet suite{toilet.suite.partNo ? " \u00b7 " + toilet.suite.partNo : ""}</p>
+              </div>
+              <button className="btn" type="button" onClick={() => setToilet(null)}>Back</button>
+            </div>
+
+            {!toilet.inlet && (
+              <div style={{ marginTop: 14 }}>
+                <h3 style={{ fontSize: 16, marginBottom: 4 }}>Where does the water pipe enter the cistern?</h3>
+                <p className="mhint" style={{ marginTop: 0 }}>A photo can&rsquo;t show this &mdash; have a look behind or underneath the cistern. It decides which inlet valve you need.</p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+                  {[["bottom", "Bottom", "Pipe comes up underneath"], ["back", "Back", "Pipe comes through the wall behind"], ["side", "Side / top", "Pipe enters from the side or above"]].map((o) => (
+                    <button key={o[0]} type="button" className="btn" style={{ flexDirection: "column", alignItems: "flex-start", textAlign: "left", minWidth: 168 }} onClick={() => loadToiletParts(o[0])}>
+                      <span style={{ fontWeight: 700 }}>{o[1]}</span>
+                      <span className="mhint" style={{ fontWeight: 400 }}>{o[2]}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {toilet.loading && <div className="aibar" style={{ marginTop: 14 }}>Finding the parts that fit&hellip;</div>}
+
+            {toilet.parts && (
+              <div style={{ marginTop: 16 }}>
+                {toilet.parts.geberitNote && (
+                  <div className="aibar" style={{ marginBottom: 12 }}>Heads up: Caroma&rsquo;s inlet valves are made by Geberit, so the part in your hand may well say GEBERIT on it. That is still the right part.</div>
+                )}
+                {[["Replacement seat", toilet.parts.seats], ["Inlet valve \u2014 " + toilet.inlet + " entry", toilet.parts.inletValves], ["Outlet / flush valve", toilet.parts.outletValves], ["Flush button / plate", toilet.parts.buttons]].map((sec) => (
+                  <div key={sec[0]} style={{ marginBottom: 18 }}>
+                    <h3 style={{ fontSize: 15, marginBottom: 8 }}>{sec[0]}</h3>
+                    {(!sec[1] || !sec[1].length) ? (
+                      <p className="mhint" style={{ marginTop: 0 }}>Nothing in the catalogue matches this suite yet.</p>
+                    ) : (
+                      <div className="models">
+                        {sec[1].map((p) => (
+                          <div className="modelcard" key={p.id}>
+                            <div className="mimg">{p.photo ? <img src={p.photo} alt={p.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
+                            <div className="minfo">
+                              <div className="mname">{[p.brand, p.model].filter(Boolean).join(" ")}</div>
+                              <div className="mhint">{p.partNo}{p.note ? " \u00b7 " + p.note : ""}</div>
+                              {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info &rarr;</a>}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
