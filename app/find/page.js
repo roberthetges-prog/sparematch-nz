@@ -9,6 +9,25 @@ const FIELD_LABEL = { productType: "Fixing", valveFamily: "Valve", brand: "Brand
 const modelsByBrand = {};
 for (const mo of models) (modelsByBrand[mo.brand] ||= []).push(mo);
 
+// The toilet section reads from the DATABASE, not the bundled parts.json snapshot.
+// The snapshot has 12 seats and no photos; the database has the real catalogue, with pictures,
+// and it grows every time we add stock.
+const TOILET_CATS = ["toilet suite", "toilet seat", "toilet inlet valve", "toilet outlet valve", "flush button"];
+const TOILET_LABEL = {
+  "toilet suite": "🚽 Toilet suite",
+  "toilet seat": "🪑 Toilet seat",
+  "toilet inlet valve": "💧 Inlet (fill) valve",
+  "toilet outlet valve": "🌀 Outlet (flush) valve",
+  "flush button": "⏺ Flush button / plate",
+};
+const TOILET_HINT = {
+  "toilet suite": "Find your suite first — it tells us the seat and the valves.",
+  "toilet seat": "Match the shape and the fixing. Seats are the most-replaced toilet part.",
+  "toilet inlet valve": "The valve the water pipe feeds into. Check bottom / back / side entry.",
+  "toilet outlet valve": "The flush valve inside the cistern.",
+  "flush button": "The button or plate you press.",
+};
+
 async function downscale(dataUrl, maxSide) {
   // A photo straight off a phone is 4-12MB. Base64-encoded that blows past the vision API's
   // per-image limit and the whole request is REJECTED - which is why real phone photos failed
@@ -79,8 +98,6 @@ function buildCandidates(ai) {
     for (const m of pool) { if (seen.has(m.model)) continue; seen.add(m.model); out.push(m); if (out.length >= 12) break; }
     return out;
   }
-  // Fallback: no confident brand — sample one photographed model per brand (type-filtered)
-  // so the visual matcher can still surface the right brand family from the whole catalogue.
   const sample = [];
   for (const b of BRAND_PRIORITY) {
     const arr = (modelsByBrand[b] || []).filter((m) => m.photo && (!t || (m.model || "").toLowerCase().includes(t)));
@@ -91,9 +108,6 @@ function buildCandidates(ai) {
 }
 
 function detectionsToAnswers(all, ai) {
-  // Only ever set the product type and a confidently-named brand. Never hard-filter by
-  // AI category/size (those collapse the catalogue). Land the user on the brand's visual
-  // model picker so they confirm by shape.
   const order = [["productType", "Tapware"], ["brand", ai.brand]];
   const ans = []; let cur = {};
   for (const [field, val] of order) {
@@ -132,6 +146,8 @@ export default function Find() {
   const [ai, setAi] = useState(null);
   const [bFilter, setBFilter] = useState("");
   const [toilet, setToilet] = useState(null);
+  const [tb, setTb] = useState(null);          // toilet browse: { cat, brand, items, brands, loading }
+  const [tcounts, setTcounts] = useState(null);
 
   const sel = useMemo(() => answers.reduce((o, a) => ((o[a.field] = a.value), o), {}), [answers]);
   const pool = useMemo(() => applyFilters(parts, sel), [sel]);
@@ -151,8 +167,38 @@ export default function Find() {
   }, [sel]);
 
   const add = (field, value) => { setForceResults(false); setSkipModel(false); setModelResult(null); setVmatch(null); setAnswers((a) => [...a.filter((x) => x.field !== field), { field, value }]); };
-  const back = () => { setForceResults(false); setSkipModel(false); if (vmatch) { setVmatch(null); return; } if (modelResult) { setModelResult(null); return; } setAnswers((a) => a.slice(0, -1)); };
-  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); setToilet(null); };
+  const back = () => {
+    setForceResults(false); setSkipModel(false);
+    if (tb && tb.cat) { setTb({ cat: null, brand: "", items: null, brands: null, loading: false }); return; }
+    if (tb) { setTb(null); return; }
+    if (vmatch) { setVmatch(null); return; }
+    if (modelResult) { setModelResult(null); return; }
+    setAnswers((a) => a.slice(0, -1));
+  };
+  const reset = () => { setForceResults(false); setSkipModel(false); setModelResult(null); setAnswers([]); setPhoto(null); setFile(null); setAi(null); setVmatch(null); setToilet(null); setTb(null); };
+
+  // --- Toilet browse, straight off the live database ---
+  async function openToiletBrowse() {
+    setTb({ cat: null, brand: "", items: null, brands: null, loading: false });
+    if (!tcounts) {
+      try {
+        const r = await fetch("/api/browse?counts=1");
+        const j = await r.json();
+        if (j && j.counts) setTcounts(j.counts);
+      } catch { /* menu still works without counts */ }
+    }
+  }
+  async function loadBrowse(cat, brand) {
+    setTb({ cat, brand: brand || "", items: null, brands: null, loading: true });
+    try {
+      const url = "/api/browse?category=" + encodeURIComponent(cat) + (brand ? "&brand=" + encodeURIComponent(brand) : "");
+      const r = await fetch(url);
+      const j = await r.json();
+      setTb({ cat, brand: brand || "", items: (j && j.items) || [], brands: (j && j.brands) || [], loading: false });
+    } catch {
+      setTb({ cat, brand: brand || "", items: [], brands: [], loading: false });
+    }
+  }
 
   // A cistern gives no clue from the front whether the water feeds in at the bottom, the back
   // or the side. We cannot see it, so we ask - guessing would send someone home with the wrong valve.
@@ -233,15 +279,17 @@ export default function Find() {
 
   const stage = analysing ? "loading"
     : toilet ? "toilet"
+    : tb ? "tbrowse"
     : (vmatch && vmatch.length) ? "matches"
     : modelResult ? "modelresult"
     : !sel.productType ? "type"
-    : ((sel.productType === "Valve" || sel.productType === "Toilet") && !sel.valveFamily) ? "family"
+    : (sel.productType === "Valve" && !sel.valveFamily) ? "family"
     : !sel.brand ? "brand"
     : (sel.productType === "Tapware" && !skipModel && modelCards.length >= 1) ? "model"
     : (forceResults || !q) ? "results" : "question";
 
   const matches = pool;
+  const toiletTotal = tcounts ? Object.values(tcounts).reduce((a, b) => a + b, 0) : null;
 
   return (
     <main className="finder">
@@ -261,8 +309,10 @@ export default function Find() {
 
         <div className="crumbs">
           {answers.map((a) => (<span className="crumb" key={a.field}>{FIELD_LABEL[a.field]}: <b>{a.value}</b></span>))}
+          {tb && <span className="crumb">Fixing: <b>Toilet</b></span>}
+          {tb && tb.cat && <span className="crumb">Part: <b>{(TOILET_LABEL[tb.cat] || tb.cat).replace(/^\S+\s/, "")}</b></span>}
           {modelResult && <span className="crumb">Model: <b>{modelResult[0].range}</b></span>}
-          {(answers.length > 0 || modelResult) && (<><button className="crumb" onClick={back}>← Back</button><button className="crumb" onClick={reset}>Start over</button></>)}
+          {(answers.length > 0 || modelResult || tb) && (<><button className="crumb" onClick={back}>← Back</button><button className="crumb" onClick={reset}>Start over</button></>)}
         </div>
 
         {stage === "loading" && (
@@ -306,15 +356,86 @@ export default function Find() {
             <div className="grid">
               <button className="opt bigopt" onClick={() => add("productType", "Tapware")}>🚰 Tap / mixer <span className="c">{parts.filter((p) => p.productType === "Tapware").length}</span></button>
               <button className="opt bigopt" onClick={() => add("productType", "Valve")}>🎛 Valve <span className="c">{parts.filter((p) => p.productType === "Valve").length}</span></button>
-              <button className="opt bigopt" onClick={() => add("productType", "Toilet")}>🚽 Toilet <span className="c">{parts.filter((p) => p.productType === "Toilet").length}</span></button>
+              <button className="opt bigopt" onClick={openToiletBrowse}>🚽 Toilet{toiletTotal ? <span className="c">{toiletTotal}</span> : null}</button>
             </div>
+          </div>
+        )}
+
+        {stage === "tbrowse" && (
+          <div className="panel">
+            {!tb.cat && (
+              <>
+                <h2>What toilet part?</h2>
+                <p className="sub">Not sure which valve? Start with the suite — pick your toilet and we&apos;ll show the seat, the valves and the button that fit it.</p>
+                <div className="grid">
+                  {TOILET_CATS.map((c) => (
+                    <button className="opt bigopt" key={c} onClick={() => loadBrowse(c, "")}>
+                      {TOILET_LABEL[c]}
+                      {tcounts && tcounts[c] ? <span className="c">{tcounts[c]}</span> : null}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {tb.cat && (
+              <>
+                <h2>{(TOILET_LABEL[tb.cat] || tb.cat).replace(/^\S+\s/, "")}</h2>
+                <p className="sub">{TOILET_HINT[tb.cat] || "Pick the one that looks like yours."}</p>
+
+                {tb.brands && tb.brands.length > 1 && (
+                  <div className="guessrow" style={{ flexWrap: "wrap" }}>
+                    <button className={"opt guess" + (tb.brand ? "" : " on")} onClick={() => loadBrowse(tb.cat, "")}>All</button>
+                    {tb.brands.map((b) => (
+                      <button className={"opt guess" + (tb.brand === b.brand ? " on" : "")} key={b.brand} onClick={() => loadBrowse(tb.cat, b.brand)}>
+                        {b.brand} <span className="c">{b.count}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {tb.loading && <div className="aibar">Loading the catalogue…</div>}
+
+                {!tb.loading && tb.items && tb.items.length === 0 && (
+                  <p className="sub">Nothing in the catalogue for that yet.</p>
+                )}
+
+                {!tb.loading && tb.items && tb.items.length > 0 && (
+                  <div className="models">
+                    {tb.items.map((p) => (
+                      <div className="modelcard" key={p.id}>
+                        <div className="mimg">{p.photo ? <img src={p.photo} alt={p.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
+                        <div className="minfo">
+                          <div className="mname">{[p.brand, p.model].filter(Boolean).join(" ")}</div>
+                          {(p.partNo || p.size) && <div className="mhint">{[p.partNo, p.size].filter(Boolean).join(" · ")}</div>}
+                          {p.fits && <div className="mhint">{p.fits.length > 110 ? p.fits.slice(0, 110) + "…" : p.fits}</div>}
+                          {p.cat === "toilet suite" ? null : null}
+                          {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info &rarr;</a>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="toolbar">
+                  <button className="btn btn-ghost" onClick={back}>← Back</button>
+                  <button className="btn btn-ghost" onClick={reset}>Start over</button>
+                </div>
+
+                <p className="feedback-row">
+                  Yours isn&apos;t here?{" "}
+                  <a href="mailto:myhappyplace@web.de?subject=TapSnap%20%E2%80%94%20missing%20toilet%20part&body=Tell%20us%20the%20brand%20and%20model%20if%20you%20know%20it%2C%20and%20attach%20a%20photo%3A%0A%0A">Tell us</a>{" "}
+                  and we&apos;ll add it.
+                </p>
+              </>
+            )}
           </div>
         )}
 
         {stage === "family" && (
           <div className="panel">
-            <h2>{sel.productType === "Toilet" ? "What toilet part?" : "What kind of valve?"}</h2>
-            <p className="sub">{sel.productType === "Toilet" ? "Inlet (fill) and outlet (flush) valves are matchable exactly; seats are matched by fixing type and shape." : "Tempering valves reduce hot-water temperature; the others control pressure and relief."}</p>
+            <h2>What kind of valve?</h2>
+            <p className="sub">Tempering valves reduce hot-water temperature; the others control pressure and relief.</p>
             <div className="grid">
               {distinctValues(applyFilters(parts, { productType: sel.productType }), "valveFamily").map((o) => (
                 <button className="opt" key={o.value} onClick={() => add("valveFamily", o.value)}>{o.value} <span className="c">{o.count}</span></button>
@@ -405,7 +526,7 @@ export default function Find() {
 
         {stage === "question" && q && (
           <div className="panel">
-            <h2>{sel.productType === "Toilet" && q.field === "dimension" ? "Which type is it?" : q.label}</h2>
+            <h2>{q.label}</h2>
             <p className="sub">{q.remaining} possible parts so far — pick one to narrow it down.</p>
             {q.field === "dimension" && sel.productType === "Tapware" && <MeasureHelp />}
             <div className="grid">
@@ -423,7 +544,7 @@ export default function Find() {
             <div className="matchhead">
               <div>
                 <h2 style={{ margin: 0, fontSize: 18 }}>{[toilet.suite.brand, toilet.suite.model].filter(Boolean).join(" ")}</h2>
-                <p className="mhint" style={{ margin: "2px 0 0" }}>Toilet suite{toilet.suite.partNo ? " \u00b7 " + toilet.suite.partNo : ""}</p>
+                <p className="mhint" style={{ margin: "2px 0 0" }}>Toilet suite{toilet.suite.partNo ? " · " + toilet.suite.partNo : ""}</p>
               </div>
               <button className="btn" type="button" onClick={() => setToilet(null)}>Back</button>
             </div>
@@ -450,7 +571,7 @@ export default function Find() {
                 {toilet.parts.geberitNote && (
                   <div className="aibar" style={{ marginBottom: 12 }}>Heads up: Caroma&rsquo;s inlet valves are made by Geberit, so the part in your hand may well say GEBERIT on it. That is still the right part.</div>
                 )}
-                {[["Replacement seat", toilet.parts.seats], ["Inlet valve \u2014 " + toilet.inlet + " entry", toilet.parts.inletValves], ["Outlet / flush valve", toilet.parts.outletValves], ["Flush button / plate", toilet.parts.buttons]].map((sec) => (
+                {[["Replacement seat", toilet.parts.seats], ["Inlet valve — " + toilet.inlet + " entry", toilet.parts.inletValves], ["Outlet / flush valve", toilet.parts.outletValves], ["Flush button / plate", toilet.parts.buttons]].map((sec) => (
                   <div key={sec[0]} style={{ marginBottom: 18 }}>
                     <h3 style={{ fontSize: 15, marginBottom: 8 }}>{sec[0]}</h3>
                     {(!sec[1] || !sec[1].length) ? (
@@ -462,7 +583,7 @@ export default function Find() {
                             <div className="mimg">{p.photo ? <img src={p.photo} alt={p.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
                             <div className="minfo">
                               <div className="mname">{[p.brand, p.model].filter(Boolean).join(" ")}</div>
-                              <div className="mhint">{p.partNo}{p.note ? " \u00b7 " + p.note : ""}</div>
+                              <div className="mhint">{p.partNo}{p.note ? " · " + p.note : ""}</div>
                               {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info &rarr;</a>}
                             </div>
                           </div>
