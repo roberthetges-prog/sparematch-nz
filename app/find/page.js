@@ -310,7 +310,7 @@ export default function Find() {
                 <div className="matchhead">
                   <div>
                     <h2 style={{ margin: 0, fontSize: 18 }}>{[br.sel.brand, br.sel.model].filter(Boolean).join(" ")}</h2>
-                    <p className="mhint" style={{ margin: "2px 0 0" }}>{br.catLabel}{br.sel.partNo ? " · " + br.sel.partNo : ""}</p>
+                    <p className="mhint" style={{ margin: "2px 0 0" }}>{br.catLabel}{(br.sel.sku || br.sel.partNo) ? " · " + (br.sel.sku || br.sel.partNo) : ""}</p>
                   </div>
                   <button className="btn" type="button" onClick={() => setBr({ ...br, sel: null })}>Back</button>
                 </div>
@@ -321,14 +321,18 @@ export default function Find() {
                 </div>
                 <div style={{ marginTop: 12 }}>
                   {MIXER_CATS.includes(br.sel.category) && (
-                    br.sel.partNo || br.sel.size ? (
+                    // partNo is the CARTRIDGE code. sku is the shop's code for the tap itself.
+                    // Only ever call something a cartridge if it actually is one.
+                    br.sel.partNo ? (
                       <div className="aibar">
                         <b>Takes cartridge:</b> {[br.sel.partNo, br.sel.size].filter(Boolean).join(" · ")}
                         {br.sel.confirm ? <div className="mhint" style={{ marginTop: 4 }}>Confirm the size and fit before ordering.</div> : null}
                       </div>
                     ) : (
                       <>
-                        <div className="aibar muted">We don&apos;t have a cartridge code for this model yet — measure the cartridge body and match it by size.</div>
+                        <div className="aibar muted">
+                          We don&apos;t have the cartridge code for this model yet{br.sel.size ? <> — but the maker states a <b>{br.sel.size}</b> cartridge</> : null}. Pull the old one out and measure it before you order.
+                        </div>
                         <MeasureHelp />
                       </>
                     )
@@ -371,7 +375,7 @@ export default function Find() {
                         <div className="mimg">{p.photo ? <img src={p.photo} alt={p.model} loading="lazy" /> : <span className="mph">no photo</span>}</div>
                         <div className="minfo">
                           <div className="mname">{[p.brand, p.model].filter(Boolean).join(" ")}</div>
-                          {(p.partNo || p.size) && <div className="mhint">{[p.partNo, p.size].filter(Boolean).join(" · ")}</div>}
+                          {(p.sku || p.partNo || p.size) && <div className="mhint">{[p.sku || p.partNo, p.size].filter(Boolean).join(" · ")}</div>}
                         </div>
                       </button>
                     ))}
