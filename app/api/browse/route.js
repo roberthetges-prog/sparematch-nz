@@ -73,13 +73,19 @@ const GROUPS = {
 const ALL_CATS = new Set();
 for (const g of Object.values(GROUPS)) for (const c of g.cats) ALL_CATS.add(c[0]);
 
+// part_no and sku are NOT the same thing and must never be shown as if they were.
+// On a mixer, part_no is the CARTRIDGE code (CC25, LEVCART25, Grohe 46048000) - the number a
+// plumber takes to the counter. sku is the retailer's code for the tap itself. Handing someone
+// the tap's SKU when they asked for a cartridge is exactly the kind of confident wrong answer
+// that loses a user for good.
 function shape(r) {
   return {
     id: r.id,
     brand: r.brand || "",
     model: r.model,
     category: r.category,
-    partNo: r.part_no || "",
+    partNo: r.part_no || "",   // cartridge / spare-part code
+    sku: r.sku || "",          // the product's own retail code
     size: r.size || "",
     fits: r.fits || "",
     photo: r.photo_url || "",
@@ -125,7 +131,7 @@ export async function GET(request) {
 
   let q = sb
     .from("products")
-    .select("id,brand,model,category,part_no,size,fits,photo_url,buy_url,exploded,confirm")
+    .select("id,brand,model,category,part_no,sku,size,fits,photo_url,buy_url,exploded,confirm")
     .eq("category", cat)
     .eq("active", true)
     .not("photo_url", "is", null)
