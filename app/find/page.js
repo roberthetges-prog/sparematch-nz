@@ -333,25 +333,32 @@ export default function Find() {
                 <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} /></label>
               </div>
               {photo && <img src={photo} className="thumb" alt="your part" />}
-
-              {/* The second slot only appears once there is a first photo to add to. Optional. */}
-              {photo && (
-                <div style={{ width: "100%", marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(128,128,128,0.25)" }}>
-                  <div className="txt" style={{ marginBottom: 8 }}>
-                    <b>{photo2 ? "Handle close-up added ✓" : "Add a close-up of the handle? (optional)"}</b>
-                    Optional, but it helps a lot. Shoot the handle from above — side-on it barely shows, and the handle is what tells one brand from another.
-                  </div>
-                  <div className="upbtns">
-                    <label className="btn btn-ghost">📷 Take close-up<input type="file" accept="image/*" capture="environment" onChange={onPhoto2} style={{ display: "none" }} /></label>
-                    <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto2} style={{ display: "none" }} /></label>
-                    {photo2 && <button className="btn btn-ghost" type="button" onClick={clearPhoto2}>Remove</button>}
-                  </div>
-                  {photo2 && <img src={photo2} className="thumb" alt="handle close-up" />}
-                </div>
-              )}
-
-              {photo && <button className="btn btn-primary goid" onClick={runIdentify} disabled={analysing}>{analysing ? <><span className="spin" /> Identifying…</> : "🔍 Identify this tap"}</button>}
             </div>
+
+            {/* The handle slot is its OWN box, a SIBLING of the photo box - never a child of it.
+                .uploader is `display:flex` ROW on desktop, with no wrap: a full-width child does
+                not break to a new line, it just gets squeezed into a narrow column and crushes
+                the copy beside it. Mirroring .uploader's own structure (icon / txt / upbtns /
+                thumb) means this box inherits the identical responsive behaviour for free - a row
+                on desktop, a stacked column under the narrow-screen media query that phones hit. */}
+            {photo && (
+              <div className="uploader">
+                <div className="icon">🔎</div>
+                <div className="txt">
+                  <b>{photo2 ? "Handle close-up added ✓" : "Add a close-up of the handle?"}</b>
+                  Optional, but it helps a lot. Shoot the handle from above — side-on it barely shows, and the handle is what tells one brand from another.
+                </div>
+                <div className="upbtns">
+                  <label className="btn btn-ghost">📷 Take close-up<input type="file" accept="image/*" capture="environment" onChange={onPhoto2} style={{ display: "none" }} /></label>
+                  <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto2} style={{ display: "none" }} /></label>
+                  {photo2 && <button className="btn btn-ghost" type="button" onClick={clearPhoto2}>Remove</button>}
+                </div>
+                {photo2 && <img src={photo2} className="thumb" alt="handle close-up" />}
+              </div>
+            )}
+
+            {photo && <button className="btn btn-primary goid" onClick={runIdentify} disabled={analysing} style={{ width: "100%" }}>{analysing ? <><span className="spin" /> Identifying…</> : "🔍 Identify this tap"}</button>}
+
             <h2>What are you fixing?</h2>
             {!groups && <p className="sub">Loading the catalogue…</p>}
             <div className="grid">
