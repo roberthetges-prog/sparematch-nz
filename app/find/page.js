@@ -57,6 +57,14 @@ async function cropToBox(dataUrl, box) {
   } catch { return null; }
 }
 
+// Read a file off the phone and shrink it once. Returns the data URL (for cropping in-browser),
+// plus the bare base64 and media type the APIs want.
+async function readShot(f) {
+  const raw = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(f); });
+  const dataUrl = (await downscale(String(raw), 1600)) || String(raw);
+  return { dataUrl, data: String(dataUrl).split(",")[1], mediaType: (String(dataUrl).match(/data:(.*?);/) || [])[1] || "image/jpeg" };
+}
+
 function inferType(ai) {
   // What we hand the matcher to narrow the search with.
   //
@@ -106,6 +114,10 @@ export default function Find() {
   const [modelResult, setModelResult] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [file, setFile] = useState(null);
+  // Photo 2 is OPTIONAL and does exactly one job: a close-up of the handle join for the reranker.
+  // It never enters the fingerprint search. See the note above runIdentify.
+  const [photo2, setPhoto2] = useState(null);
+  const [file2, setFile2] = useState(null);
   const [vmatch, setVmatch] = useState(null);
   const [analysing, setAnalysing] = useState(false);
   const [ai, setAi] = useState(null);
@@ -122,7 +134,7 @@ export default function Find() {
     return () => { live = false; };
   }, []);
 
-  const reset = () => { setModelResult(null); setPhoto(null); setFile(null); setAi(null); setVmatch(null); setToilet(null); setBr(null); };
+  const reset = () => { setModelResult(null); setPhoto(null); setFile(null); setPhoto2(null); setFile2(null); setAi(null); setVmatch(null); setToilet(null); setBr(null); };
   const back = () => {
     if (br && br.sel) { setBr({ ...br, sel: null }); return; }
     if (br && br.cat) { setBr({ ...br, cat: null, catLabel: "", brand: "", items: null, brands: null, sel: null }); return; }
@@ -185,18 +197,30 @@ export default function Find() {
   function onPhoto(e) {
     const f = e.target.files && e.target.files[0];
     if (!f) return;
-    setFile(f); setPhoto(URL.createObjectURL(f)); setAi(null); setModelResult(null);
+    // A new main photo means a new tap - the old handle close-up no longer belongs to it.
+    setFile(f); setPhoto(URL.createObjectURL(f)); setPhoto2(null); setFile2(null); setAi(null); setModelResult(null);
   }
+
+  function onPhoto2(e) {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    setFile2(f); setPhoto2(URL.createObjectURL(f)); setAi(null); setModelResult(null);
+  }
+
+  function clearPhoto2() { setFile2(null); setPhoto2(null); }
 
   async function runIdentify() {
     if (!file || analysing) return;
     setAi(null); setAnalysing(true); setModelResult(null);
     try {
-      const rawUrl = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
-      const dataUrl = (await downscale(String(rawUrl), 1600)) || String(rawUrl);
-      const base64 = String(dataUrl).split(",")[1];
-      const mediaType = (String(dataUrl).match(/data:(.*?);/) || [])[1] || "image/jpeg";
-      const resp = await fetch("/api/identify", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: base64, mediaType }) });
+      const s1 = await readShot(file);
+      const s2 = file2 ? await readShot(file2) : null;
+
+      // identify DOES want both angles: one hides what the other reveals, and it returns a box
+      // and a handleBox per photo, in order.
+      const images = [{ data: s1.data, mediaType: s1.mediaType }];
+      if (s2) images.push({ data: s2.data, mediaType: s2.mediaType });
+      const resp = await fetch("/api/identify", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ images }) });
       const j = await resp.json();
       if (!resp.ok && j && (j.error === "rate_limited" || j.error === "image_too_large")) { setAi({ status: "notice", message: j.message }); return; }
       if (!j || j.configured === false) { setAi({ status: "off" }); return; }
@@ -208,10 +232,32 @@ export default function Find() {
         // near-certain, unlike a guess from its shape - tell the matcher it can trust it.
         const marks = (Array.isArray(j.markings) ? j.markings : []).join(" ").toLowerCase();
         const brandSure = !!(j.brand && marks.includes(String(j.brand).toLowerCase()));
-        const cropped = await cropToBox(String(dataUrl), j.box);
-        const qData = cropped || base64;
-        const qMedia = cropped ? "image/jpeg" : mediaType;
-        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: qData, mediaType: qMedia, type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
+
+        // ---- RECALL gets exactly ONE picture: the whole tap from photo 1, cropped. ----
+        // Deliberately NOT both angles. The catalogue holds one studio shot per product, so a
+        // second whole-tap crop adds a second ranked list that /api/match fuses with `seen`
+        // count taking priority over rank - a lookalike sitting mid-table in BOTH lists then
+        // beats the right tap that nails ONE angle. Recall is already the bottleneck; we are
+        // not feeding it a second way to bury the answer.
+        const boxes = Array.isArray(j.boxes) ? j.boxes : [];
+        const cropped = await cropToBox(String(s1.dataUrl), boxes[0] || j.box);
+        const qData = cropped || s1.data;
+        const qMedia = cropped ? "image/jpeg" : s1.mediaType;
+
+        // ---- The RERANKER gets the handle close-up, passed SEPARATELY as handleData. ----
+        // Never in `images`: a lever compared against 1,400 whole taps is noise that pushed good
+        // candidates off the shortlist - measured, 72% -> 70%. /api/match appends handleData
+        // after the whole-tap view and labels it "the deciding detail", which is exactly what its
+        // prompt is built around. Prefer photo 2's handle (shot for the purpose); otherwise fall
+        // back to the handle in photo 1, so a single-photo user still gets the benefit.
+        const hbs = Array.isArray(j.handleBoxes) ? j.handleBoxes : [];
+        let handleData = null;
+        if (s2 && hbs[1]) handleData = await cropToBox(String(s2.dataUrl), hbs[1]);
+        if (!handleData) handleData = await cropToBox(String(s1.dataUrl), hbs[0] || j.handleBox);
+
+        const payload = { images: [{ data: qData, mediaType: qMedia }], type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure };
+        if (handleData) { payload.handleData = handleData; payload.handleMediaType = "image/jpeg"; }
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
         const mj = await mResp.json();
         if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
           const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
@@ -267,7 +313,10 @@ export default function Find() {
                 <div className="sub">Reading the shape, then comparing it against our catalogue photos. This takes a few seconds.</div>
               </div>
             </div>
-            {photo && <img src={photo} className="thumb" alt="your tap" style={{ marginTop: 12 }} />}
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+              {photo && <img src={photo} className="thumb" alt="your tap" />}
+              {photo2 && <img src={photo2} className="thumb" alt="the handle" />}
+            </div>
           </div>
         )}
 
@@ -284,6 +333,23 @@ export default function Find() {
                 <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto} style={{ display: "none" }} /></label>
               </div>
               {photo && <img src={photo} className="thumb" alt="your part" />}
+
+              {/* The second slot only appears once there is a first photo to add to. Optional. */}
+              {photo && (
+                <div style={{ width: "100%", marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(128,128,128,0.25)" }}>
+                  <div className="txt" style={{ marginBottom: 8 }}>
+                    <b>{photo2 ? "Handle close-up added ✓" : "Add a close-up of the handle? (optional)"}</b>
+                    Optional, but it helps a lot. Shoot the handle from above — side-on it barely shows, and the handle is what tells one brand from another.
+                  </div>
+                  <div className="upbtns">
+                    <label className="btn btn-ghost">📷 Take close-up<input type="file" accept="image/*" capture="environment" onChange={onPhoto2} style={{ display: "none" }} /></label>
+                    <label className="btn btn-ghost">🖼 Upload<input type="file" accept="image/*" onChange={onPhoto2} style={{ display: "none" }} /></label>
+                    {photo2 && <button className="btn btn-ghost" type="button" onClick={clearPhoto2}>Remove</button>}
+                  </div>
+                  {photo2 && <img src={photo2} className="thumb" alt="handle close-up" />}
+                </div>
+              )}
+
               {photo && <button className="btn btn-primary goid" onClick={runIdentify} disabled={analysing}>{analysing ? <><span className="spin" /> Identifying…</> : "🔍 Identify this tap"}</button>}
             </div>
             <h2>What are you fixing?</h2>
