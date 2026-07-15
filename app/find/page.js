@@ -58,7 +58,12 @@ async function cropToBox(dataUrl, box) {
 }
 
 function inferType(ai) {
-  // A basin mixer and its paired shower mixer look near-identical, so this call matters.
+  // What we hand the matcher to narrow on. It compares this against the catalogue category, so
+  // the best answer is the vision step's partType, which is drawn from those very categories -
+  // "toilet inlet valve" narrows straight to the inlet valves and nothing else.
+  const pt = String((ai && ai.partType) || "").toLowerCase().trim();
+  if (pt) return pt;
+  // Older/looser answers: fall back to the fixture. "basin" still narrows "basin mixer".
   const fx = String((ai && ai.fixture) || "").toLowerCase().trim();
   if (["basin", "shower", "sink", "bath", "toilet"].includes(fx)) return fx;
   const s = (((ai && ai.description) || "") + " " + ((ai && ai.category) || "")).toLowerCase();
