@@ -208,10 +208,18 @@ export default function Find() {
         // near-certain, unlike a guess from its shape - tell the matcher it can trust it.
         const marks = (Array.isArray(j.markings) ? j.markings : []).join(" ").toLowerCase();
         const brandSure = !!(j.brand && marks.includes(String(j.brand).toLowerCase()));
+        // TWO VIEWS, not one. Rob's point, and he's right: on a single-lever mixer the spout tells
+        // you almost nothing - a long low chrome arc is common to a dozen brands - while the LEVER
+        // and the way it MEETS THE BODY give the game away. Photographed side-on that junction is a
+        // few dozen pixels, and it gets averaged into nothing when the whole tap is squeezed into
+        // one 512px fingerprint. So we send the whole tap AND a close crop of the handle join,
+        // reusing the multi-image path already built for two camera angles.
         const cropped = await cropToBox(String(dataUrl), j.box);
-        const qData = cropped || base64;
-        const qMedia = cropped ? "image/jpeg" : mediaType;
-        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: qData, mediaType: qMedia, type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
+        const handleCrop = await cropToBox(String(dataUrl), j.handleBox);
+        const views = [];
+        views.push({ data: cropped || base64, mediaType: cropped ? "image/jpeg" : mediaType });
+        if (handleCrop) views.push({ data: handleCrop, mediaType: "image/jpeg" });
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ images: views, type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
         const mj = await mResp.json();
         if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
           const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
@@ -539,19 +547,3 @@ function PartCard({ p }) {
         {p.range && <div className="fits">Fits: {p.range}</div>}
         <div className="chips">
           {p.valveFamily && <span className="chip">{p.valveFamily}</span>}
-          {p.valveType && <span className="chip">{p.valveType}</span>}
-          {p.dimension && <span className="chip">{p.dimension}</span>}
-          <span className="chip">{p.brand}</span>
-        </div>
-        <span className={"badge " + (verified ? "v" : "d")}>{verified ? "✓ Verified source" : "⚠ Confirm fit"}</span>
-        {p.notes && <div className="note2">{p.notes}</div>}
-        {p.supersession && <div className="super">Supersession: {p.supersession}</div>}
-        <div className="foot">
-          {p.buyUrl && <a className="smallbtn" href={p.buyUrl} target="_blank" rel="noreferrer">Buy / info →</a>}
-          {p.explodedUrl && <a className="diagram" href={p.explodedUrl} target="_blank" rel="noreferrer">📐 Diagram</a>}
-          {p.sourceUrl && !p.explodedUrl && <a className="src" href={p.sourceUrl} target="_blank" rel="noreferrer">source</a>}
-        </div>
-      </div>
-    </div>
-  );
-}
