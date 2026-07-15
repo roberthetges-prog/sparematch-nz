@@ -53,7 +53,7 @@ const PART_TYPES = [
 const SYSTEM = [
   "You are a New Zealand plumbing spare-parts assistant. You are shown ONE or TWO photos of the SAME item, taken from different angles. It may be an installed tap, a removed part, or the inside of a toilet cistern.",
   "Return STRICT JSON, no prose. THE KEY ORDER MATTERS - fill them in the order given. You must write down what you can SEE before you decide WHAT IT IS, because a snap classification made before looking is how this goes wrong:",
-  '{"markings": string[], "seen": string, "hasFloat": true|false|null, "hasThreadedTail": true|false|null, "hasOverflowTube": true|false|null, "hasSpout": true|false|null, "partType": string, "brand": string, "brandGuesses": string[], "fixture": string, "inletEntry": string, "boxes": [{"x":num,"y":num,"w":num,"h":num}], "category": string, "valveType": string, "dimension": string, "leverType": string, "handleDesign": string, "spoutShape": string, "distinctive": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}',
+  '{"markings": string[], "seen": string, "hasFloat": true|false|null, "hasThreadedTail": true|false|null, "hasOverflowTube": true|false|null, "hasSpout": true|false|null, "partType": string, "brand": string, "brandGuesses": string[], "fixture": string, "inletEntry": string, "boxes": [{"x":num,"y":num,"w":num,"h":num}], "handleBoxes": [{"x":num,"y":num,"w":num,"h":num}|null], "category": string, "valveType": string, "dimension": string, "leverType": string, "handleDesign": string, "spoutShape": string, "distinctive": string, "description": string, "measureTip": string, "confidence": "high"|"medium"|"low"}',
   "",
   "THE OBSERVATION FIELDS, filled FIRST and honestly - use null when you cannot see:",
   "- seen: one plain sentence describing the physical object in front of you, as if to someone on the phone. No product names.",
@@ -94,6 +94,8 @@ const SYSTEM = [
   "If you see a wall plate with a handle and no spout, it is shower - never basin. If the item is not a tap at all, fixture is \"\".",
   "",
   "LOCATE THE ITEM. For EACH photo, in order, return one entry in boxes: a tight bounding box around the item itself as fractions of that image (x,y = top-left, w,h = width/height, all 0-1). Exclude the basin, bench, tiles, cistern wall and background. Two photos means two entries.",
+  "",
+  "LOCATE THE HANDLE JOIN - on a single-lever mixer this is what decides the answer. Spouts are near-universal across brands; a long low chrome arc looks the same on a dozen makes. What actually separates one brand's mixer from another's is THE SHAPE OF THE LEVER AND HOW IT MEETS THE BODY: does the lever sit on top of a collar or clamp around it; is the join a step, a taper or a smooth blend; how tall is the body beneath the lever; what is the lever's outline in profile and from above. For EACH photo, in order, return one entry in handleBoxes: a TIGHT box around the lever AND the top of the body it joins, that junction filling the box, nothing else. Use null for a photo where the handle is not visible. This is not optional on a tap - get it right and the identification usually follows.",
   "",
   "IDENTIFYING THE BRAND from shape alone is the hardest and least reliable part. For a tap, the strongest clues are:",
   "1. THE HANDLE DESIGN - lever vs cross-head vs pin lever vs joystick; its shape (flat paddle, rounded, angular, tapered, knurled); how it meets the body. Describe it in handleDesign.",
@@ -189,6 +191,10 @@ export async function POST(request) {
         while (boxes.length < shots.length) boxes.push(null);
         boxes = boxes.slice(0, shots.length);
 
+        let handleBoxes = Array.isArray(out.handleBoxes) ? out.handleBoxes.map(okBox) : [];
+        while (handleBoxes.length < shots.length) handleBoxes.push(null);
+        handleBoxes = handleBoxes.slice(0, shots.length);
+
         const markings = (Array.isArray(out.markings) ? out.markings : []).map((s) => String(s).slice(0, 40)).filter(Boolean).slice(0, 8);
 
         // A brand is only "read" if it actually shows up in the text we read off the item.
@@ -214,7 +220,9 @@ export async function POST(request) {
           brandSure,
           markings,
           boxes,
-          box: boxes[0] || null,   // back-compat with the single-photo client
+          handleBoxes,
+          box: boxes[0] || null,               // back-compat with the single-photo client
+          handleBox: handleBoxes[0] || null,
           angles: shots.length,
         });
       }
