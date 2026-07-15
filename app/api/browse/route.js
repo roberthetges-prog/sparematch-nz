@@ -95,13 +95,16 @@ function shape(r) {
   };
 }
 
+// Count everything we hold, photo or not. A product with no picture is still a real product with
+// a real part number - hiding it is how the toilet seats went missing. Valves especially: most of
+// Apex's pressure limiting range has no published photo anywhere, and a plumber looking for
+// "the 350, not the 500" needs the code far more than he needs a picture of a brass lump.
 async function countOf(sb, cat) {
   const { count } = await sb
     .from("products")
     .select("id", { count: "exact", head: true })
     .eq("category", cat)
-    .eq("active", true)
-    .not("photo_url", "is", null);
+    .eq("active", true);
   return count || 0;
 }
 
@@ -134,7 +137,8 @@ export async function GET(request) {
     .select("id,brand,model,category,part_no,sku,size,fits,photo_url,buy_url,exploded,confirm")
     .eq("category", cat)
     .eq("active", true)
-    .not("photo_url", "is", null)
+    // Photographed products first - the picker is visual - but never drop the rest.
+    .order("photo_url", { ascending: true, nullsFirst: false })
     .order("brand", { ascending: true })
     .order("model", { ascending: true })
     .limit(500);
