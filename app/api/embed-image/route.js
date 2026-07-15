@@ -88,32 +88,52 @@ export async function POST(request) {
   const sb = sbAdmin();
   if (!sb) return Response.json({ error: "database not configured" }, { status: 500 });
 
-  // Deliberately small: each row can cost 8 proxy attempts, and we have 60s.
-  const limit = Math.min(Math.max(Number(body.limit) || 5, 1), 8);
+  // Deliberately small: each image can cost 8 proxy attempts, and we have 60s.
+  const limit = Math.min(Math.max(Number(body.limit) || 4, 1), 6);
+
+  // Pull a generous slice, then work per DISTINCT PICTURE rather than per product. Makers publish
+  // one shot for a whole valve range - 39 of our rows share just 20 images - so fetching per row
+  // would pay for the same download a dozen times over.
   const { data: rows, error } = await sb
     .from("products")
     .select("id,brand,model,photo_url")
     .is("embedding", null)
     .not("photo_url", "is", null)
     .eq("active", true)
-    .limit(limit);
+    .limit(200);
   if (error) return Response.json({ error: "query failed" }, { status: 500 });
   if (!rows || !rows.length) return Response.json({ embedded: 0, remaining: 0, notes: [], stillStuck: [] });
+
+  const byUrl = new Map();
+  for (const r of rows) {
+    if (!byUrl.has(r.photo_url)) byUrl.set(r.photo_url, []);
+    byUrl.get(r.photo_url).push(r);
+  }
+  const urls = [...byUrl.keys()].slice(0, limit);
 
   let embedded = 0;
   const notes = [];
   const stillStuck = [];
 
-  for (const r of rows) {
-    const got = await fetchStubborn(r.photo_url);
-    if (!got) { stillStuck.push(`${r.brand} ${r.model}`); continue; }
+  for (const url of urls) {
+    const group = byUrl.get(url);
+    const first = group[0];
+    const got = await fetchStubborn(url);
+    if (!got) { stillStuck.push(`${first.brand} ${first.model}`); continue; }
     const dataUrl = "data:image/jpeg;base64," + got.buf.toString("base64");
     const vec = await jinaEmbed(key, dataUrl);
-    if (!vec) { stillStuck.push(`${r.brand} ${r.model} (fetched, but embedding failed)`); continue; }
-    const { error: upErr } = await sb.from("products").update({ embedding: "[" + vec.join(",") + "]" }).eq("id", r.id);
-    if (upErr) { stillStuck.push(`${r.brand} ${r.model} (couldn't save)`); continue; }
-    embedded++;
-    notes.push(`${r.brand} ${r.model} — ${got.how}`);
+    if (!vec) { stillStuck.push(`${first.brand} ${first.model} (fetched, but embedding failed)`); continue; }
+    // Same picture, same fingerprint - so write it to every row that uses this picture. That is
+    // not a shortcut: an identical file genuinely has an identical fingerprint.
+    const { error: upErr } = await sb
+      .from("products")
+      .update({ embedding: "[" + vec.join(",") + "]" })
+      .eq("photo_url", url)
+      .is("embedding", null)
+      .eq("active", true);
+    if (upErr) { stillStuck.push(`${first.brand} ${first.model} (couldn't save)`); continue; }
+    embedded += group.length;
+    notes.push(`${first.brand} ${first.model}${group.length > 1 ? ` (+${group.length - 1} sharing this picture)` : ""} — ${got.how}`);
   }
 
   const { count } = await sb
