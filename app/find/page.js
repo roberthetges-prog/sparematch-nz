@@ -216,10 +216,10 @@ export default function Find() {
         // reusing the multi-image path already built for two camera angles.
         const cropped = await cropToBox(String(dataUrl), j.box);
         const handleCrop = await cropToBox(String(dataUrl), j.handleBox);
-        const views = [];
-        views.push({ data: cropped || base64, mediaType: cropped ? "image/jpeg" : mediaType });
-        if (handleCrop) views.push({ data: handleCrop, mediaType: "image/jpeg" });
-        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ images: views, type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
+        // The whole tap goes in "data" - that is what gets fingerprinted against the catalogue.
+        // The handle close-up goes in "handleData", kept OUT of the fingerprint search (the
+        // catalogue has no handle close-ups to match it against) and handed to the reranker only.
+        const mResp = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ data: cropped || base64, mediaType: cropped ? "image/jpeg" : mediaType, handleData: handleCrop || "", handleMediaType: "image/jpeg", type: inferType(j), brandGuesses: bg, brand: j.brand || "", brandSure }) });
         const mj = await mResp.json();
         if (mj && Array.isArray(mj.ranked) && mj.ranked.length) {
           const top = mj.ranked.filter((r) => r.photo).slice(0, 6);
